@@ -36,10 +36,12 @@ public class SoundSource : MonoBehaviour
     /// </summary>
     /// <param name="position"></param>
     /// <param name="volume"></param>
-    public static void Generate(Vector3 position, float volume)
+    public static SoundSource Generate(Vector3 position, float volume)
     {
         GameObject soundSourceGO = new GameObject("(SoundSouce)");
-        soundSourceGO.AddComponent<SoundSource>().volume = volume;
         soundSourceGO.transform.position = position;
+        SoundSource soundSouce = soundSourceGO.AddComponent<SoundSource>();
+        soundSouce.volume = volume;
+        return soundSouce;
     }
 }

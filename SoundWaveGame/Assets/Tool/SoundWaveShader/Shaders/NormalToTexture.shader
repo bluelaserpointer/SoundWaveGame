@@ -1,5 +1,6 @@
-﻿Shader "Hidden/Roystan/Normals Texture"
+﻿Shader "Hidden/NormalToTexture"
 {
+    //code from Roystan
     Properties
     {
     }

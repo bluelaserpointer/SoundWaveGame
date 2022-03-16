@@ -1,4 +1,4 @@
-Shader "Hidden/SoundWave"
+Shader "Hidden/SoundWaveToTexture"
 {
     Properties
     {
@@ -51,14 +51,17 @@ Shader "Hidden/SoundWave"
             fixed4 frag(v2f i) : SV_Target
             {
                 float receivedVolume = 0;
+                float2 screenUV = i.vertex.xy / _ScreenParams.xy;
+                float depth = tex2D(_CameraDepthTexture, screenUV);
                 for (int id = 0; id < _SoundSourceCount; ++id) {
                     float soundDistance = length(_SoundSourcePositions[id] - i.worldPosition);
                     float soundVolume = _SoundSourceVolumes[id];
                     float soundLifeTime = _SoundSourceLifeTimes[id];
-                    float2 screenUV = i.vertex.xy / _ScreenParams.xy;
-                    float depth = tex2D(_CameraDepthTexture, screenUV);
-                    float inference = soundVolume * (min(soundLifeTime * SOUND_SPEED_FACTOR, soundVolume) - soundDistance);
-                    if (soundLifeTime < soundVolume && abs(inference) < SOUND_BORDER_SCALE * (1 + depth * 5)) //edge of sound wave
+                    float borderDistance = min(soundLifeTime * SOUND_SPEED_FACTOR, soundVolume) - soundDistance;
+                    if (borderDistance <= 0)
+                        continue;
+                    float inference = soundVolume * borderDistance;
+                    if (soundLifeTime * SOUND_SPEED_FACTOR < soundVolume && borderDistance < SOUND_BORDER_SCALE * (1 - soundLifeTime * SOUND_SPEED_FACTOR / soundVolume)) //edge of sound wave
                         return float4(0, 1, 0, 1);
                     if (inference > 0)
                         receivedVolume += inference * (1 - soundLifeTime / MAX_SOUND_LIFE_TIME) * 0.05;

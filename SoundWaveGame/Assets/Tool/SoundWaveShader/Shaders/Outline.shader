@@ -24,6 +24,7 @@
 			// to be in the 0...1 range.
 			sampler2D _CameraNormalsTexture;
 			sampler2D _CameraDepthTexture;
+			sampler2D _SoundWaveTexture;
         
 			// Data pertaining to _MainTex's dimensions.
 			// https://docs.unity3d.com/Manual/SL-PropertiesInPrograms.html
@@ -125,10 +126,10 @@
 				float edgeNormal = sqrt(dot(normalFiniteDifference0, normalFiniteDifference0) + dot(normalFiniteDifference1, normalFiniteDifference1));
 
 				//TODO: comments explain this
-				float3 color0 = tex2D(_MainTex, bottomLeftUV).rgb;
-				float3 color1 = tex2D(_MainTex, topRightUV).rgb;
-				float3 color2 = tex2D(_MainTex, bottomRightUV).rgb;
-				float3 color3 = tex2D(_MainTex, topLeftUV).rgb;
+				float3 color0 = tex2D(_SoundWaveTexture, bottomLeftUV).rgb;
+				float3 color1 = tex2D(_SoundWaveTexture, topRightUV).rgb;
+				float3 color2 = tex2D(_SoundWaveTexture, bottomRightUV).rgb;
+				float3 color3 = tex2D(_SoundWaveTexture, topLeftUV).rgb;
 				float red = max(max(max(color0.r, color1.r), color2.r), color3.r);
 				float green = max(max(max(color0.g, color1.g), color2.g), color3.g);
 				float blue = max(max(max(color0.b, color1.b), color2.b), color3.b);

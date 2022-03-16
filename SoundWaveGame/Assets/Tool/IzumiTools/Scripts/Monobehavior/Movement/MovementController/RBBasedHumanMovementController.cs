@@ -12,6 +12,10 @@ using UnityEngine;
 public class RBBasedHumanMovementController : MonoBehaviour
 {
     //inspector
+    [Header("SE")]
+    [SerializeField]
+    AudioSource walkingSESource;
+
     [Header("Movement")]
     [Min(0)]
     public float Speed = 5f;
@@ -46,20 +50,26 @@ public class RBBasedHumanMovementController : MonoBehaviour
     }
     void Update()
     {
-        if(IsGrounded || controllableInAir)
+        bool isMoving = _inputs != Vector3.zero;
+        if (IsGrounded || controllableInAir)
         {
             _inputs = Vector3.zero;
             _inputs.x = Input.GetAxis("Horizontal");
             _inputs.z = Input.GetAxis("Vertical");
-            if (_inputs != Vector3.zero)
+            if (isMoving)
             {
                 _inputs = _cameraYAxis.TransformVector(_inputs).normalized;
                 ModelTargetRotation = Quaternion.Euler(0, Mathf.Rad2Deg * Mathf.Atan2(_inputs.x, _inputs.z), 0);
             }
-            else
-            {
-                // standing still behavior
-            }
+        }
+        if(!walkingSESource.isPlaying) {
+            if(IsGrounded && isMoving)
+                walkingSESource.Play();
+        }
+        else
+        {
+            if (!IsGrounded || !isMoving)
+                walkingSESource.Stop();
         }
         JumpCD.Charge();
         if (Input.GetButtonDown("Jump") && JumpCD.IsReady)

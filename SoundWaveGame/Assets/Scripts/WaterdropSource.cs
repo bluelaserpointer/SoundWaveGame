@@ -6,6 +6,8 @@ using UnityEngine;
 public class WaterdropSource : MonoBehaviour
 {
     [SerializeField]
+    Color soundColor = Color.white;
+    [SerializeField]
     Cooldown interval = new Cooldown(1.5F);
 
     // Update is called once per frame
@@ -15,6 +17,7 @@ public class WaterdropSource : MonoBehaviour
         {
             Waterdrop waterdrop = Instantiate(Resources.Load<Waterdrop>("Waterdrop"));
             waterdrop.transform.position = transform.position;
+            waterdrop.soundColor = soundColor;
         }
     }
 }

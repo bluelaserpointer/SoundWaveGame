@@ -24,14 +24,17 @@
 			// to be in the 0...1 range.
 			sampler2D _CameraNormalsTexture;
 			sampler2D _CameraDepthTexture;
-			sampler2D _SoundWaveTexture;
+			sampler2D _SoundBordersTexture;
+			sampler2D _SoundVolumesTexture;
+
+			int _Debug_ShowTextureID = 0; //0: default, 1:normal, 2:depth, 3:soundWave
         
 			// Data pertaining to _MainTex's dimensions.
 			// https://docs.unity3d.com/Manual/SL-PropertiesInPrograms.html
 			float4 _MainTex_TexelSize;
 
 			float _Scale;
-			float4 _Color;
+			float4 _BackgroundColor;
 
 			float _DepthThreshold;
 			float _DepthNormalThreshold;
@@ -75,6 +78,22 @@
 
 			float4 Frag(Varyings i) : SV_Target
 			{
+				//debug mode
+				switch (_Debug_ShowTextureID) {
+				case 1:
+					return tex2D(_CameraNormalsTexture, i.texcoord);
+				case 2:
+					return tex2D(_CameraDepthTexture, i.texcoord);
+				case 3:
+					return tex2D(_SoundBordersTexture, i.texcoord);
+				case 4:
+					return tex2D(_SoundVolumesTexture, i.texcoord);
+				}
+				//border line
+				float3 borderColor = tex2D(_SoundBordersTexture, i.texcoord);
+				if (borderColor.r > 0 || borderColor.g > 0 || borderColor.b > 0)
+					return float4(borderColor, 1);
+				//else, test if this fragment is on an outline
 				float halfScaleFloor = floor(_Scale * 0.5);
 				float halfScaleCeil = ceil(_Scale * 0.5);
 
@@ -124,23 +143,11 @@
 				// Dot the finite differences with themselves to transform the 
 				// three-dimensional values to scalars.
 				float edgeNormal = sqrt(dot(normalFiniteDifference0, normalFiniteDifference0) + dot(normalFiniteDifference1, normalFiniteDifference1));
-
-				//TODO: comments explain this
-				float3 color0 = tex2D(_SoundWaveTexture, bottomLeftUV).rgb;
-				float3 color1 = tex2D(_SoundWaveTexture, topRightUV).rgb;
-				float3 color2 = tex2D(_SoundWaveTexture, bottomRightUV).rgb;
-				float3 color3 = tex2D(_SoundWaveTexture, topLeftUV).rgb;
-				float red = max(max(max(color0.r, color1.r), color2.r), color3.r);
-				float green = max(max(max(color0.g, color1.g), color2.g), color3.g);
-				float blue = max(max(max(color0.b, color1.b), color2.b), color3.b);
-
-				if (green > 0) //border of sound wave
-					return float4(1, 1, 1, 1);
-				if (edgeDepth <= depthThreshold && edgeNormal <= _NormalThreshold) //not outline returns black
-					return _Color;
-				//outline returns original object color
-				//outside of model is not shaded, so if directly sampling center point at the edge of object will sometimes become black.
-				return float4(red, red, red, 1);
+				//not outline returns backgroud color
+				if (edgeDepth <= depthThreshold && edgeNormal <= _NormalThreshold)
+					return _BackgroundColor;
+				//outline returns sound volume color
+				return float4(tex2D(_SoundVolumesTexture, i.texcoord).rgb, 1);
 			}
             ENDCG
         }

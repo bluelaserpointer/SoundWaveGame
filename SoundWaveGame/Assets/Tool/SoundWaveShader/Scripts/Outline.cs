@@ -14,7 +14,7 @@ public class Outline : MonoBehaviour
 	[Header("Setting")]
 	[Tooltip("Number of pixels between samples that are tested for an edge. When this value is 1, tested samples are adjacent.")]
 	public int outlineScale = 1;
-	public Color outlineColor = Color.black;
+	public Color backgroundColor = Color.black;
 	[Tooltip("Difference between depth values, scaled by the current depth, required to draw an edge.")]
 	public float depthThreshold = 1.5f;
 	[Range(0, 1), Tooltip("The value at which the dot product between the surface normal and the view direction will affect " +
@@ -25,6 +25,14 @@ public class Outline : MonoBehaviour
 	public float depthNormalThresholdScale = 7;
 	[Range(0, 1), Tooltip("Larger values will require the difference between normals to be greater to draw an edge.")]
 	public float normalThreshold = 0.4f;
+
+	/// <summary>
+	/// preview a texture used in post-processing shader, 1: normal 2: depth 3: soundBorder 4: soundVolume
+	/// </summary>
+	[Header("Debug")]
+	[SerializeField]
+	[Range(0, 4)]
+	int debugShowTextureID = 0;
 	//--
 
 	public Material OutlineMaterial { get; private set; }
@@ -45,11 +53,12 @@ public class Outline : MonoBehaviour
 			return;
 		}
 		OutlineMaterial.SetFloat("_Scale", outlineScale);
-		OutlineMaterial.SetColor("_Color", outlineColor);
+		OutlineMaterial.SetColor("_BackgroundColor", backgroundColor);
 		OutlineMaterial.SetFloat("_DepthThreshold", depthThreshold);
 		OutlineMaterial.SetFloat("_DepthNormalThreshold", depthNormalThreshold);
 		OutlineMaterial.SetFloat("_DepthNormalThresholdScale", depthNormalThresholdScale);
 		OutlineMaterial.SetFloat("_NormalThreshold", normalThreshold);
+		OutlineMaterial.SetFloat("_Debug_ShowTextureID", debugShowTextureID);
 		OutlineMaterial.SetMatrix("_ClipToView", GL.GetGPUProjectionMatrix(Camera.projectionMatrix, true).inverse);
 
 		Graphics.Blit(src, dest, OutlineMaterial);

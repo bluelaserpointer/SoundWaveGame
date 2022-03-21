@@ -43,6 +43,7 @@ public class SoundSourceTeller : MonoBehaviour
             Vector4[] soundSourcePositions = new Vector4[MAX_SOUND_SOURCE_COUNT];
             float[] soundSourceVolumes = new float[MAX_SOUND_SOURCE_COUNT];
             float[] soundSourceLifeTimes = new float[MAX_SOUND_SOURCE_COUNT];
+            Vector4[] soundColors = new Vector4[MAX_SOUND_SOURCE_COUNT];
 
             int loops = 0;
             foreach (SoundSource soundSource in soundSources)
@@ -52,6 +53,7 @@ public class SoundSourceTeller : MonoBehaviour
                     soundSourcePositions[loops] = soundSource.transform.position;
                     soundSourceVolumes[loops] = soundSource.volume;
                     soundSourceLifeTimes[loops] = soundSource.LifeTime;
+                    soundColors[loops] = soundSource.color;
                     if (++loops >= MAX_SOUND_SOURCE_COUNT)
                     {
                         Debug.LogWarning("Too many sound sources! (>" + MAX_SOUND_SOURCE_COUNT + ")");
@@ -63,6 +65,7 @@ public class SoundSourceTeller : MonoBehaviour
             Shader.SetGlobalVectorArray("_SoundSourcePositions", soundSourcePositions);
             Shader.SetGlobalFloatArray("_SoundSourceVolumes", soundSourceVolumes);
             Shader.SetGlobalFloatArray("_SoundSourceLifeTimes", soundSourceLifeTimes);
+            Shader.SetGlobalVectorArray("_SoundColors", soundColors);
         }
         else
         {

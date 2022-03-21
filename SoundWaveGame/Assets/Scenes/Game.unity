@@ -1401,6 +1401,79 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: -25.401, z: 0}
+--- !u!1001 &1504768651
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839398, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_Name
+      value: WaterdropSource (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_RootOrder
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.2142588
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839419, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
 --- !u!1 &1521325558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,6 +1988,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450094889951839396, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
+      propertyPath: soundColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1450094889951839398, guid: fa146f927c7e55b4082280dee9313b18, type: 3}
       propertyPath: m_Name
       value: WaterdropSource
@@ -2458,7 +2547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.data[0].shader
@@ -2466,6 +2555,10 @@ PrefabInstance:
       objectReference: {fileID: 4800000, guid: 95d6144eab187a34b929151454e2969d, type: 3}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.data[1].shader
+      value: 
+      objectReference: {fileID: 4800000, guid: 3d5cc7827ad3e9c4da520a3ab60d102e, type: 3}
+    - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
+      propertyPath: shaderToTextures.Array.data[2].shader
       value: 
       objectReference: {fileID: 4800000, guid: 544c82e515d37454385ae192157fff21, type: 3}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
@@ -2478,7 +2571,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.data[1].textureName
-      value: _SoundWaveTexture
+      value: _SoundVolumesTexture
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
+      propertyPath: shaderToTextures.Array.data[2].textureName
+      value: _SoundBordersTexture
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.data[0].replacementTag
@@ -2489,11 +2586,19 @@ PrefabInstance:
       value: RenderType
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
+      propertyPath: shaderToTextures.Array.data[2].replacementTag
+      value: RenderType
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.data[0].renderTextureDepth
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
       propertyPath: shaderToTextures.Array.data[1].renderTextureDepth
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5308107634865440903, guid: cb11dfca72890c448a8e2f5785338469, type: 3}
+      propertyPath: shaderToTextures.Array.data[2].renderTextureDepth
       value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 5308107634865440921, guid: cb11dfca72890c448a8e2f5785338469, type: 3}

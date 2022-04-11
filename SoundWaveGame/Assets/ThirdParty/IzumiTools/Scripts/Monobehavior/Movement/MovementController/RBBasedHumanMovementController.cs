@@ -27,6 +27,8 @@ public class RBBasedHumanMovementController : MonoBehaviour
     [SerializeField]
     [Min(0)]
     float modelRotateLerpFactor = 20F;
+    [SerializeField]
+    Cooldown walkingSoundInterval = new Cooldown(0.5F);
 
     [Header("SelfReference")]
     [SerializeField]
@@ -36,8 +38,9 @@ public class RBBasedHumanMovementController : MonoBehaviour
     [Tooltip("Warn: CameraYAxis should only do Y rotation, or moving vector could towards sky/ground.")]
     [SerializeField]
     protected Transform _cameraYAxis;
+    //--
 
-    //data
+    //control
     public bool IsGrounded => _groundChecker.CollidingAny;
     public Rigidbody Rigidbody { get; private set; }
     private Vector3 _inputs = Vector3.zero;
@@ -50,25 +53,29 @@ public class RBBasedHumanMovementController : MonoBehaviour
     }
     void Update()
     {
-        bool isMoving = _inputs != Vector3.zero;
+        bool isMoving = false;
+        walkingSoundInterval.Charge();
         if (IsGrounded || controllableInAir)
         {
             _inputs = Vector3.zero;
             _inputs.x = Input.GetAxis("Horizontal");
             _inputs.z = Input.GetAxis("Vertical");
-            if (isMoving)
+            if (_inputs != Vector3.zero)
             {
+                isMoving = true;
                 _inputs = _cameraYAxis.TransformVector(_inputs).normalized;
                 ModelTargetRotation = Quaternion.Euler(0, Mathf.Rad2Deg * Mathf.Atan2(_inputs.x, _inputs.z), 0);
+                if(walkingSoundInterval.CheckReady())
+                    SoundSource.Generate(_groundChecker.transform.position, 5, Color.white);
             }
         }
         if(!walkingSESource.isPlaying) {
-            if(IsGrounded && isMoving)
+            if(isMoving)
                 walkingSESource.Play();
         }
         else
         {
-            if (!IsGrounded || !isMoving)
+            if (!isMoving)
                 walkingSESource.Stop();
         }
         JumpCD.Charge();

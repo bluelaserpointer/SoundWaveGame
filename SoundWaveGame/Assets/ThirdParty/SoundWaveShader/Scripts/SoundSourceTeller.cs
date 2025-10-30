@@ -14,7 +14,8 @@ public class SoundSourceTeller : MonoBehaviour
     {
         Instance = this;
     }
-    List<SoundSource> soundSources = new List<SoundSource>();
+    private readonly List<SoundSource> soundSources = new List<SoundSource>();
+    public List<SoundSource> SoundSources => soundSources;
 
     public void AddSoundSouce(SoundSource soundSource)
     {

@@ -1,5 +1,7 @@
-Shader "Hidden/SoundBorder"
+﻿Shader "Hidden/SoundBorder"
 {
+    //用途：生成“声波边界图”——检测像素是否处于声波传播边缘，输出对应声源的颜色。
+    // 输出结果存入 _SoundBordersTexture，用于后处理中优先显示声波轮廓（高亮边缘）。
     SubShader
     {
         Tags { "RenderType" = "Opaque" }

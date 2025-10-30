@@ -7,6 +7,8 @@ public abstract class Item : MonoBehaviour, IInteractable
 {
     public virtual void Interact()
     {
-        GameManager.Player.AddItem(this);
+        if (this == null)
+            return;
+        Player.Instance.AddItem(this);
     }
 }

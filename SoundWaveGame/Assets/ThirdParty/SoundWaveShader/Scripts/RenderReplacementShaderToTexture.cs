@@ -60,6 +60,10 @@ class ShaderToTexture
     }
     public void UpdateTexture()
     {
+        // —— 全局默认：一律当作非玩家 —— //
+        Shader.SetGlobalFloat("_IsPlayer", 0f);
+        Shader.SetGlobalFloat("_PlayerBaseRipple", 0f);
+
         Camera.targetTexture = RenderTexture;
         Camera.RenderWithShader(shader, replacementTag);
     }

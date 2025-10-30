@@ -1,5 +1,7 @@
-Shader "Hidden/SoundVolume"
+﻿Shader "Hidden/SoundVolume"
 {
+    //用途：生成“声波体积图”——在屏幕空间内为每个像素计算当前所有声源的波动强度与颜色叠加。
+    // 输出结果存入 _SoundVolumesTexture，用于后处理着色（如音波区域的描边颜色）。
     SubShader
     {
         Tags { "RenderType" = "Opaque" }
@@ -21,6 +23,10 @@ Shader "Hidden/SoundVolume"
             float _SoundSourceVolumes[MAX_SOUND_SOURCE_COUNT];
             float _SoundSourceLifeTimes[MAX_SOUND_SOURCE_COUNT];
             float3 _SoundColors[MAX_SOUND_SOURCE_COUNT];
+
+            // --- 玩家基色控制 ---
+            float _IsPlayer;                // 每个Renderer通过 MPB 设置: 1=玩家, 0=非玩家
+            float _PlayerBaseRipple;        // 玩家轮廓无声音时描边颜色
 
             struct appdata
             {
@@ -48,7 +54,7 @@ Shader "Hidden/SoundVolume"
 
             fixed4 frag(v2f i) : SV_Target
             {
-                float3 receivedVolumeColor = float3(0, 0, 0);
+                float3 receivedVolumeColor = (_IsPlayer > 0.5) ? float3(_PlayerBaseRipple, _PlayerBaseRipple, _PlayerBaseRipple) : 0;
                 float2 screenUV = i.vertex.xy / _ScreenParams.xy;
                 float depth = tex2D(_CameraDepthTexture, screenUV);
                 for (int id = 0; id < _SoundSourceCount; ++id) {

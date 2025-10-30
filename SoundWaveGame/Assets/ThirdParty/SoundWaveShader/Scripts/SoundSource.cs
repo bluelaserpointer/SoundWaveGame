@@ -8,15 +8,18 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class SoundSource : MonoBehaviour
 {
+    public static List<SoundSource> All => SoundSourceTeller.Instance.SoundSources;
     public float volume;
     public Color color;
 
+    public float SpawnTime {  get; private set; }
     public float LifeTime { get; private set; }
     public static float MAX_LIFE_TIME = 4;
 
     private void Start()
     {
         SoundSourceTeller.Instance.AddSoundSouce(this);
+        SpawnTime = Time.timeSinceLevelLoad;
     }
     private void Update()
     {
@@ -25,7 +28,14 @@ public class SoundSource : MonoBehaviour
         {
             Destory();
         }
-
+    }
+    public float WaveDistance()
+    {
+        return volume * (LifeTime / MAX_LIFE_TIME);
+    }
+    public bool InsideWaveRadius(Vector3 pos)
+    {
+        return Vector3.Distance(transform.position, pos) < WaveDistance();
     }
     public void Destory()
     {

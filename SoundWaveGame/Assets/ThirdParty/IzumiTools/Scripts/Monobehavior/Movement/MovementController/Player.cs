@@ -1,3 +1,4 @@
+﻿using Invector.vCharacterController;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,62 +6,75 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
     //inspector
     [SerializeField]
-    new Camera camera;
+    int _hp;
     [SerializeField]
-    RBBasedHumanMovementController movementController;
+    Camera _playerCamera;
     [SerializeField]
-    Knife knifePrefab;
+    vThirdPersonCamera _cameraSystem;
     [SerializeField]
-    float knifeThrowingForce = 100;
+    vThirdPersonInput _movementInputSystem;
     [SerializeField]
-    Cooldown knifeThrowCD = new Cooldown(1);
-    [SerializeField]
-    AudioClip knifeThrowSE;
+    KnifeThrow _knifeThrow;
+    public bool controllable;
     //--
-    public RBBasedHumanMovementController MovementController => movementController;
-    int knifeAmount;
-    public int KnifeAmount { get => knifeAmount;
-        set
-        {
-            GameManager.KnifeAmountText.text = "Knife: " + (knifeAmount = value);
-        }
-    }
-    private void Start()
+    public Camera Camera => _playerCamera;
+    public int KnifeCount => _knifeThrow.KnifeCount;
+    public bool IsDead { get; private set; }
+    private void Awake()
     {
-        KnifeAmount = 0;
+        Instance = this;
     }
     private void Update()
     {
+        if (controllable)
+        {
+            CheckRaycast();
+        }
+        CheckDeath();
+    }
+    void CheckRaycast()
+    {
         RaycastHit raycastResult;
-        Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out raycastResult);
+        Physics.Raycast(_playerCamera.ScreenPointToRay(Input.mousePosition), out raycastResult);
         //print(raycastResult.collider.gameObject.name);
-        if(raycastResult.collider != null)
+        //看到就直接互动
+        if (raycastResult.collider != null)
         {
             GameObject hitGO = raycastResult.collider.attachedRigidbody?.gameObject;
             if (hitGO != null)
-                hitGO.GetComponent<IInteractable>()?.Interact();
-        }
-
-        knifeThrowCD.Charge();
-        if (Input.GetMouseButton(0))
-        {
-            if(KnifeAmount > 0 && knifeThrowCD.CheckReady())
             {
-                --KnifeAmount;
-                Knife knife = Instantiate(knifePrefab);
-                knife.transform.SetPositionAndRotation(camera.transform.position + camera.transform.forward * 0.5f, camera.transform.rotation);
-                knife.Rigidbody.AddForce(knifeThrowingForce * camera.transform.forward);
-                AudioSource.PlayClipAtPoint(knifeThrowSE, camera.transform.position);
+                hitGO.GetComponent<IInteractable>()?.Interact();
             }
         }
+    }
+    void CheckDeath()
+    {
+        if (IsDead)
+        {
+            return;
+        }
+        if (_hp > 0)
+        {
+            return;
+        }
+        Dead();
+    }
+    public void Dead()
+    {
+        GameManager.Instance.GameOver();
+        IsDead = true;
+        _cameraSystem.enabled = false;
+        _movementInputSystem.enabled = false;
+        _knifeThrow.enabled = false;
     }
     public void AddItem(Item item)
     {
         if(item.GetType().Equals(typeof(Knife)))
         {
-            ++KnifeAmount;
+            ++_knifeThrow.KnifeCount;
             Destroy(item.gameObject);
         }
     }

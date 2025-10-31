@@ -64,8 +64,10 @@
                     float borderDistance = min(soundLifeTime * SOUND_SPEED_FACTOR, soundVolume) - soundDistance;
                     if (borderDistance <= 0)
                         continue;
-                    float alpha = soundVolume * borderDistance * (1 - soundLifeTime / MAX_SOUND_LIFE_TIME) * 0.05;
-                    receivedVolumeColor = _SoundColors[id] * alpha + receivedVolumeColor * (1 - alpha);
+                    float falloff = 0.2 / (borderDistance + 1.0) + 0.05 * (1.0 - clamp(borderDistance / 10.0, 0.0, 1.0));
+                    float t = clamp(soundLifeTime / MAX_SOUND_LIFE_TIME, 0.0, 1.0);
+                    float alpha = 5 * falloff * (1.0 - pow(t, 6.0));
+                    receivedVolumeColor = max(receivedVolumeColor, _SoundColors[id] * alpha);
                 }
                 return float4(receivedVolumeColor, 1);
             }

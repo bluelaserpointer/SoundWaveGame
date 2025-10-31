@@ -8,13 +8,17 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class SoundSource : MonoBehaviour
 {
+    public enum SoundType { Environment, Enemy }
     public static List<SoundSource> All => SoundSourceTeller.Instance.SoundSources;
     public float volume;
     public Color color;
+    public SoundType type;
 
     public float SpawnTime {  get; private set; }
     public float LifeTime { get; private set; }
+
     public static float MAX_LIFE_TIME = 4;
+    public static readonly float SOUND_VELOCITY = 4;
 
     private void Start()
     {
@@ -31,7 +35,7 @@ public class SoundSource : MonoBehaviour
     }
     public float WaveDistance()
     {
-        return volume * (LifeTime / MAX_LIFE_TIME);
+        return Mathf.Min(volume, SOUND_VELOCITY * LifeTime);
     }
     public bool InsideWaveRadius(Vector3 pos)
     {
@@ -49,13 +53,14 @@ public class SoundSource : MonoBehaviour
     /// <param name="volume"></param>
     /// <param name="color"></param>
     /// <returns></returns>
-    public static SoundSource Generate(Vector3 position, float volume, Color color)
+    public static SoundSource Generate(Vector3 position, float volume, Color color, SoundType soundType)
     {
         GameObject soundSourceGO = new GameObject("(SoundSouce)");
         soundSourceGO.transform.position = position;
         SoundSource soundSouce = soundSourceGO.AddComponent<SoundSource>();
         soundSouce.volume = volume;
         soundSouce.color = color;
+        soundSouce.type = soundType;
         return soundSouce;
     }
 }

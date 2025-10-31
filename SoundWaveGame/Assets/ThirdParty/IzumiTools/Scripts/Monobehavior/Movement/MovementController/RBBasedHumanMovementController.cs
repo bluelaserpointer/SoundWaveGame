@@ -66,7 +66,7 @@ public class RBBasedHumanMovementController : MonoBehaviour
                 _inputs = _cameraYAxis.TransformVector(_inputs).normalized;
                 ModelTargetRotation = Quaternion.Euler(0, Mathf.Rad2Deg * Mathf.Atan2(_inputs.x, _inputs.z), 0);
                 if(walkingSoundInterval.CheckReady())
-                    SoundSource.Generate(_groundChecker.transform.position, 5, Color.white);
+                    SoundSource.Generate(_groundChecker.transform.position, 5, Color.white, SoundSource.SoundType.Environment);
             }
         }
         if(!walkingSESource.isPlaying) {

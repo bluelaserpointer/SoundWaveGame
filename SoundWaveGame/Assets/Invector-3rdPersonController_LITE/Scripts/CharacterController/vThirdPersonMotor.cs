@@ -105,6 +105,8 @@ namespace Invector.vCharacterController
 
         #endregion
 
+        public Vector3 Input => input;
+
         public void Init()
         {
             animator = GetComponent<Animator>();

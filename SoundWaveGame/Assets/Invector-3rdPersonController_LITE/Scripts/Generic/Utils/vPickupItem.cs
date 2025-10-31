@@ -1,27 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
+[RequireComponent(typeof(Collider))]
 public class vPickupItem : MonoBehaviour
 {
-    AudioSource _audioSource;
-    public AudioClip _audioClip;
-    public GameObject _particle;    
+    [SerializeField]
+    UnityEvent _onPickup = new();
+    public GameObject particle;
 
-    void Start()
-    {
-        _audioSource = GetComponent<AudioSource>();
-    }
+    [SerializeField]
+    AudioSource _audioSource;
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (!other.CompareTag("Player"))
+            return;
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer r in renderers)            
+            r.enabled = false;
+        _onPickup.Invoke();
+        if (_audioSource != null)
         {
-            Renderer[] renderers = GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in renderers)            
-                r.enabled = false;            
-
-            _audioSource.PlayOneShot(_audioClip);
-            Destroy(gameObject, _audioClip.length);
+            _audioSource.Play();
+            Destroy(gameObject, _audioSource.clip.length);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        if (particle != null)
+        {
+            Instantiate(particle, transform.position, transform.rotation);
         }
     }
 }

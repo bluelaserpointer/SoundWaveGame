@@ -12,6 +12,8 @@ public class GameOverUI : MonoBehaviour
     [SerializeField]
     Button _retryButton;
     [SerializeField]
+    Button _titleButton; // 新增的返回主菜单游戏按钮
+    [SerializeField]
     Button _quitButton; // 新增的退出游戏按钮
 
     private void Awake()
@@ -19,6 +21,8 @@ public class GameOverUI : MonoBehaviour
         Instance = this;
         _graphicRoot.SetActive(false);
         _retryButton.onClick.AddListener(() => GameManager.Instance.Retry());
+        // 为返回主菜单按钮添加点击事件
+        _titleButton.onClick.AddListener(() => BackToTitle());
         // 为退出按钮添加点击事件
         _quitButton.onClick.AddListener(() => QuitGame());
     }
@@ -27,6 +31,12 @@ public class GameOverUI : MonoBehaviour
         _graphicRoot.SetActive(cond);
     }
     
+    // 返回主菜单的方法
+    private void BackToTitle()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+    }
+
     // 退出游戏的方法
     private void QuitGame()
     {

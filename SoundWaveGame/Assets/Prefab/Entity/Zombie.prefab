@@ -50,9 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _screamAnchor: {fileID: 3519600951333952746}
   _screamInterval:
-    requiredTime: 5
+    requiredTime: 4
   _screamSoundColor: {r: 1, g: 0, b: 0, a: 1}
-  _screamVolume: 25
+  _screamVolume: 15
+  _singleSoundMaxChaseTime: 0.75
 --- !u!114 &4448847470833232757
 MonoBehaviour:
   m_ObjectHideFlags: 0

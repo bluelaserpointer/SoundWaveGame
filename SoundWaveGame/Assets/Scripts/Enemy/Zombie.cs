@@ -12,11 +12,15 @@ public class Zombie : Enemy
     Color _screamSoundColor;
     [SerializeField]
     float _screamVolume;
+    [SerializeField]
+    float _singleSoundMaxChaseTime;
 
 
     SoundSource chasingSoundSource;
 
     int _screamRemainCount;
+    float _singleSoundChasedTime;
+    public bool IsChasing { get; private set; }
     // Update is called once per frame
     void Update()
     {
@@ -28,10 +32,28 @@ public class Zombie : Enemy
         SoundSource newSound = FindLatestNoise(minSpawnTime);
         if (newSound != null && newSound != chasingSoundSource)
         {
+            IsChasing = true;
+            _singleSoundChasedTime = 0;
             Scream();
             chasingSoundSource = newSound;
             aiController.NotifyMoveTo(newSound.transform.position);
         }
+        else
+        {
+            if (chasingSoundSource != null)
+            {
+                if (IsChasing)
+                {
+                    _singleSoundChasedTime += Time.deltaTime;
+                    if (_singleSoundChasedTime > _singleSoundMaxChaseTime)
+                    {
+                        IsChasing = false;
+                        aiController.NotifyMoveTo(transform.position);
+                    }
+                }
+            }
+        }
+        
     }
     public void Scream()
     {

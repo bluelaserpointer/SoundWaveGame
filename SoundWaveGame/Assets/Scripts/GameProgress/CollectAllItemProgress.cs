@@ -37,9 +37,9 @@ public class CollectAllItemProgress : GameProgress
             if (!_targetItemIdentifier.Equals(identifier))
                 return;
             ++_collectedCount;
-            if (CollectedCount == RequiredCount)
+            if (CollectedCount >= RequiredCount)
             {
-                OnComplete.Invoke();
+                Complete();
             }
             UpdateUI();
         });

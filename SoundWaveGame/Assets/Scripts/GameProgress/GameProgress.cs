@@ -11,4 +11,13 @@ public abstract class GameProgress : MonoBehaviour
     public UnityEvent OnComplete => _onComplete;
     public abstract float GetProgressRatio();
     public bool IsComplete => GetProgressRatio() == 1;
+    public bool IsCompleted { get; private set; }
+
+    public void Complete()
+    {
+        if (IsCompleted)
+            return;
+        IsCompleted = true;
+        _onComplete.Invoke();
+    }
 }

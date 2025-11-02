@@ -26,9 +26,9 @@ public class GameOverUI : MonoBehaviour
         // 为退出按钮添加点击事件
         _quitButton.onClick.AddListener(() => QuitGame());
     }
-    public void Show(bool cond)
+    public void Show()
     {
-        _graphicRoot.SetActive(cond);
+        _graphicRoot.SetActive(true);
     }
     
     // 返回主菜单的方法

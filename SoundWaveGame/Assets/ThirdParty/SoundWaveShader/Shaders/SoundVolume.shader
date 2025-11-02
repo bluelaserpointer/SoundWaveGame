@@ -24,9 +24,7 @@
             float _SoundSourceLifeTimes[MAX_SOUND_SOURCE_COUNT];
             float3 _SoundColors[MAX_SOUND_SOURCE_COUNT];
 
-            // --- 玩家基色控制 ---
-            float _IsPlayer;                // 每个Renderer通过 MPB 设置: 1=玩家, 0=非玩家
-            float _PlayerBaseRipple;        // 玩家轮廓无声音时描边颜色
+            float3 _ConstantColor; // base color displayed when no sound waves are lighting it 
 
             struct appdata
             {
@@ -54,7 +52,7 @@
 
             fixed4 frag(v2f i) : SV_Target
             {
-                float3 receivedVolumeColor = (_IsPlayer > 0.5) ? float3(_PlayerBaseRipple, _PlayerBaseRipple, _PlayerBaseRipple) : 0;
+                float3 receivedVolumeColor = _ConstantColor;
                 float2 screenUV = i.vertex.xy / _ScreenParams.xy;
                 float depth = tex2D(_CameraDepthTexture, screenUV);
                 for (int id = 0; id < _SoundSourceCount; ++id) {

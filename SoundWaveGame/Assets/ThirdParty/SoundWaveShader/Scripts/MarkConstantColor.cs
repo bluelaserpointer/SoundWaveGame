@@ -1,23 +1,25 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Make this children visible in a color even no sound wave are lighting it 
+/// </summary>
 [DisallowMultipleComponent]
-public class MarkAsPlayerForSoundVolume : MonoBehaviour
+public class MarkConstantColor : MonoBehaviour
 {
-    [Range(0f, 1f)]
-    public float playerBaseRipple = 0.55f;
+    [SerializeField]
+    Color _constantColor = Color.white;
 
-    static readonly int ID_IsPlayer = Shader.PropertyToID("_IsPlayer");
-    static readonly int ID_PlayerBaseRipple = Shader.PropertyToID("_PlayerBaseRipple");
+    static readonly int ID_ConstantColor = Shader.PropertyToID("_ConstantColor");
 
     MaterialPropertyBlock _mpb;
 
-    void OnEnable() { Apply(true); }
+    void OnEnable() { Apply(enabled); }
     void OnDisable() { Apply(false); }
 #if UNITY_EDITOR
-    void OnValidate() { if (enabled) Apply(true); }
+    void OnValidate() { Apply(enabled); }
 #endif
 
-    void Apply(bool isPlayer)
+    void Apply(bool visible)
     {
         if (_mpb == null) _mpb = new MaterialPropertyBlock();
         var renderers = GetComponentsInChildren<Renderer>(true);
@@ -30,8 +32,7 @@ public class MarkAsPlayerForSoundVolume : MonoBehaviour
             for (int i = 0; i < submeshCount; i++)
             {
                 r.GetPropertyBlock(_mpb, i);
-                _mpb.SetFloat(ID_IsPlayer, isPlayer ? 1f : 0f);
-                _mpb.SetFloat(ID_PlayerBaseRipple, isPlayer ? playerBaseRipple : 0f);
+                _mpb.SetColor(ID_ConstantColor, visible ? _constantColor : Color.black);
                 r.SetPropertyBlock(_mpb, i);
             }
         }

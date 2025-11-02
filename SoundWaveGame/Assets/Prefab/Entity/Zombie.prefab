@@ -54,7 +54,7 @@ MonoBehaviour:
     requiredTime: 4
   _screamSoundColor: {r: 1, g: 0, b: 0, a: 1}
   _screamVolume: 15
-  _singleSoundMaxChaseTime: 2
+  _singleSoundMaxChaseTime: 1
 --- !u!114 &4448847470833232757
 MonoBehaviour:
   m_ObjectHideFlags: 0

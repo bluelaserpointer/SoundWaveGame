@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
-public class StageClearUI : MonoBehaviour
+public class GameClearUI : MonoBehaviour
 {
-    public static StageClearUI Instance { get; private set; }
-    [SerializeField]
-    GameProgress _stageClearGameProgress;
+    public static GameClearUI Instance { get; private set; }
     [SerializeField]
     GameObject _graphicRoot;
     [SerializeField]
@@ -22,18 +20,16 @@ public class StageClearUI : MonoBehaviour
     {
         Instance = this;
         _retryButton.onClick.AddListener(() => GameManager.Instance.Retry());
-        _stageClearGameProgress.OnComplete.AddListener(() =>
-        {
-            _graphicRoot.SetActive(true);
-            Player.Instance.Controllable = false;
-        });
         // 为返回主菜单按钮添加点击事件
         _titleButton.onClick.AddListener(() => BackToTitle());
         // 为退出按钮添加点击事件
         _quitButton.onClick.AddListener(() => QuitGame());
 
     }
-    
+    public void Show()
+    {
+        _graphicRoot.SetActive(true);
+    }
     // 返回主菜单的方法
     private void BackToTitle()
     {

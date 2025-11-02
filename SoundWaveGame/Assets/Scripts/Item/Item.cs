@@ -34,7 +34,7 @@ public class Item : MonoBehaviour, IInteractable
             return;
         Player.Instance.AddItem(this);
     }
-    public void Collected()
+    public virtual void Collected()
     {
         if (CollectedItemCounts.ContainsKey(_identifier))
         {

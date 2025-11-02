@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public readonly Dictionary<string, List<Item>> stageItems = new();
     public readonly Dictionary<string, int> collectedItemCounts = new();
+
+    public readonly UnityEvent<int> onKnifeAdd = new();
 
     public static GameManager Instance { get; private set; }
     private void Awake()

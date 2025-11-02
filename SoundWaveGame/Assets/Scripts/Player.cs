@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        GameManager.Instance.onKnifeAdd.AddListener(addition => _knifeThrow.KnifeCount += addition);
     }
     private void Update()
     {

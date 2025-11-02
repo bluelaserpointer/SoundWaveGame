@@ -1,9 +1,10 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [DisallowMultipleComponent]
-public class KnifeThrow : MonoBehaviour
+public class KnifeThrow : Ability
 {
     [SerializeField]
     Transform _throwingAnchor;
@@ -20,16 +21,20 @@ public class KnifeThrow : MonoBehaviour
     [SerializeField]
     int _initialCount;
 
-    int knifeCount;
+    int _knifeCount;
     public int KnifeCount
     {
-        get => knifeCount;
+        get => _knifeCount;
         set
         {
-            knifeCount = value;
+            _knifeCount = value;
             PlayerStatsUI.Instance.UpdateKnifeCount(value);
         }
     }
+
+    public override string Name => "探测刀";
+
+    public override bool IsUssable => _knifeCount > 0 && knifeThrowCD.IsReady;
 
     // Start is called before the first frame update
     void Start()
@@ -41,23 +46,22 @@ public class KnifeThrow : MonoBehaviour
     void Update()
     {
         knifeThrowCD.Charge();
-        if (Player.Instance.Controllable && Input.GetMouseButton(0))
-        {
-            if (KnifeCount > 0 && knifeThrowCD.CheckReady())
-            {
-                --KnifeCount;
-                Vector3 throwingPosition = _throwingAnchor.position;
-                Vector3 throwingDirection = _throwingAnchor.forward;
-                Quaternion throwingRotation = _throwingAnchor.rotation;
-                Knife knife = Instantiate(knifePrefab);
-                knife.transform.SetPositionAndRotation(throwingPosition + throwingDirection * 0.5f, throwingRotation);
-                knife.Rigidbody.AddForce(knifeThrowingForce * throwingDirection);
-                AudioSource.PlayClipAtPoint(knifeThrowSE, throwingPosition);
-            }
-        }
     }
     public void Throw()
     {
+        knifeThrowCD.Reset();
+        Vector3 throwingPosition = _throwingAnchor.position;
+        Vector3 throwingDirection = _throwingAnchor.forward;
+        Quaternion throwingRotation = _throwingAnchor.rotation;
+        Knife knife = Instantiate(knifePrefab);
+        knife.transform.SetPositionAndRotation(throwingPosition + throwingDirection * 0.5f, throwingRotation);
+        knife.Rigidbody.AddForce(knifeThrowingForce * throwingDirection);
+        AudioSource.PlayClipAtPoint(knifeThrowSE, throwingPosition);
+    }
 
+    public override void ActivateAbility()
+    {
+        --KnifeCount;
+        Throw();
     }
 }

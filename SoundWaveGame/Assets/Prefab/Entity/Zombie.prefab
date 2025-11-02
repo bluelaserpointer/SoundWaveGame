@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _movementController: {fileID: 4448847470833232757}
-  _footstepSoundColor: {r: 1, g: 0.40566033, b: 0.40566033, a: 1}
+  _footstepSoundColor: {r: 1, g: 0, b: 0, a: 1}
   _soundType: 1
   _walkingSoundVolume: 5
   _sprintingSoundVolume: 15

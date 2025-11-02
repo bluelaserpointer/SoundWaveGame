@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     float _hp;
     [SerializeField]
+    Ability _ability;
+    [SerializeField]
     Camera _playerCamera;
     [SerializeField]
     vThirdPersonCamera _cameraSystem;
@@ -42,7 +44,7 @@ public class Player : MonoBehaviour
     public bool _controllable;
     //--
     public Camera Camera => _playerCamera;
-    public int KnifeCount => _knifeThrow.KnifeCount;
+    public Ability CurrentAbility => _ability;
     public bool IsDead { get; private set; }
     private void Awake()
     {
@@ -53,9 +55,17 @@ public class Player : MonoBehaviour
     {
         if (Controllable)
         {
+            CheckAbilityAcivation();
             CheckRaycast();
         }
         CheckDeath();
+    }
+    void CheckAbilityAcivation()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            CurrentAbility.TryActivateAbility();
+        }
     }
     void CheckRaycast()
     {

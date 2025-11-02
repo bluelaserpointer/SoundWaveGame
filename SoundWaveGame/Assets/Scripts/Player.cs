@@ -17,17 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     vThirdPersonInput _movementInputSystem;
     [SerializeField]
-    vThirdPersonController _movementController;
-    [SerializeField]
     KnifeThrow _knifeThrow;
-    [SerializeField]
-    float _walkingSoundVolume;
-    [SerializeField]
-    float _sprintingSoundVolume;
-    [SerializeField]
-    float _walkingSoundInterval;
-    [SerializeField]
-    float _sprintingSoundInvertal;
     public bool Controllable {
         get => _controllable;
         set
@@ -54,42 +44,17 @@ public class Player : MonoBehaviour
     public Camera Camera => _playerCamera;
     public int KnifeCount => _knifeThrow.KnifeCount;
     public bool IsDead { get; private set; }
-    bool _lastFrameIsGrounded;
-    float _keepMovedWithoutNoiseTime;
     private void Awake()
     {
         Instance = this;
-        _lastFrameIsGrounded = true;
     }
     private void Update()
     {
         if (Controllable)
         {
-            FootstepSound();
             CheckRaycast();
         }
         CheckDeath();
-    }
-    void FootstepSound()
-    {
-        bool isGrounded = _movementController.isGrounded;
-        bool makeFootstep = isGrounded &&
-            (_movementController.Input != Vector3.zero
-            || !_lastFrameIsGrounded);
-        _lastFrameIsGrounded = isGrounded;
-        if (!makeFootstep)
-        {
-            _keepMovedWithoutNoiseTime = 0;
-            return;
-        }
-        _keepMovedWithoutNoiseTime += Time.deltaTime;
-        bool isSprinting = _movementController.isSprinting;
-        float noiseInterval = isSprinting ? _sprintingSoundInvertal : _walkingSoundInterval;
-        if (_keepMovedWithoutNoiseTime < noiseInterval)
-            return;
-        _keepMovedWithoutNoiseTime = 0;
-        float volume = isSprinting ? _sprintingSoundVolume : _walkingSoundVolume;
-        SoundSource.Generate(transform.position, volume, Color.white, SoundSource.SoundType.Environment);
     }
     void CheckRaycast()
     {

@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour
     //inspector
     [SerializeField]
     ItemManager _itemManager;
-//--
+    //--
 
-public readonly Dictionary<string, List<Item>> stageItems = new();
+    public readonly Dictionary<string, List<Item>> stageItems = new();
     public readonly Dictionary<string, int> collectedItemCounts = new();
 
     public readonly UnityEvent<int> onKnifeAdd = new();

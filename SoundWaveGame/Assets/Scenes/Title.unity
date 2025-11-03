@@ -270,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &72329499
@@ -691,7 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &365061348
@@ -1247,7 +1247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &710180621
@@ -1285,7 +1285,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 340}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &710180623
@@ -1533,7 +1533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &842580133
@@ -2089,7 +2089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &1032574748
@@ -2240,7 +2240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &1091735579
@@ -2497,9 +2497,9 @@ RectTransform:
   m_Father: {fileID: 1112006682}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -21.25}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1154783813
@@ -2656,7 +2656,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1252724136
@@ -2680,7 +2680,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 160, y: 160}
-  m_Spacing: {x: 80, y: 40}
+  m_Spacing: {x: 80, y: 60}
   m_Constraint: 2
   m_ConstraintCount: 2
 --- !u!1 &1252817664
@@ -2719,9 +2719,9 @@ RectTransform:
   m_Father: {fileID: 1112006682}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -238.75}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1252817666
@@ -2870,9 +2870,9 @@ RectTransform:
   m_Father: {fileID: 1112006682}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -166.25}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1267732265
@@ -3268,7 +3268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 2100000, guid: c588912858cd8a5469aa3cb89703b86d, type: 2}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &1376726295
@@ -3419,7 +3419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &1436560779
@@ -3942,7 +3942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &1528376180
@@ -3964,7 +3964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1528376181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4221,7 +4221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 0}
-  hoverMaterial: {fileID: 0}
+  hoverMaterial: {fileID: 2100000, guid: 8d101414ad18df345bb765079b220f78, type: 2}
   normalText: 
   hoverText: Enter
 --- !u!1 &1542294036
@@ -5223,9 +5223,9 @@ RectTransform:
   m_Father: {fileID: 1112006682}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 80, y: -93.75}
   m_SizeDelta: {x: 160, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1919750273

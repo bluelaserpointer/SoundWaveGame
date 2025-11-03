@@ -62,16 +62,10 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
     // 鼠标离开
     public void OnPointerExit(PointerEventData eventData)
     {
-
-        // 从Resources文件夹加载图片
-        Sprite loadedSprite = Resources.Load<Sprite>("Assets/Resources/UIRes/关卡1缩略图.png");
-
-
         // 恢复默认材质
-        if (buttonImage != null && defaultMaterial != null)
+        if (buttonImage != null)
         {
             buttonImage.material = null;
-            buttonImage.sprite = loadedSprite;
             Debug.Log("鼠标离开，材质已恢复为默认材质");
         }
         

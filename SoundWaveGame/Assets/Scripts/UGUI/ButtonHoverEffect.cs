@@ -25,6 +25,10 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private Coroutine animationCoroutine;
     private bool isMouseOver = false;
 
+    [Header("Ring Effect Settings")]
+    public Color ringColor = Color.white; // 白色不透明
+    public float ringWidth = 0.02f;
+    public float ringSpeed = 1.0f; // 调整这个值可以控制圆环扩散速度
 
     void Start()
     {
@@ -52,11 +56,16 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         buttonMaterial = new Material(Shader.Find("UI/ButtonBorder"));
         buttonImage.material = buttonMaterial;
         
-        // 设置初始属性
+        // 设置边框初始属性
         buttonMaterial.SetColor("_BorderColor", Color.clear);
         buttonMaterial.SetFloat("_BorderWidth", borderWidth);
         buttonMaterial.SetFloat("_WaveSpeed", waveSpeed);
         buttonMaterial.SetFloat("_Progress", 0f);
+
+        // 设置圆环属性
+        buttonMaterial.SetColor("_RingColor", ringColor);
+        buttonMaterial.SetFloat("_RingWidth", ringWidth);
+        buttonMaterial.SetFloat("_RingSpeed", ringSpeed);
     }
     
     // 鼠标进入

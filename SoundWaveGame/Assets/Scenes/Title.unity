@@ -272,14 +272,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &72329499
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,14 +699,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &365061348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1263,14 +1261,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &710180621
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,14 +1553,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &842580133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,10 +1984,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 1.5
-  ringCount: 2
+  ringSpeed: 1
 --- !u!1 &964731635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2277,14 +2272,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &1032574748
 GameObject:
   m_ObjectHideFlags: 0
@@ -2435,14 +2429,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &1091735579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2597,10 +2590,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 1.5
-  ringCount: 2
+  ringSpeed: 1
 --- !u!1 &1112006681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2823,9 +2815,8 @@ MonoBehaviour:
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
   ringColor: {r: 1, g: 1, b: 1, a: 1}
-  ringWidth: 0.1
-  ringSpeed: 2
-  ringCount: 1
+  ringWidth: 0.02
+  ringSpeed: 1
 --- !u!1 &1205713121
 GameObject:
   m_ObjectHideFlags: 0
@@ -3187,9 +3178,8 @@ MonoBehaviour:
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
   ringColor: {r: 1, g: 1, b: 1, a: 1}
-  ringWidth: 0.1
-  ringSpeed: 2
-  ringCount: 1
+  ringWidth: 0.02
+  ringSpeed: 1
 --- !u!1 &1267732263
 GameObject:
   m_ObjectHideFlags: 0
@@ -3345,9 +3335,8 @@ MonoBehaviour:
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
   ringColor: {r: 1, g: 1, b: 1, a: 1}
-  ringWidth: 0.1
-  ringSpeed: 2
-  ringCount: 1
+  ringWidth: 0.02
+  ringSpeed: 1
 --- !u!1 &1309457904
 GameObject:
   m_ObjectHideFlags: 0
@@ -3633,14 +3622,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &1376726295
 GameObject:
   m_ObjectHideFlags: 0
@@ -3791,14 +3779,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &1435311696
 GameObject:
   m_ObjectHideFlags: 0
@@ -4391,14 +4378,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &1528376180
 GameObject:
   m_ObjectHideFlags: 0
@@ -4667,14 +4653,13 @@ MonoBehaviour:
   normalText: 
   hoverText: Enter
   borderColor: {r: 1, g: 1, b: 1, a: 1}
-  borderWidth: 0.05
+  borderWidth: 0.02
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
-  ringColor: {r: 1, g: 1, b: 1, a: 0.5}
+  ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
-  ringSpeed: 2
-  ringCount: 4
+  ringSpeed: 1
 --- !u!1 &1542294036
 GameObject:
   m_ObjectHideFlags: 0
@@ -5793,9 +5778,8 @@ MonoBehaviour:
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
   ringColor: {r: 1, g: 1, b: 1, a: 1}
-  ringWidth: 0.1
-  ringSpeed: 2
-  ringCount: 1
+  ringWidth: 0.02
+  ringSpeed: 1
 --- !u!1001 &2013150106
 PrefabInstance:
   m_ObjectHideFlags: 0

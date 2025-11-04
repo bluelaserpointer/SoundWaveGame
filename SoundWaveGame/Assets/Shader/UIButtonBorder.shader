@@ -7,7 +7,12 @@ Shader "UI/ButtonBorder"
         _BorderColor ("Border Color", Color) = (1,1,1,1)
         _BorderWidth ("Border Width", Range(0, 0.2)) = 0.05
         _Progress ("Progress", Range(0, 1)) = 0
-        _WaveSpeed ("Wave Speed", Float) = 2.0
+        
+        // 圆环效果属性
+        _RingColor ("Ring Color", Color) = (1,1,1,1)
+        _RingWidth ("Ring Width", Range(0, 0.1)) = 0.02
+        _RingSpeed ("Ring Speed", Float) = 1.0
+        
         _StencilComp ("Stencil Comparison", Float) = 8
         _Stencil ("Stencil ID", Float) = 0
         _StencilOp ("Stencil Operation", Float) = 0
@@ -63,7 +68,7 @@ Shader "UI/ButtonBorder"
                 float2 texcoord  : TEXCOORD0;
                 float4 vertex   : SV_POSITION;
                 float4 color    : COLOR;
-                float2 localPos : TEXCOORD1;
+                float2 worldPos : TEXCOORD1;
             };
 
             sampler2D _MainTex;
@@ -71,7 +76,12 @@ Shader "UI/ButtonBorder"
             fixed4 _BorderColor;
             float _BorderWidth;
             float _Progress;
-            float _WaveSpeed;
+            
+            // 圆环效果变量
+            fixed4 _RingColor;
+            float _RingWidth;
+            float _RingSpeed;
+            
             float4 _ClipRect;
 
             v2f vert(appdata_t IN)
@@ -80,8 +90,32 @@ Shader "UI/ButtonBorder"
                 OUT.vertex = UnityObjectToClipPos(IN.vertex);
                 OUT.texcoord = IN.texcoord;
                 OUT.color = IN.color * _Color;
-                OUT.localPos = IN.texcoord - float2(0.5, 0.5); // 中心点为(0,0)
+                OUT.worldPos = IN.texcoord;
                 return OUT;
+            }
+
+            // 修正后的圆环效果函数 - 圆环从右上角开始逐渐放大
+            float CalculateRingEffect(float2 uv, float progress)
+            {
+                // 圆心固定在右上角(1,1)
+                float2 center = float2(1, 1);
+                
+                // 计算当前点到圆心的距离
+                float dist = length(uv - center);
+                
+                // 计算按钮对角线长度（从(0,0)到(1,1)）
+                float maxRadius = length(float2(1, 1));
+                
+                // 修正：圆环半径从0逐渐增加到最大半径
+                float currentRadius = (1.0 -progress) * _RingSpeed * maxRadius;
+                
+                // 计算圆环效果 - 确保圆环随着半径增加而显示
+                // 当dist接近currentRadius时显示圆环
+                float ringInner = smoothstep(currentRadius - _RingWidth, currentRadius, dist);
+                float ringOuter = smoothstep(currentRadius, currentRadius + _RingWidth, dist);
+                float ringEffect = ringInner * (1.0 - ringOuter);
+                
+                return ringEffect;
             }
 
             fixed4 frag(v2f IN) : SV_Target
@@ -98,26 +132,32 @@ Shader "UI/ButtonBorder"
                 // 判断是否在边框范围内
                 float isBorder = step(minDist, _BorderWidth);
                 
-                // 计算从左下角到右上角的对角线进度
-                // 左下角(0,0)值为0，右上角(1,1)值为1
-                float diagonalValue = (IN.texcoord.x + IN.texcoord.y) * 0.5;
+                // 计算从左下角到当前点的进度
+                float2 fromBottomLeft = IN.texcoord;
+                float diagonalProgress = (fromBottomLeft.x + fromBottomLeft.y) * 0.5;
                 
-                // 关键修改：使用Progress来控制波浪的传播
-                // 当Progress=0时，wave在大部分区域为0（透明）
-                // 当Progress增加时，wave从左下角开始逐渐变为1（白色）
-                float waveThreshold = _Progress * 1.5; // 调整系数来控制传播速度
-                float wave = smoothstep(waveThreshold - 0.4, waveThreshold, diagonalValue);
+                // 边框波浪效果
+                float waveThreshold = _Progress * 1.5;
+                float wave = smoothstep(waveThreshold - 0.4, waveThreshold, diagonalProgress);
+                
+                // 计算圆环效果
+                float ringEffect = CalculateRingEffect(IN.texcoord, _Progress);
                 
                 // 主纹理颜色
                 fixed4 color = tex2D(_MainTex, IN.texcoord) * IN.color;
                 
-                // 边框颜色（带透明度动画）
+                // 边框颜色
                 fixed4 borderColor = _BorderColor;
                 borderColor.a *= wave * isBorder;
                 
-                // 混合边框和主纹理
+                // 圆环颜色
+                fixed4 ringColor = _RingColor;
+                ringColor.a = ringEffect;
+                
+                // 混合效果
+                color.rgb = lerp(color.rgb, ringColor.rgb, ringColor.a);
                 color.rgb = lerp(color.rgb, borderColor.rgb, borderColor.a);
-                color.a = max(color.a, borderColor.a);
+                color.a = max(color.a, max(ringColor.a, borderColor.a));
                 
                 color.a *= UnityGet2DClipping(IN.texcoord, _ClipRect);
                 

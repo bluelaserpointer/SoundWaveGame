@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BorderTest
+  m_Name: BorderWaveEffectMaterial
   m_Shader: {fileID: 4800000, guid: 71cb26e4428ba1b4cabe82b395969a01, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []

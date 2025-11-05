@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
@@ -41,6 +43,11 @@ public class PauseManager : MonoBehaviour
         }
     }
     
+    void PlayButtonSound()
+    {
+        UISoundManager.Instance.PlayButtonSound();
+    }
+
     public void PauseGame()
     {
         if (isPaused) return;
@@ -66,6 +73,8 @@ public class PauseManager : MonoBehaviour
     
     public void ResumeGame()
     {
+        PlayButtonSound();
+
         if (!isPaused) return;
         
         isPaused = false;
@@ -85,6 +94,7 @@ public class PauseManager : MonoBehaviour
     //重新开始游戏方法
     public void RetryGame()
     {
+        PlayButtonSound();
         // 恢复时间尺度
         Time.timeScale = 1f;
         
@@ -118,6 +128,7 @@ public class PauseManager : MonoBehaviour
 
     public void ReturnToMainMenu()
     {
+        PlayButtonSound();
         Time.timeScale = 1f;
         AudioListener.pause = false;
         SceneManager.LoadScene("Title");
@@ -125,6 +136,7 @@ public class PauseManager : MonoBehaviour
     
     public void QuitGame()
     {
+        PlayButtonSound();
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
         #else

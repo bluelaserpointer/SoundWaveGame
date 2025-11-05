@@ -53,7 +53,7 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         }
 
         // 创建材质实例
-        buttonMaterial = new Material(Shader.Find("UI/ButtonBorder"));
+        buttonMaterial = new Material(Shader.Find("UIButtonBorder"));
         buttonImage.material = buttonMaterial;
         
         // 设置边框初始属性

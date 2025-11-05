@@ -13,8 +13,9 @@ public class PauseManager : MonoBehaviour
     public bool canPause = true;
     
     [Header("Events")]
-    public UnityEvent onGamePaused;
-    public UnityEvent onGameResumed;
+    public UnityEvent onGamePaused; // 暂停事件
+    public UnityEvent onGameResumed; // 恢复游戏事件
+    public UnityEvent onGameRetry; // 重新开始事件
     
     private bool isPaused = false;
     public bool IsPaused => isPaused;
@@ -79,6 +80,25 @@ public class PauseManager : MonoBehaviour
 
         // 重新锁定鼠标光标
         SetCursorState(false);
+    }
+
+    //重新开始游戏方法
+    public void RetryGame()
+    {
+        // 恢复时间尺度
+        Time.timeScale = 1f;
+        
+        // 恢复音频
+        AudioListener.pause = false;
+        
+        // 触发重新开始事件
+        onGameRetry?.Invoke();
+        
+        // 获取当前场景名称并重新加载
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
+        // 注意：重新加载场景后，当前脚本实例会被销毁，新的实例会被创建
+        // 所有游戏状态都会重置到场景初始状态
     }
     
     // 统一的鼠标状态设置方法

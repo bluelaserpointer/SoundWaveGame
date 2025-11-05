@@ -13,7 +13,7 @@ public class BeaconSpawner : Ability
     [SerializeField]
     int _beaconStock;
 
-    public override string Name => "信标";
+    public override string Name => "Beacon";
 
     public override bool IsUssable => _beaconStock > 0;
 

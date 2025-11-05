@@ -32,7 +32,7 @@ public class KnifeThrow : Ability
         }
     }
 
-    public override string Name => "探测刀";
+    public override string Name => "P-Knife";
 
     public override bool IsUssable => _knifeCount > 0 && knifeThrowCD.IsReady;
 

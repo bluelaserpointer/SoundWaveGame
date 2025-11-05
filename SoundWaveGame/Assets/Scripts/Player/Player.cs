@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     Ability _ability;
     [SerializeField]
+    List<Ability> _abilities;
+    [SerializeField]
     Camera _playerCamera;
     [SerializeField]
     vThirdPersonCamera _cameraSystem;
@@ -20,6 +22,13 @@ public class Player : MonoBehaviour
     vThirdPersonInput _movementInputSystem;
     [SerializeField]
     KnifeThrow _knifeThrow;
+
+    public Ability Ability
+    {
+        get => _ability;
+        set => _ability = value;
+    }
+    public List<Ability> Abilities => _abilities;
     public bool Controllable {
         get => _controllable;
         set
@@ -51,14 +60,29 @@ public class Player : MonoBehaviour
         Instance = this;
         GameManager.Instance.onKnifeAdd.AddListener(addition => _knifeThrow.KnifeCount += addition);
     }
+    private void Start()
+    {
+        foreach (Ability ability in Abilities)
+        {
+            AbilitySelectorUI.Instance.AddSlot(ability, () => Ability = ability);
+        }
+    }
     private void Update()
     {
         if (Controllable)
         {
+            CheckAbilitySwitch();
             CheckAbilityAcivation();
             CheckRaycast();
         }
         CheckDeath();
+    }
+    void CheckAbilitySwitch()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            AbilitySelectorUI.Instance.Show(!AbilitySelectorUI.Instance.IsVisible);
+        }
     }
     void CheckAbilityAcivation()
     {

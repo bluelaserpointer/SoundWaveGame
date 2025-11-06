@@ -1,4 +1,4 @@
-Shader "UI/ButtonBorder"
+Shader "UIButtonBorder"
 {
     Properties
     {

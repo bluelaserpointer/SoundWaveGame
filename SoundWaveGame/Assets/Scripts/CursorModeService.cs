@@ -9,8 +9,11 @@ using UnityEngine.Events;
 [DisallowMultipleComponent]
 public sealed class CursorModeService : MonoBehaviour
 {
-
     [SerializeField] private CursorLockMode gameplayLockWhenNoUI = CursorLockMode.Locked; // 视角模式常用 Locked
+
+    [Header("Debug")]
+    [SerializeField]
+    int _debugRequesterCount;
 
     public readonly UnityEvent<bool> onCursorShown = new UnityEvent<bool>();     // true=显示UI光标，false=回到视角
 
@@ -34,7 +37,7 @@ public sealed class CursorModeService : MonoBehaviour
 
     public int CursorRequesterCount => _requesters.Count;
     public static bool RequestCursor => Instance.CursorRequesterCount > 0;
-    // 用 HashSet 防重复；同时清理失效引用
+
     private readonly HashSet<CursorRequestPanel> _requesters = new();
     static bool isShuttingDown;
 
@@ -63,6 +66,7 @@ public sealed class CursorModeService : MonoBehaviour
         bool wasEmpty = CursorRequesterCount == 0;
         _requesters.Add(r);
         if (wasEmpty && CursorRequesterCount > 0) Apply(show: true);
+        _debugRequesterCount = CursorRequesterCount;
     }
 
     public static void Remove(CursorRequestPanel r)
@@ -75,6 +79,7 @@ public sealed class CursorModeService : MonoBehaviour
         if (r == null) return;
         _requesters.Remove(r);
         if (CursorRequesterCount == 0) Apply(show: false);
+        _debugRequesterCount = CursorRequesterCount;
     }
 
     private void Apply(bool show)

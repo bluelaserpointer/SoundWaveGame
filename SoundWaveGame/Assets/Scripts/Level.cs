@@ -25,6 +25,5 @@ public class Level : MonoBehaviour
         _itemManager.Init();
         Player player = Instantiate(_playerPrefab);
         player.transform.SetPositionAndRotation(_playerStartAnchor.position, _playerStartAnchor.rotation);
-        player.Controllable = true;
     }
 }

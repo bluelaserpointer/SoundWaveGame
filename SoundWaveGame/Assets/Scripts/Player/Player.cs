@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     public List<Ability> Abilities => _abilities;
     public bool Controllable {
         get => _controllable;
-        set
+        private set
         {
             _controllable = value;
             if (_controllable)
@@ -62,12 +62,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         CursorModeService.Instance.onCursorShown.AddListener(cond => _movementInputSystem.readCameraRotationInput = !cond);
-        PauseManager.Instance.onGamePaused.AddListener(cond => Controllable = !cond);
+        GameManager.Instance.onGameEnd.AddListener(UpdateControllableState);
+        PauseManager.Instance.onGamePaused.AddListener(_ => UpdateControllableState());
         AbilitySelectorUI.Instance.Clear();
         foreach (Ability ability in Abilities)
         {
             AbilitySelectorUI.Instance.AddSlot(ability, () => Ability = ability);
         }
+        UpdateControllableState();
     }
     private void Update()
     {
@@ -111,6 +113,12 @@ public class Player : MonoBehaviour
             }
         }
         */
+    }
+    public void UpdateControllableState()
+    {
+        Controllable =
+            !GameManager.Instance.IsGameEnd &&
+            !PauseManager.Instance.IsPaused;
     }
     public void RestoreAbilityUsage(Ability.AbilityType abilityType, int count)
     {

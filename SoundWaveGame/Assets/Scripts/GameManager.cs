@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public static string CurrentLevelName { get; private set; }
+    public readonly UnityEvent onGameEnd = new();
+    public bool IsGameEnd { get; private set; }
     private void Awake()
     {
         Instance = this;
@@ -76,11 +78,13 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         GameOverUI.Instance.Show(true);
-        Player.Instance.Controllable = false;
+        IsGameEnd = true;
+        onGameEnd.Invoke();
     }
     public void GameClear()
     {
         GameClearUI.Instance.Show(true);
-        Player.Instance.Controllable = false;
+        IsGameEnd = true;
+        onGameEnd.Invoke();
     }
 }

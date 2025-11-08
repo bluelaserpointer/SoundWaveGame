@@ -5,7 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = nameof(StaticResources))]
 public class StaticResources : ScriptableObject
 {
+    [Header("UI SFX")]
+    [SerializeField]
+    AudioClip _buttonClickSound;
+    [SerializeField]
+    AudioClip _panelSwitchSound;
+    [SerializeField]
+    AudioClip _notificationSound;
 
+    public AudioClip ButtonClickSound => _buttonClickSound;
+    public AudioClip PanelSwitchSound => _panelSwitchSound;
+    public AudioClip NotificationSound => _notificationSound;
     public static StaticResources Instance {
         get
         {

@@ -31,28 +31,4 @@ public class UISoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-    public void PlayButtonSound()
-    {
-        if (buttonClickSound != null)
-        {
-            audioSource.PlayOneShot(buttonClickSound);
-        }
-    }
-    
-    public void PlayPanelSwitchSound()
-    {
-        if (panelSwitchSound != null)
-        {
-            audioSource.PlayOneShot(panelSwitchSound);
-        }
-    }
-    
-    public void PlayNotificationSound()
-    {
-        if (notificationSound != null)
-        {
-            audioSource.PlayOneShot(notificationSound);
-        }
-    }
 }

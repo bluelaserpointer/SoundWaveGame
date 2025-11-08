@@ -2209,14 +2209,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1490390766}
         m_TargetAssemblyTypeName: LevelMenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel2
-        m_Mode: 1
+        m_MethodName: LoadLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Level1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1032574751
@@ -3424,14 +3424,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1490390766}
         m_TargetAssemblyTypeName: LevelMenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel1
-        m_Mode: 1
+        m_MethodName: LoadLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Dock Thing
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1376726298
@@ -3791,16 +3791,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ce926b8d8bc7e468711288b0d0278f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level1SceneName: Dock Thing
-  level2SceneName: Dock Thing
-  level3SceneName: Dock Thing
-  level4SceneName: Dock Thing
-  level5SceneName: Dock Thing
-  level6SceneName: Dock Thing
-  level7SceneName: Dock Thing
-  level8SceneName: Dock Thing
-  level9SceneName: Dock Thing
-  level10SceneName: Dock Thing
 --- !u!1 &1498921851
 GameObject:
   m_ObjectHideFlags: 0

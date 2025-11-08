@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [DisallowMultipleComponent]
 public class Player : MonoBehaviour
 {
-    public static Player Instance { get; private set; }
-    //inspector
     [SerializeField]
     float _hp;
     [SerializeField]
@@ -23,6 +22,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     KnifeThrow _knifeThrow;
 
+    public static Player Instance { get; private set; }
     public Ability Ability
     {
         get => _ability;
@@ -51,19 +51,19 @@ public class Player : MonoBehaviour
         }
     }
     public bool _controllable;
-    //--
     public Camera Camera => _playerCamera;
     public Ability CurrentAbility => _ability;
     public bool IsDead { get; private set; }
     private void Awake()
     {
         Instance = this;
-        GameManager.Instance.onKnifeAdd.AddListener(addition => _knifeThrow.KnifeCount += addition);
-        CursorModeService.Instance.onCursorShown.AddListener(cond => _movementInputSystem.readCameraRotationInput = !cond);
-        PauseManager.Instance.onGamePaused.AddListener(cond => Controllable = !cond);
+        _cameraSystem.transform.SetParent(null);
     }
     private void Start()
     {
+        CursorModeService.Instance.onCursorShown.AddListener(cond => _movementInputSystem.readCameraRotationInput = !cond);
+        PauseManager.Instance.onGamePaused.AddListener(cond => Controllable = !cond);
+        AbilitySelectorUI.Instance.Clear();
         foreach (Ability ability in Abilities)
         {
             AbilitySelectorUI.Instance.AddSlot(ability, () => Ability = ability);
@@ -111,6 +111,12 @@ public class Player : MonoBehaviour
             }
         }
         */
+    }
+    public void RestoreAbilityUsage(Ability.AbilityType abilityType, int count)
+    {
+        //TODO: 规范化每个技能的使用次数恢复
+        //_abilities.Find(ability => ability.Type == abilityType);
+        _knifeThrow.KnifeCount += count;
     }
     public void Damage(float damage)
     {

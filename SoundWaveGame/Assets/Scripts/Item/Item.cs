@@ -10,8 +10,8 @@ public class Item : MonoBehaviour, IInteractable
     [SerializeField]
     string _identifier;
 
-    public static Dictionary<string, List<Item>> StageItems => GameManager.Instance.stageItems;
-    public static Dictionary<string, int> CollectedItemCounts => GameManager.Instance.collectedItemCounts;
+    public static Dictionary<string, List<Item>> StageItems => ItemManager.Instance.stageItems;
+    public static Dictionary<string, int> CollectedItemCounts => ItemManager.Instance.collectedItemCounts;
 
     public string Identifier => _identifier;
     public void Init()

@@ -7,6 +7,9 @@ using UnityEngine;
 public class ItemManager
 {
     public static ItemManager Instance { get; private set; }
+
+    public readonly Dictionary<string, List<Item>> stageItems = new();
+    public readonly Dictionary<string, int> collectedItemCounts = new();
     public void Init()
     {
         Instance = this;

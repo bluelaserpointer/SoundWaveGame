@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b615e4eeb44ea49be00a9331880754, type: 3}
   m_Name: StaticResources
   m_EditorClassIdentifier: 
+  _buttonClickSound: {fileID: 8300000, guid: a22007791dd75304fb669e93d82f017a, type: 3}
+  _panelSwitchSound: {fileID: 8300000, guid: a22007791dd75304fb669e93d82f017a, type: 3}
+  _notificationSound: {fileID: 8300000, guid: a22007791dd75304fb669e93d82f017a, type: 3}

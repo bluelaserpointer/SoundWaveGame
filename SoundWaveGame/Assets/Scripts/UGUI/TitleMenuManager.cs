@@ -20,7 +20,7 @@ public class TitleMenuManager : MonoBehaviour
     // 按钮点击音效
     void PlayButtonSound()
     {
-        UISoundManager.Instance.PlayButtonSound();
+        StaticResources.Instance.ButtonClickSound.Play2dSound();
     }
 
     // === 主菜单按钮功能 ===
@@ -72,10 +72,9 @@ public class TitleMenuManager : MonoBehaviour
     {
         if (mainMenuCanvas != null)
             mainMenuCanvas.SetActive(true);
-            UISoundManager.Instance.PlayPanelSwitchSound(); // 然后播放音效
         if (levelSelectionCanvas != null)
             levelSelectionCanvas.SetActive(false);
-            UISoundManager.Instance.PlayPanelSwitchSound(); // 然后播放音效
+        StaticResources.Instance.PanelSwitchSound.Play2dSound();
     }
     
     // 显示关卡选择
@@ -83,10 +82,9 @@ public class TitleMenuManager : MonoBehaviour
     {
         if (mainMenuCanvas != null)
             mainMenuCanvas.SetActive(false);
-            UISoundManager.Instance.PlayPanelSwitchSound(); // 然后播放音效
         if (levelSelectionCanvas != null)
             levelSelectionCanvas.SetActive(true);
-            UISoundManager.Instance.PlayPanelSwitchSound(); // 然后播放音效
+        StaticResources.Instance.PanelSwitchSound.Play2dSound();
     }
 
 }

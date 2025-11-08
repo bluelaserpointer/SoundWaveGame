@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 [DisallowMultipleComponent]
 public class KnifeThrow : Ability
@@ -34,6 +33,7 @@ public class KnifeThrow : Ability
     public override string UsageText => KnifeCount.ToString();
 
     public override string Name => "P-Knife";
+    public override AbilityType Type => AbilityType.Knife;
 
     public override bool IsUssable => _knifeCount > 0 && knifeThrowCD.IsReady;
 

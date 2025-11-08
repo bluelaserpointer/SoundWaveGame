@@ -14,8 +14,8 @@ public class BeaconSpawner : Ability
     int _beaconStock;
 
     public override string Name => "Beacon";
-
     public override bool IsUssable => _beaconStock > 0;
+    public override AbilityType Type => AbilityType.Beacon;
     public override string UsageText => _beaconStock.ToString();
 
     public int BeaconStock

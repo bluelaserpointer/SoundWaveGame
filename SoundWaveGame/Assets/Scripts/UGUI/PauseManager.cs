@@ -16,8 +16,7 @@ public class PauseManager : MonoBehaviour
     
     [Header("Events")]
     public UnityEvent<bool> onGamePaused; // 暂停状态切换
-    public UnityEvent onGameRetry; // 重新开始事件
-    
+
     public static PauseManager Instance { get; private set; }
     private bool isPaused = false;
     public bool IsPaused => isPaused;
@@ -61,7 +60,7 @@ public class PauseManager : MonoBehaviour
     
     void PlayButtonSound()
     {
-        UISoundManager.Instance.PlayButtonSound();
+        StaticResources.Instance.ButtonClickSound.Play2dSound();
     }
 
     public void PauseGame()
@@ -104,21 +103,8 @@ public class PauseManager : MonoBehaviour
     //重新开始游戏方法
     public void RetryGame()
     {
-        PlayButtonSound();
-        // 恢复时间尺度
-        Time.timeScale = 1f;
-        
-        // 恢复音频
-        AudioListener.pause = false;
-        
-        // 触发重新开始事件
-        onGameRetry?.Invoke();
-        
-        // 获取当前场景名称并重新加载
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
-        // 注意：重新加载场景后，当前脚本实例会被销毁，新的实例会被创建
-        // 所有游戏状态都会重置到场景初始状态
+        ResumeGame();
+        GameManager.Instance.ResetLevel();
     }
 
     public void ReturnToMainMenu()

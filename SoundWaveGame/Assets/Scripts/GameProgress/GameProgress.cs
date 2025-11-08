@@ -13,6 +13,8 @@ public abstract class GameProgress : MonoBehaviour
     public bool IsComplete => GetProgressRatio() == 1;
     public bool IsCompleted { get; private set; }
 
+    public readonly UnityEvent onStateChange = new();
+    public abstract string StateText { get; }
     public void Complete()
     {
         if (IsCompleted)

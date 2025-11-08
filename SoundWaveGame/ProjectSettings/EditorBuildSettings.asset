@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Title.unity
     guid: 071cb3127f02623488024c16441a884f
   - enabled: 1
+    path: Assets/Scenes/System.unity
+    guid: fe9b6cf2cb35ac548b51537573d31990
+  - enabled: 1
     path: Assets/Scenes/Dock Thing.unity
     guid: f4fc660ad7cf6eb4eb8cd6d109f7608e
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 4179583d3ffdce6499322c026368eb94
   m_configObjects: {}

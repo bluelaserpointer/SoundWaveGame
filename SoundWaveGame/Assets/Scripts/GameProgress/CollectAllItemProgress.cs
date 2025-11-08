@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -9,16 +8,13 @@ public class CollectAllItemProgress : GameProgress
     [SerializeField]
     string _targetItemIdentifier;
 
-    [Header("UGUI")]
-    [SerializeField]
-    TextMeshProUGUI _progressText;
-
     [Header("Debug")]
     [SerializeField]
     int _collectedCount;
     [SerializeField]
     int _requiredCount;
 
+    public override string StateText => $"{CollectedCount} / {RequiredCount}";
     public int CollectedCount => _collectedCount;
     public int RequiredCount => _requiredCount;
     private void Start()
@@ -41,13 +37,9 @@ public class CollectAllItemProgress : GameProgress
             {
                 Complete();
             }
-            UpdateUI();
+            onStateChange.Invoke();
         });
-        UpdateUI();
-    }
-    public void UpdateUI()
-    {
-        _progressText.text = $"{CollectedCount} / {RequiredCount}";
+        onStateChange.Invoke();
     }
     public override float GetProgressRatio()
     {

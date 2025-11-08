@@ -67,7 +67,7 @@ public sealed class CursorModeService : MonoBehaviour
 
     public static void Remove(CursorRequestPanel r)
     {
-        if (isShuttingDown || Instance == null) return;
+        if (isShuttingDown ||Instance == null || !Instance.gameObject.scene.isLoaded) return;
         Instance.remove_internal(r);
     }
     private void remove_internal(CursorRequestPanel r)

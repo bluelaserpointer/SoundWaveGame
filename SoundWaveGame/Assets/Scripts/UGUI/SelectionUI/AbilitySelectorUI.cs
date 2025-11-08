@@ -38,6 +38,18 @@ public class AbilitySelectorUI : MonoBehaviour
             }
         }
     }
+    public void Clear()
+    {
+        List<Transform> children = new List<Transform>();
+        foreach (Transform eachChild in _slotParent)
+        {
+            children.Add(eachChild);
+        }
+        foreach (Transform eachChild in children)
+        {
+            Destroy(eachChild.gameObject);
+        }
+    }
     public void AddSlot(Ability ability, Action selectedAction)
     {
         AbilitySlotUI slot = Instantiate(_slotUITemplate, _slotParent);

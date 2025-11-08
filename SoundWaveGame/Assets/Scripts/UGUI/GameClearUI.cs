@@ -19,21 +19,25 @@ public class GameClearUI : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        _retryButton.onClick.AddListener(() => GameManager.Instance.Retry());
+        _retryButton.onClick.AddListener(() =>
+        {
+            Show(false);
+            GameManager.Instance.ResetLevel();
+        });
         // 为返回主菜单按钮添加点击事件
         _titleButton.onClick.AddListener(() => BackToTitle());
         // 为退出按钮添加点击事件
         _quitButton.onClick.AddListener(() => QuitGame());
 
     }
-    public void Show()
+    public void Show(bool cond)
     {
-        _graphicRoot.SetActive(true);
+        _graphicRoot.SetActive(cond);
     }
     // 返回主菜单的方法
     private void BackToTitle()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Title");
+        GameManager.Instance.BackToTile();
     }
 
     // 退出游戏的方法

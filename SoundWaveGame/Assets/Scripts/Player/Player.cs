@@ -26,7 +26,11 @@ public class Player : MonoBehaviour
     public Ability Ability
     {
         get => _ability;
-        set => _ability = value;
+        set
+        {
+            _ability = value;
+            PlayerStatsUI.Instance.UpdateAbilityUsageText();
+        }
     }
     public List<Ability> Abilities => _abilities;
     public bool Controllable {

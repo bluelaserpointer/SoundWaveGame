@@ -8,14 +8,14 @@ public class PlayerStatsUI : MonoBehaviour
 {
     public static PlayerStatsUI Instance { get; private set; }
     [SerializeField]
-    TextMeshProUGUI _knifeCountText;
+    TextMeshProUGUI _abilityUsageText;
 
     private void Awake()
     {
         Instance = this;
     }
-    public void UpdateKnifeCount(int count)
+    public void UpdateAbilityUsageText()
     {
-        _knifeCountText.text = count.ToString();
+        _abilityUsageText.text = Player.Instance.Ability.UsageText;
     }
 }

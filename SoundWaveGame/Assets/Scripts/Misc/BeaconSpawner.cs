@@ -16,6 +16,7 @@ public class BeaconSpawner : Ability
     public override string Name => "Beacon";
 
     public override bool IsUssable => _beaconStock > 0;
+    public override string UsageText => _beaconStock.ToString();
 
     public int BeaconStock
     {
@@ -23,6 +24,7 @@ public class BeaconSpawner : Ability
         set
         {
             _beaconStock = value;
+            PlayerStatsUI.Instance.UpdateAbilityUsageText();
         }
     }
     public override void ActivateAbility()

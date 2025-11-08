@@ -5254,7 +5254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71e32df7409bb04794a4b7a8222ca6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cursorModeService: {fileID: 0}
 --- !u!4 &246271181
 Transform:
   m_ObjectHideFlags: 0
@@ -27656,7 +27655,7 @@ GameObject:
   - component: {fileID: 1174737169}
   - component: {fileID: 1174737168}
   m_Layer: 5
-  m_Name: KnifeCountText
+  m_Name: AbilityUsageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34696,7 +34695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecaf2efca66eea24abd1828982236f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _knifeCountText: {fileID: 1174737168}
+  _abilityUsageText: {fileID: 1174737168}
 --- !u!4 &1469856512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 436916, guid: 287711fb95cdc004b814e53a055b4b1e, type: 3}
@@ -45208,7 +45207,7 @@ GameObject:
   - component: {fileID: 1948379151}
   - component: {fileID: 1948379150}
   m_Layer: 5
-  m_Name: KnifeCounter
+  m_Name: AbilityUsage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

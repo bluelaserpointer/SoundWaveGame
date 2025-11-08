@@ -28,9 +28,10 @@ public class KnifeThrow : Ability
         set
         {
             _knifeCount = value;
-            PlayerStatsUI.Instance.UpdateKnifeCount(value);
+            PlayerStatsUI.Instance.UpdateAbilityUsageText();
         }
     }
+    public override string UsageText => KnifeCount.ToString();
 
     public override string Name => "P-Knife";
 

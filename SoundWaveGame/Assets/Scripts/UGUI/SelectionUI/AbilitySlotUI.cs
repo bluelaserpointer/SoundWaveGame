@@ -35,7 +35,6 @@ public class AbilitySlotUI : MonoBehaviour
             {
                 if (!_isSelected)
                 {
-                    Debug.Log("Slot select");
                     (value ? _onSelected : _onDeselected).Invoke();
                 }
                 _isSelected = value;
@@ -53,8 +52,8 @@ public class AbilitySlotUI : MonoBehaviour
     {
         Button button = GetComponent<Button>();
         button.onClick.AddListener(() => {
-            Debug.Log("button click");
             selector.Select(this);
+            selector.Show(false);
         });
         IsSelected = false;
     }

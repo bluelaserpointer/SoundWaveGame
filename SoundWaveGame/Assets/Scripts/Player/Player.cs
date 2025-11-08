@@ -36,15 +36,11 @@ public class Player : MonoBehaviour
             _controllable = value;
             if (_controllable)
             {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
                 _cameraSystem.enabled = true;
                 _movementInputSystem.enabled = true;
             }
             else
             {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
                 _cameraSystem.enabled = false;
                 _movementInputSystem.enabled = false;
             }
@@ -59,6 +55,8 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         GameManager.Instance.onKnifeAdd.AddListener(addition => _knifeThrow.KnifeCount += addition);
+        CursorModeService.Instance.onCursorShown.AddListener(cond => _movementInputSystem.readCameraRotationInput = !cond);
+        PauseManager.Instance.onGamePaused.AddListener(cond => Controllable = !cond);
     }
     private void Start()
     {
@@ -86,6 +84,8 @@ public class Player : MonoBehaviour
     }
     void CheckAbilityAcivation()
     {
+        if (CursorModeService.RequestCursor)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
             CurrentAbility.TryActivateAbility();

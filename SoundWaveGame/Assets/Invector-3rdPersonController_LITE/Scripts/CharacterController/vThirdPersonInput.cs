@@ -14,6 +14,7 @@ namespace Invector.vCharacterController
         public KeyCode sprintInput = KeyCode.LeftShift;
 
         [Header("Camera Input")]
+        public bool readCameraRotationInput = true;
         public string rotateCameraXInput = "Mouse X";
         public string rotateCameraYInput = "Mouse Y";
 
@@ -107,10 +108,13 @@ namespace Invector.vCharacterController
             if (tpCamera == null)
                 return;
 
-            var Y = Input.GetAxis(rotateCameraYInput);
-            var X = Input.GetAxis(rotateCameraXInput);
+            if (readCameraRotationInput)
+            {
+                var Y = Input.GetAxis(rotateCameraYInput);
+                var X = Input.GetAxis(rotateCameraXInput);
 
-            tpCamera.RotateCamera(X, Y);
+                tpCamera.RotateCamera(X, Y);
+            }
         }
 
         protected virtual void StrafeInput()

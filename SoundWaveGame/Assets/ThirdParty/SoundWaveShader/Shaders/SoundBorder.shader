@@ -52,6 +52,8 @@
             {
                 float2 screenUV = i.vertex.xy / _ScreenParams.xy;
                 float depth = tex2D(_CameraDepthTexture, screenUV);
+                
+                float3 receivedBorderColor = float3(0, 0, 0);
                 for (int id = 0; id < _SoundSourceCount; ++id) {
                     float soundDistance = length(_SoundSourcePositions[id] - i.worldPosition);
                     float soundVolume = _SoundSourceVolumes[id];
@@ -59,10 +61,14 @@
                     float borderDistance = min(soundLifeTime * SOUND_SPEED_FACTOR, soundVolume) - soundDistance;
                     if (borderDistance <= 0)
                         continue;
-                    if (soundLifeTime * SOUND_SPEED_FACTOR < soundVolume && borderDistance < SOUND_BORDER_SCALE * (1 - soundLifeTime * SOUND_SPEED_FACTOR / soundVolume)) //edge of sound wave
-                        return float4(_SoundColors[id], 1);
+                    float lineWidth = SOUND_BORDER_SCALE * (1 - soundLifeTime * SOUND_SPEED_FACTOR / soundVolume);
+                    if (lineWidth > 0 && borderDistance < lineWidth) //edge of sound wave
+                    {
+                        float alpha = pow(1.0 - borderDistance / lineWidth, 3.0);
+                        receivedBorderColor = max(receivedBorderColor, _SoundColors[id] * alpha);
+                    }
                 }
-                return float4(0, 0, 0, 0);
+                return float4(receivedBorderColor, 1);
             }
             ENDCG
         }

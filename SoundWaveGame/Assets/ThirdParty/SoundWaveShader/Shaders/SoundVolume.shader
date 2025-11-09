@@ -59,12 +59,12 @@
                     float soundDistance = length(_SoundSourcePositions[id] - i.worldPosition);
                     float soundVolume = _SoundSourceVolumes[id];
                     float soundLifeTime = _SoundSourceLifeTimes[id];
-                    float borderDistance = min(soundLifeTime * SOUND_SPEED_FACTOR, soundVolume) - soundDistance;
+                    float borderDistance = min(soundVolume, soundLifeTime * SOUND_SPEED_FACTOR) - soundDistance;
                     if (borderDistance <= 0)
                         continue;
-                    float falloff = 0.2 / (borderDistance + 1.0) + 0.05 * (1.0 - clamp(borderDistance / 10.0, 0.0, 1.0));
+                    float falloff = 1 - pow(1 - saturate(borderDistance / soundVolume), 2.0);
                     float t = clamp(soundLifeTime / MAX_SOUND_LIFE_TIME, 0.0, 1.0);
-                    float alpha = 5 * falloff * (1.0 - pow(t, 6.0));
+                    float alpha = 5 * falloff * (1.0 - pow(t, 2.0));
                     receivedVolumeColor = max(receivedVolumeColor, _SoundColors[id] * alpha);
                 }
                 return float4(receivedVolumeColor, 1);

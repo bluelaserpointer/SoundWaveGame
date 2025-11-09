@@ -91,8 +91,8 @@
 				}
 				//border line
 				float3 borderColor = tex2D(_SoundBordersTexture, i.texcoord);
-				if (borderColor.r > 0 || borderColor.g > 0 || borderColor.b > 0)
-					return float4(borderColor, 1);
+				//if (borderColor.r > 0 || borderColor.g > 0 || borderColor.b > 0)
+					//return float4(borderColor, 1);
 				//else, test if this fragment is on an outline
 				float halfScaleFloor = floor(_Scale * 0.5);
 				float halfScaleCeil = ceil(_Scale * 0.5);
@@ -145,9 +145,9 @@
 				float edgeNormal = sqrt(dot(normalFiniteDifference0, normalFiniteDifference0) + dot(normalFiniteDifference1, normalFiniteDifference1));
 				//not outline returns backgroud color
 				if (edgeDepth <= depthThreshold && edgeNormal <= _NormalThreshold)
-					return _BackgroundColor;
+					return float4(max(borderColor, _BackgroundColor.rgb), 1);
 				//outline returns sound volume color
-				return float4(tex2D(_SoundVolumesTexture, i.texcoord).rgb, 1);
+				return float4(max(borderColor, tex2D(_SoundVolumesTexture, i.texcoord).rgb), 1);
 			}
             ENDCG
         }

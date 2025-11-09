@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shaderToTextures:
   - textureName: _CameraNormalsTexture
-    shader: {fileID: 4800000, guid: 95d6144eab187a34b929151454e2969d, type: 3}
+    shader: {fileID: 4800000, guid: 676d2680b5c8c4144bb691a3b31693d9, type: 3}
     replacementTag: RenderType
     renderTextureFormat: 0
     filterMode: 0

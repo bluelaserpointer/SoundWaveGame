@@ -23,12 +23,15 @@ public class GameManager : MonoBehaviour
         //TODO: 卸载当前关卡场景（如果有关卡内跳转其它关卡）
         CurrentLevelName = sceneName;
         // 首先加载System场景（包含GameManager本体）
+        SceneManager.LoadScene("System", LoadSceneMode.Single);
+        /*
         // 如果System场景已经加载，则只加载关卡
         Scene systemScene = SceneManager.GetSceneByName("System");
         if (!systemScene.isLoaded)
         {
             SceneManager.LoadScene("System", LoadSceneMode.Single);
         }
+        */
     }
 
     private IEnumerator LoadLevelAsync(string sceneName)
@@ -46,6 +49,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetLevel()
     {
+        LoadLevel(CurrentLevelName);
+        //以后尝试只更新关卡部分
+        /*
         if (string.IsNullOrEmpty(CurrentLevelName))
         {
             Debug.LogWarning("No level loaded to reset.");
@@ -53,6 +59,7 @@ public class GameManager : MonoBehaviour
         }
 
         Instance.StartCoroutine(Instance.ReloadLevelAsync());
+        */
     }
 
     private IEnumerator ReloadLevelAsync()

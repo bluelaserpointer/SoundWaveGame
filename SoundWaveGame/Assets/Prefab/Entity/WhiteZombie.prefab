@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8429878965524808189}
   - component: {fileID: 8429878965524808187}
   m_Layer: 0
-  m_Name: Zombie
+  m_Name: WhiteZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3fe24eda99cf34e862a3385dc9e4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2708466474792098096}
   useRootMotion: 0
   rotateByWorld: 0
   useContinuousSprint: 1
@@ -121,6 +122,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3f8cf0044b2c840abf1b38df905c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _screamAnchor: {fileID: 0}
+  _screamInterval:
+    requiredTime: 0
+  _screamSoundColor: {r: 0, g: 0, b: 0, a: 0}
+  _screamVolume: 0
+  _singleSoundMaxChaseTime: 0
 --- !u!1001 &8429878965124539553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -186,6 +193,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae8f45e09c32764f8d4e9d8c590e84b, type: 3}
+--- !u!95 &2708466474792098096 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: dae8f45e09c32764f8d4e9d8c590e84b, type: 3}
+  m_PrefabInstance: {fileID: 8429878965124539553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8319920083244958538 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dae8f45e09c32764f8d4e9d8c590e84b, type: 3}

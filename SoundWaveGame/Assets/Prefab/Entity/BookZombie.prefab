@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4448847470833232757}
   - component: {fileID: 4448847470833232758}
   m_Layer: 0
-  m_Name: Zombie
+  m_Name: BookZombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,6 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b3fe24eda99cf34e862a3385dc9e4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 7842999637205385784}
   useRootMotion: 0
   rotateByWorld: 0
   useContinuousSprint: 1
@@ -349,5 +350,10 @@ MonoBehaviour:
 --- !u!4 &4195035197518436418 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 68d59539aed38464ab78bbd5725301c8, type: 3}
+  m_PrefabInstance: {fileID: 4448847471504113577}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7842999637205385784 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 68d59539aed38464ab78bbd5725301c8, type: 3}
   m_PrefabInstance: {fileID: 4448847471504113577}
   m_PrefabAsset: {fileID: 0}

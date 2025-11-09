@@ -6,6 +6,9 @@ namespace Invector.vCharacterController
     {
         #region Inspector Variables
 
+        [SerializeField]
+        internal Animator animator;
+
         [Header("- Movement")]
 
         [Tooltip("Turn off if you have 'in place' animations and use this values above to move the character, or use with root motion as extra speed")]
@@ -58,7 +61,6 @@ namespace Invector.vCharacterController
 
         #region Components
 
-        internal Animator animator;
         internal Rigidbody _rigidbody;                                                      // access the Rigidbody component
         internal PhysicMaterial frictionPhysics, maxFrictionPhysics, slippyPhysics;         // create PhysicMaterial for the Rigidbody
         internal CapsuleCollider _capsuleCollider;                                          // access CapsuleCollider information
@@ -109,7 +111,6 @@ namespace Invector.vCharacterController
 
         public void Init()
         {
-            animator = GetComponent<Animator>();
             animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
 
             // slides the character through walls and edges

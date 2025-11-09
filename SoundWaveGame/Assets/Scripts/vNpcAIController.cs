@@ -21,7 +21,6 @@ namespace Invector.vCharacterController
 
         void Start()
         {
-            animator = GetComponentInChildren<Animator>();
             agent = GetComponent<NavMeshAgent>();
             agent.updateRotation = false;   // 旋转交给父类（动画/旋转系统）
             agent.updatePosition = true;    // 位置由NavMesh驱动

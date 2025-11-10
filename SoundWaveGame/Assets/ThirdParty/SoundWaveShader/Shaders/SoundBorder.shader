@@ -61,10 +61,16 @@
                     float borderDistance = min(soundLifeTime * SOUND_SPEED_FACTOR, soundVolume) - soundDistance;
                     if (borderDistance <= 0)
                         continue;
+                    // 使用 soundDistance / soundVolume 作为概率决定是否跳过 ====
+                    float prob = (1 - pow(soundLifeTime / MAX_SOUND_LIFE_TIME, 6.0)) * 0.75;
+                    // 利用伪随机函数（例如 hash2D）生成随机值
+                    float rand = frac(sin(dot(i.worldPosition + id * 12.345, float2(12.9898,78.233))) * 43758.5453);
+                    if (rand > prob)
+                        continue; // 概率不通过则跳过涂色
                     float lineWidth = SOUND_BORDER_SCALE * (1 - soundLifeTime * SOUND_SPEED_FACTOR / soundVolume);
                     if (lineWidth > 0 && borderDistance < lineWidth) //edge of sound wave
                     {
-                        float alpha = pow(1.0 - borderDistance / lineWidth, 3.0);
+                        float alpha = 1- pow(abs(0.5 - borderDistance / lineWidth) * 2, 2.0);
                         receivedBorderColor = max(receivedBorderColor, _SoundColors[id] * alpha);
                     }
                 }

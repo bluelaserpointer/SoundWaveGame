@@ -49,7 +49,6 @@
             #define MAX_SOUND_LIFE_TIME 4 //warning: need to be same value with "SoundSouce.cs" script
             #define SOUND_SPEED_FACTOR 4
             #define SOUND_BORDER_SCALE 0.1
-
             fixed4 frag(v2f i) : SV_Target
             {
                 float3 receivedVolumeColor = _ConstantColor;
@@ -62,6 +61,12 @@
                     float borderDistance = min(soundVolume, soundLifeTime * SOUND_SPEED_FACTOR) - soundDistance;
                     if (borderDistance <= 0)
                         continue;
+                    // 使用 soundDistance / soundVolume 作为概率决定是否跳过 ====
+                    float prob = (1 - pow(saturate(soundDistance / soundVolume), 6.0)) * 0.25;
+                    // 利用伪随机函数（例如 hash2D）生成随机值
+                    float rand = frac(sin(dot(i.worldPosition + id * 12.345, float2(12.9898,78.233))) * 43758.5453);
+                    if (rand > prob)
+                        continue; // 概率不通过则跳过涂色
                     float falloff = 1 - pow(1 - saturate(borderDistance / soundVolume), 2.0);
                     float t = clamp(soundLifeTime / MAX_SOUND_LIFE_TIME, 0.0, 1.0);
                     float alpha = 5 * falloff * (1.0 - pow(t, 2.0));

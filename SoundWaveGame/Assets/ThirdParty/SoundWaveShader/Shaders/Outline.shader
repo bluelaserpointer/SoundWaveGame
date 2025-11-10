@@ -56,6 +56,8 @@
 				return float4(color, alpha);
 			}
 
+			float LinEye(float d) { return LinearEyeDepth(d); }              // 或 LinearEyeDepth(d, _ZBufferParams)
+
 			// Both the Varyings struct and the Vert shader are copied
 			// from StdLib.hlsl included above, with some modifications.
 			struct Varyings
@@ -89,13 +91,12 @@
 				case 4:
 					return tex2D(_SoundVolumesTexture, i.texcoord);
 				}
-				//border line
-				float3 borderColor = tex2D(_SoundBordersTexture, i.texcoord);
-				//if (borderColor.r > 0 || borderColor.g > 0 || borderColor.b > 0)
-					//return float4(borderColor, 1);
-				//else, test if this fragment is on an outline
-				float halfScaleFloor = floor(_Scale * 0.5);
-				float halfScaleCeil = ceil(_Scale * 0.5);
+				float lin01 = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.texcoord));
+				// 根据深度调节采样半径：远处放大
+				float adaptiveScale = _Scale * lerp(1.0, 25.0, lin01);
+				//test if this fragment is on an outline
+				float halfScaleFloor = floor(adaptiveScale * 0.5);
+				float halfScaleCeil = ceil(adaptiveScale * 0.5);
 
 				// Sample the pixels in an X shape, roughly centered around i.texcoord.
 				// As the _CameraDepthTexture and _CameraNormalsTexture default samplers
@@ -129,6 +130,7 @@
 				// Modulate the threshold by the existing depth value;
 				// pixels further from the screen will require smaller differences
 				// to draw an edge.
+
 				float depthThreshold = _DepthThreshold * depth0 * normalThreshold;
 
 				float depthFiniteDifference0 = depth1 - depth0;
@@ -136,18 +138,23 @@
 				// edgeDepth is calculated using the Roberts cross operator.
 				// The same operation is applied to the normal below.
 				// https://en.wikipedia.org/wiki/Roberts_cross
-				float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 100;
+				float edgeDepth = sqrt(pow(depthFiniteDifference0, 2) + pow(depthFiniteDifference1, 2)) * 1;
 
 				float3 normalFiniteDifference0 = normal1 - normal0;
 				float3 normalFiniteDifference1 = normal3 - normal2;
 				// Dot the finite differences with themselves to transform the 
 				// three-dimensional values to scalars.
 				float edgeNormal = sqrt(dot(normalFiniteDifference0, normalFiniteDifference0) + dot(normalFiniteDifference1, normalFiniteDifference1));
+				float3 outlineClipColor;
 				//not outline returns backgroud color
 				if (edgeDepth <= depthThreshold && edgeNormal <= _NormalThreshold)
-					return float4(max(borderColor, _BackgroundColor.rgb), 1);
+					outlineClipColor = _BackgroundColor;
+				else
+					outlineClipColor = tex2D(_SoundVolumesTexture, i.texcoord);
+				//draw border line
+				float3 borderColor = tex2D(_SoundBordersTexture, i.texcoord);
 				//outline returns sound volume color
-				return float4(max(borderColor, tex2D(_SoundVolumesTexture, i.texcoord).rgb), 1);
+				return float4(max(borderColor, outlineClipColor), 1);
 			}
             ENDCG
         }

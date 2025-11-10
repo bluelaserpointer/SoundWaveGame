@@ -1,5 +1,8 @@
 ﻿Shader "Hidden/Roystan/Outline Post Process"
 {
+	//从_SoundBordersTexture、_SoundVolumesTexture裁剪所需要的区域。
+	//1._SoundBordersTexture的所有颜色都会被保留。
+	//2._SoundVolumesTexture的颜色只有在轮廓处才会被保留。
 	Properties
 	{
 		_MainTex("Base (RGB)", 2D) = "white" {}

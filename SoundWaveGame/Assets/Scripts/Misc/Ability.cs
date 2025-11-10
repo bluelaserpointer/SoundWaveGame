@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[DisallowMultipleComponent]
 public abstract class Ability : MonoBehaviour
 {
     public readonly UnityEvent<string> onStatusChange = new UnityEvent<string>();

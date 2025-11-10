@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3446778108563496389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.519, z: 0.095}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7510534adbf98e469faa90c2c2e2098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _throwingAnchor: {fileID: 3446778108712132034}
+  _throwingAnchor: {fileID: 3446778108563496388}
   knifePrefab: {fileID: 5694267814874617822, guid: 71a0bad739512484da0d0024ad29df71, type: 3}
   knifeThrowingForce: 100
   knifeThrowCD:

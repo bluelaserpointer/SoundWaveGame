@@ -8,8 +8,11 @@ public class MarkConstantColor : MonoBehaviour
 {
     [SerializeField]
     Color _constantColor = Color.white;
+    [SerializeField]
+    bool _useOriginalColor;
 
     static readonly int ID_ConstantColor = Shader.PropertyToID("_ConstantColor");
+    static readonly int ID_UseOriginalColor = Shader.PropertyToID("_UseOriginalColor");
 
     MaterialPropertyBlock _mpb;
 
@@ -33,6 +36,7 @@ public class MarkConstantColor : MonoBehaviour
             {
                 r.GetPropertyBlock(_mpb, i);
                 _mpb.SetColor(ID_ConstantColor, visible ? _constantColor : Color.black);
+                _mpb.SetInt(ID_UseOriginalColor, _useOriginalColor ? 1 : 0);
                 r.SetPropertyBlock(_mpb, i);
             }
         }

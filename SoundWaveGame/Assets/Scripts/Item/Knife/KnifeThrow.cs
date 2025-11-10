@@ -5,6 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class KnifeThrow : Ability
 {
+    public Vector3 targetPosition;
     [SerializeField]
     Transform _throwingAnchor;
     [SerializeField]
@@ -52,11 +53,11 @@ public class KnifeThrow : Ability
     {
         knifeThrowCD.Reset();
         Vector3 throwingPosition = _throwingAnchor.position;
-        Vector3 throwingDirection = _throwingAnchor.forward;
-        Quaternion throwingRotation = _throwingAnchor.rotation;
+        Vector3 forceDirection = (targetPosition - throwingPosition).normalized;
+        Quaternion throwingRotation = Quaternion.LookRotation(forceDirection);
         Knife knife = Instantiate(knifePrefab);
-        knife.transform.SetPositionAndRotation(throwingPosition + throwingDirection * 0.5f, throwingRotation);
-        knife.Rigidbody.AddForce(knifeThrowingForce * throwingDirection);
+        knife.transform.SetPositionAndRotation(throwingPosition + forceDirection * 0.5f, throwingRotation);
+        knife.Rigidbody.AddForce(knifeThrowingForce * forceDirection);
         AudioSource.PlayClipAtPoint(knifeThrowSE, throwingPosition);
     }
 

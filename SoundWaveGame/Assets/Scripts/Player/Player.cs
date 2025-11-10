@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     List<Ability> _abilities;
     [SerializeField]
-    Camera _playerCamera;
-    [SerializeField]
     vThirdPersonCamera _cameraSystem;
     [SerializeField]
     vThirdPersonInput _movementInputSystem;
@@ -23,6 +21,7 @@ public class Player : MonoBehaviour
     KnifeThrow _knifeThrow;
 
     public static Player Instance { get; private set; }
+    public Camera Camera => _cameraSystem.Camera;
     public Ability Ability
     {
         get => _ability;
@@ -51,7 +50,6 @@ public class Player : MonoBehaviour
         }
     }
     public bool _controllable;
-    public Camera Camera => _playerCamera;
     public Ability CurrentAbility => _ability;
     public bool IsDead { get; private set; }
     private void Awake()
@@ -94,13 +92,30 @@ public class Player : MonoBehaviour
             return;
         if (Input.GetMouseButtonDown(0))
         {
+            if (Ability.GetType() == typeof(KnifeThrow))
+            {
+                Ray cameraRay = Camera.ScreenPointToRay(Input.mousePosition);
+                float minDistance = 100;
+                Vector3 hitPosition = Camera.transform.position + Camera.transform.forward * 100;
+                foreach (var hit in Physics.RaycastAll(cameraRay, minDistance))
+                {
+                    if (hit.collider.isTrigger || hit.distance > minDistance)
+                        continue;
+                    GameObject hitGo = hit.collider.gameObject;
+                    if (hitGo.transform == transform || hitGo.transform.IsChildOf(transform))
+                        continue;
+                    minDistance = hit.distance;
+                    hitPosition = hit.point;
+                }
+                ((KnifeThrow)Ability).targetPosition = hitPosition;
+            }
             CurrentAbility.TryActivateAbility();
         }
     }
     void CheckRaycast()
     {
         RaycastHit raycastResult;
-        Physics.Raycast(_playerCamera.ScreenPointToRay(Input.mousePosition), out raycastResult);
+        Physics.Raycast(Camera.ScreenPointToRay(Input.mousePosition), out raycastResult);
         //print(raycastResult.collider.gameObject.name);
         //看到就直接互动
         /*

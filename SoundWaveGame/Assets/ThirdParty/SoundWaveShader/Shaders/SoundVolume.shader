@@ -2,6 +2,11 @@
 {
     //用途：生成“声波体积图”——在屏幕空间内为每个像素计算当前所有声源的波动强度与颜色叠加。
     // 输出结果存入 _SoundVolumesTexture，用于后处理着色（如音波区域的描边颜色）。
+    //改变_ConstantColor以没有声波时显示常驻色
+    Properties
+    {
+        _MainTex ("Base", 2D) = "white" {}
+    }
     SubShader
     {
         Tags { "RenderType" = "Opaque" }
@@ -24,18 +29,24 @@
             float _SoundSourceLifeTimes[MAX_SOUND_SOURCE_COUNT];
             float3 _SoundColors[MAX_SOUND_SOURCE_COUNT];
 
-            float3 _ConstantColor; // base color displayed when no sound waves are lighting it 
+            float3 _ConstantColor; // base color displayed when no sound waves are lighting it
+            int _UseOriginalColor; // define if use tex2d original color as constant color
 
             struct appdata
             {
                 float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             struct v2f
             {
                 float4 vertex : SV_POSITION;
                 float4 worldPosition : TEXCOORD0;
+                float2 uv  : TEXCOORD1;
+                float4 color : COLOR; 
             };
+            sampler2D _MainTex;
             float4 _MainTex_ST;
 
             v2f vert (appdata v)
@@ -43,6 +54,8 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
+                o.uv  = v.uv;
+                o.color = v.color;
                 return o;
             }
 
@@ -51,7 +64,17 @@
             #define SOUND_BORDER_SCALE 0.1
             fixed4 frag(v2f i) : SV_Target
             {
-                float3 receivedVolumeColor = _ConstantColor;
+                // 判断是否使用原始贴图颜色
+                float3 receivedVolumeColor;
+
+                if (_UseOriginalColor == 1)
+                {
+                    receivedVolumeColor = tex2D(_MainTex, i.uv).rgb * i.color.rgb; // 混合 LineRenderer 顶点色
+                }
+                else
+                {
+                    receivedVolumeColor = _ConstantColor;
+                }
                 float2 screenUV = i.vertex.xy / _ScreenParams.xy;
                 float depth = tex2D(_CameraDepthTexture, screenUV);
                 for (int id = 0; id < _SoundSourceCount; ++id) {

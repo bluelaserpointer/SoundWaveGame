@@ -15,7 +15,6 @@ public class AbilitySelectorUI : MonoBehaviour
     [SerializeField]
     Transform _slotParent;
 
-    public readonly UnityEvent<int> onSelected = new();
     public bool IsVisible => _graphicRoot.activeSelf;
 
     private void Awake()

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[DisallowMultipleComponent]
 /// <summary>
 /// 人物移动时产生SoundWave
 /// </summary>
@@ -22,6 +23,10 @@ public class FootstepSoundWave : MonoBehaviour
     float _walkingSoundInterval;
     [SerializeField]
     float _sprintingSoundInvertal;
+
+    [Header("Sound")]
+    [SerializeField]
+    List<AudioClip> _footstepSEs;
 
     bool _lastFrameIsGrounded;
     float _keepMovedWithoutNoiseTime;
@@ -54,7 +59,18 @@ public class FootstepSoundWave : MonoBehaviour
         if (_keepMovedWithoutNoiseTime < noiseInterval)
             return;
         _keepMovedWithoutNoiseTime = 0;
+        MakeStepSound();
+    }
+
+    public void MakeStepSound()
+    {
+        bool isSprinting = _movementController.isSprinting;
         float volume = isSprinting ? _sprintingSoundVolume : _walkingSoundVolume;
         SoundSource.Generate(transform.position, volume, _footstepSoundColor, _soundType);
+
+        if (_footstepSEs.Count > 0)
+        {
+            AudioSource.PlayClipAtPoint(_footstepSEs.GetRandomElement(), transform.position, 4.0F);
+        }
     }
 }

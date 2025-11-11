@@ -418,6 +418,7 @@ MonoBehaviour:
   _cameraSystem: {fileID: 3446778108712132039}
   _movementInputSystem: {fileID: 3446778110045665639}
   _knifeThrow: {fileID: 3446778108563496387}
+  _activelySoundSourceGenerator: {fileID: 5219771548714686655}
   _controllable: 0
 --- !u!114 &3446778110045665637
 MonoBehaviour:
@@ -432,7 +433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _constantColor: {r: 0.6377357, g: 0.6377357, b: 0.6377357, a: 1}
-  _useOriginalColor: 0
+  _sampleTextureColorAsConstantColor: 0
+  _ignoreOutlineClip: 0
 --- !u!114 &3446778110045665639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +644,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 612c93b5086874d418ec7b3e383620d2, type: 3}
+--- !u!1 &811272601186365540 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5352962978279586530, guid: 612c93b5086874d418ec7b3e383620d2, type: 3}
+  m_PrefabInstance: {fileID: 4687037020660533894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5219771548714686655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 811272601186365540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5652f40f329d0fd4ab99ac41fcf92c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundColor: {r: 1, g: 1, b: 1, a: 0}
+  soundType: 0
+  volume: 25
+  audioClip: {fileID: 0}
 --- !u!4 &3302191762966943899 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7843034968766681629, guid: 612c93b5086874d418ec7b3e383620d2, type: 3}

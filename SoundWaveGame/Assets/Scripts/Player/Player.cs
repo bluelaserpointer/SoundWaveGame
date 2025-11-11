@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     vThirdPersonInput _movementInputSystem;
     [SerializeField]
     KnifeThrow _knifeThrow;
+    [SerializeField]
+    SoundSourceGenerator _activelySoundSourceGenerator;
 
     public static Player Instance { get; private set; }
     public Camera Camera => _cameraSystem.Camera;
@@ -76,8 +78,16 @@ public class Player : MonoBehaviour
             CheckAbilitySwitch();
             CheckAbilityAcivation();
             CheckRaycast();
+            CheckActiveSoundGeneration();
         }
         CheckDeath();
+    }
+    void CheckActiveSoundGeneration()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            _activelySoundSourceGenerator.GenerateSound();
+        }
     }
     void CheckAbilitySwitch()
     {

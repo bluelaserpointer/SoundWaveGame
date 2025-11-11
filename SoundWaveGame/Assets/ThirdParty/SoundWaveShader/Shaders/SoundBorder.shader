@@ -68,7 +68,6 @@
         float3 receivedBorderColor = 0;
 
         float2 screenUV = svPos / _ScreenParams.xy;
-        float  depth    = tex2D(_CameraDepthTexture, screenUV).r; // 如需基于深度的效果可使用
 
         [loop]
         for (int id = 0; id < _SoundSourceCount; ++id)

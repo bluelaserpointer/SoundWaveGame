@@ -10,6 +10,7 @@
 
     CGINCLUDE
     #include "UnityCG.cginc"
+    #include "./SoundWaveCommon.cginc"
 
     sampler2D _CameraDepthTexture;
 
@@ -23,6 +24,9 @@
     float3 _ConstantColor;
     int _SampleTextureColorAsConstantColor;
 	int _IgnoreOutlineClip;
+    
+    int   _UseParticleAlphaClip;
+    int   _UseAdditiveBlackKey;
 
     sampler2D _MainTex;
     float4 _MainTex_ST;
@@ -35,17 +39,19 @@
 
     struct v2f {
         float4 vertex        : SV_POSITION;
+        float4 color         : COLOR;
         float4 worldPosition : TEXCOORD0;
         float2 uv            : TEXCOORD1;
-        float4 color         : COLOR;
+        float4 screenPos     : TEXCOORD2;
     };
 
     v2f vert (appdata v){
         v2f o;
         o.vertex = UnityObjectToClipPos(v.vertex);
+        o.color = v.color;
         o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
         o.uv  = v.uv;
-        o.color = v.color;
+        o.screenPos = ComputeScreenPos(o.vertex);
         return o;
     }
 
@@ -85,21 +91,6 @@
             return _ConstantColor;
     }
 
-    // —— Transparent 用的 SDF alpha 计算 —— //
-    float GetTMPAlpha(float2 uv, float4 vtxColor)
-    {
-        // TMP 字形的 SDF 存在 _MainTex.a
-        float sdf = tex2D(_MainTex, uv).a;
-
-        // 用 0.5 为中心的 AA 阈值（近似，已足够干净；需要更精细可引入 _GradientScale 等）
-        float w = fwidth(sdf);                  // 屏幕空间导数
-        float alpha = smoothstep(0.5 - w, 0.5 + w, sdf);
-
-        // 乘上顶点色的 alpha（TMP 顶点色经常带渐变/透明）
-        alpha *= vtxColor.a;
-
-        return alpha;
-    }
     ENDCG
 
     // -------- Opaque --------
@@ -146,11 +137,10 @@
 
             float4 frag_transparent(v2f i) : SV_Target
             {
-                // 用 SDF 裁剪字外区域（解决“矩形边界”的根因）
-                float alpha = GetTMPAlpha(i.uv, i.color);
-                clip(alpha - 1e-4);   // 字外像素直接丢弃
+                // 1) 选择 alpha 来源：TMP(SDF) 或 粒子(贴图A)， 丢弃透明区（把 PNG 的透明边缘/空白剔除）
+                 ClipCombinedAlpha(_MainTex, i.uv, i.color.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
 
-                // 字内像素：颜色= 基础色(贴图*顶点色 或 常量色) 再叠加声波
+                // 2) 计算颜色并叠加声波
                 float3 baseCol = GetBaseColor(i.uv, i.color);
                 float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
                 return outCol;

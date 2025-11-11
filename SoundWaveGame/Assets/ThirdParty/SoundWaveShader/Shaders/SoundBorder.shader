@@ -10,6 +10,7 @@
 
     CGINCLUDE
     #include "UnityCG.cginc"
+    #include "./SoundWaveCommon.cginc"
 
     sampler2D _CameraDepthTexture;
 
@@ -19,6 +20,9 @@
     float  _SoundSourceVolumes[MAX_SOUND_SOURCE_COUNT];
     float  _SoundSourceLifeTimes[MAX_SOUND_SOURCE_COUNT];
     float3 _SoundColors[MAX_SOUND_SOURCE_COUNT];
+    
+    int   _UseParticleAlphaClip;
+    int   _UseAdditiveBlackKey;
 
     sampler2D _MainTex;
     float4 _MainTex_ST;
@@ -46,16 +50,6 @@
         o.uv            = TRANSFORM_TEX(v.uv, _MainTex);
         o.color         = v.color;
         return o;
-    }
-
-    // —— Transparent 用的 TMP SDF alpha（与 SoundVolume 同步） —— //
-    float GetTMPAlpha(float2 uv, float4 vtxColor)
-    {
-        float sdf = tex2D(_MainTex, uv).a;    // TMP 字形 SDF 在 a 通道
-        float w   = fwidth(sdf);
-        float a   = smoothstep(0.5 - w, 0.5 + w, sdf);
-        a *= vtxColor.a;                      // 乘顶点色 alpha（渐变/透明）
-        return a;
     }
 
     // —— 声波“边界色”叠加主逻辑，三个通道复用 —— //
@@ -139,8 +133,7 @@
 
             float4 frag_transparent(v2f i) : SV_Target
             {
-                float alpha = GetTMPAlpha(i.uv, i.color);
-                clip(alpha - 1e-4);                         // 仅字形内部保留
+                ClipCombinedAlpha(_MainTex, i.uv, i.color.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
 
                 float3 col = AccumulateBorder(i.worldPosition, i.vertex.xy);
                 return float4(col, 1);

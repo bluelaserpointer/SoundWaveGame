@@ -15,9 +15,18 @@ public class SoundVolumeColorModifier : MonoBehaviour
     [SerializeField]
     bool _ignoreOutlineClip;
 
+    [Header("Particle")]
+    [SerializeField]
+    bool _useParticleAlphaClip;
+    [SerializeField]
+    bool _useAdditiveBlackKey;
+
+
     static readonly int ID_ConstantColor = Shader.PropertyToID("_ConstantColor");
     static readonly int ID_SampleTextureColorAsConstantColor = Shader.PropertyToID("_SampleTextureColorAsConstantColor");
     static readonly int ID_IgnoreOutlineClip = Shader.PropertyToID("_IgnoreOutlineClip");
+    static readonly int ID_UseParticleAlphaClip = Shader.PropertyToID("_UseParticleAlphaClip");
+    static readonly int ID_UseAdditiveBlackKey = Shader.PropertyToID("_UseAdditiveBlackKey");
 
     MaterialPropertyBlock _mpb;
 
@@ -43,6 +52,8 @@ public class SoundVolumeColorModifier : MonoBehaviour
                 _mpb.SetColor(ID_ConstantColor, visible ? _constantColor : Color.black);
                 _mpb.SetInt(ID_SampleTextureColorAsConstantColor, _sampleTextureColorAsConstantColor ? 1 : 0);
                 _mpb.SetInt(ID_IgnoreOutlineClip, _ignoreOutlineClip ? 1 : 0);
+                _mpb.SetInt(ID_UseParticleAlphaClip, _useParticleAlphaClip ? 1 : 0);
+                _mpb.SetInt(ID_UseAdditiveBlackKey, _useAdditiveBlackKey ? 1 : 0);
                 r.SetPropertyBlock(_mpb, i);
             }
         }

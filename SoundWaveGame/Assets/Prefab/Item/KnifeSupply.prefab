@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: KnifeSupply
+  _abilityType: 0
   _supplyKnifeCount: 10
 --- !u!111 &366992568411011326
 Animation:

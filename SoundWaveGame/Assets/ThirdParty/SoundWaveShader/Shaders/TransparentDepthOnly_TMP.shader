@@ -3,21 +3,16 @@
     Properties
     {
         _MainTex   ("Base", 2D) = "white" {}
-        _BumpMap   ("Normal Map", 2D) = "bump" {}
-
-        // —— 透明裁剪控制 —— //
-        _UseSDF    ("Use SDF Alpha (TMP)", Float) = 1   // 1=按TMP SDF软边；0=普通alpha裁剪
-        _AlphaClip ("Alpha Clip (non-SDF)", Range(0,1)) = 0.5
     }
 
     CGINCLUDE
     #include "UnityCG.cginc"
+    #include "./SoundWaveCommon.cginc"
 
     sampler2D _MainTex;
-    sampler2D _BumpMap;
-
-    float _UseSDF;
-    float _AlphaClip;
+    
+    int   _UseParticleAlphaClip;
+    int   _UseAdditiveBlackKey;
 
     struct appdata
     {
@@ -60,9 +55,8 @@
         Tags { "RenderType"="Transparent" }
         Pass
         {
-            // 关键设置：双面 & 不写深度
             Cull Off
-            ZWrite Off
+            ZWrite On
             ZTest LEqual
             // 如需把输出叠加而不是覆盖，自己加 Blend 规则（多数替换渲染输出到专用RT可不设）
 
@@ -73,12 +67,8 @@
             // Transparent Pass 的片元：对 TMP 做 SDF 裁剪，再输出法线
             float4 frag_t(v2f i) : SV_Target
             {
-                // —— 1) SDF/Alpha 裁剪：把字外的像素直接丢弃（不写 RT）——
-                // 如果是 TMP SDF 字体：
-                float a = tex2D(_MainTex, i.uv).a;   // SDF 存在 alpha
-                float w = fwidth(a);                 // 屏幕空间导数，实现软边
-                float alpha = smoothstep(0.5 - w, 0.5 + w, a) * i.col.a; // 乘上顶点色的透明度
-                clip(alpha - 1e-4);                  // 字外像素不写入 RT
+                // —— 1) SDF/Alpha 裁剪：直接丢弃（不写 RT）——
+                 ClipCombinedAlpha(_MainTex, i.uv, i.col.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
 
                 // —— 2) 计算并写入depth（你的原逻辑）——
                 float d01 = Linear01FromSVPos(i.pos);

@@ -4,20 +4,17 @@
     {
         _MainTex   ("Base", 2D) = "white" {}
         _BumpMap   ("Normal Map", 2D) = "bump" {}
-
-        // —— 透明裁剪控制 —— //
-        _UseSDF    ("Use SDF Alpha (TMP)", Float) = 1   // 1=按TMP SDF软边；0=普通alpha裁剪
-        _AlphaClip ("Alpha Clip (non-SDF)", Range(0,1)) = 0.5
     }
 
     CGINCLUDE
     #include "UnityCG.cginc"
+    #include "./SoundWaveCommon.cginc"
 
     sampler2D _MainTex;
     sampler2D _BumpMap;
-
-    float _UseSDF;
-    float _AlphaClip;
+    
+    int   _UseParticleAlphaClip;
+    int   _UseAdditiveBlackKey;
 
     struct appdata
     {
@@ -109,7 +106,7 @@
         {
             // 关键设置：双面 & 不写深度
             Cull Off
-            ZWrite Off
+            ZWrite On
             ZTest LEqual
             // 如需把输出叠加而不是覆盖，自己加 Blend 规则（多数替换渲染输出到专用RT可不设）
 
@@ -122,10 +119,7 @@
             float4 frag_t(v2f i) : SV_Target
             {
                 // —— 1) SDF/Alpha 裁剪——
-                float a = tex2D(_MainTex, i.uv).a;
-                float w = fwidth(a);
-                float alpha = smoothstep(0.5 - w, 0.5 + w, a) * i.col.a;
-                clip(alpha - 1e-4);
+                ClipCombinedAlpha(_MainTex, i.uv, i.col.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
 
                 // —— 2) TBN 法线——
                 float3 nTS = UnpackNormal(tex2D(_BumpMap, i.uv));
@@ -148,7 +142,7 @@
         Pass
         {
             Cull Off
-            ZWrite Off
+            ZWrite On
             ZTest LEqual
 
             CGPROGRAM
@@ -157,9 +151,8 @@
 
             float4 frag_c(v2f i) : SV_Target
             {
-                // 硬截（如果你想软边，用 Transparent 分支并开 _UseSDF）
-                float a = tex2D(_MainTex, i.uv).a * i.col.a;
-                clip(a - _AlphaClip);
+                // —— 1) SDF/Alpha 裁剪——
+                ClipCombinedAlpha(_MainTex, i.uv, 1, _UseParticleAlphaClip, _UseAdditiveBlackKey);
                 return FragBody(i);
             }
             ENDCG

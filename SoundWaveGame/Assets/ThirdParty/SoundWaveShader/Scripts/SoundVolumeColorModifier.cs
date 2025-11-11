@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Make this children visible in a color even no sound wave are lighting it 
+/// Modify child renderers appearance in soundwave shaders.
 /// </summary>
 [DisallowMultipleComponent]
-public class MarkConstantColor : MonoBehaviour
+public class SoundVolumeColorModifier : MonoBehaviour
 {
     [SerializeField]
-    Color _constantColor = Color.white;
+    [Tooltip("Black has no effect.")]
+    Color _constantColor = Color.black;
     [SerializeField]
-    bool _useOriginalColor;
+    [Tooltip("Replace constantColor.")]
+    bool _sampleTextureColorAsConstantColor;
+    [SerializeField]
+    bool _ignoreOutlineClip;
 
     static readonly int ID_ConstantColor = Shader.PropertyToID("_ConstantColor");
-    static readonly int ID_UseOriginalColor = Shader.PropertyToID("_UseOriginalColor");
+    static readonly int ID_SampleTextureColorAsConstantColor = Shader.PropertyToID("_SampleTextureColorAsConstantColor");
+    static readonly int ID_IgnoreOutlineClip = Shader.PropertyToID("_IgnoreOutlineClip");
 
     MaterialPropertyBlock _mpb;
 
@@ -36,7 +41,8 @@ public class MarkConstantColor : MonoBehaviour
             {
                 r.GetPropertyBlock(_mpb, i);
                 _mpb.SetColor(ID_ConstantColor, visible ? _constantColor : Color.black);
-                _mpb.SetInt(ID_UseOriginalColor, _useOriginalColor ? 1 : 0);
+                _mpb.SetInt(ID_SampleTextureColorAsConstantColor, _sampleTextureColorAsConstantColor ? 1 : 0);
+                _mpb.SetInt(ID_IgnoreOutlineClip, _ignoreOutlineClip ? 1 : 0);
                 r.SetPropertyBlock(_mpb, i);
             }
         }

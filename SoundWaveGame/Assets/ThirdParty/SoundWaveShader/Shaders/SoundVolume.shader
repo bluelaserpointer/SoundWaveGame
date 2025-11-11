@@ -7,95 +7,180 @@
     {
         _MainTex ("Base", 2D) = "white" {}
     }
+
+    CGINCLUDE
+    #include "UnityCG.cginc"
+
+    sampler2D _CameraDepthTexture;
+
+    int _SoundSourceCount;
+    #define MAX_SOUND_SOURCE_COUNT 64
+    float3 _SoundSourcePositions[MAX_SOUND_SOURCE_COUNT];
+    float _SoundSourceVolumes[MAX_SOUND_SOURCE_COUNT];
+    float _SoundSourceLifeTimes[MAX_SOUND_SOURCE_COUNT];
+    float3 _SoundColors[MAX_SOUND_SOURCE_COUNT];
+
+    float3 _ConstantColor;
+    int _SampleTextureColorAsConstantColor;
+	int _IgnoreOutlineClip;
+
+    sampler2D _MainTex;
+    float4 _MainTex_ST;
+
+    struct appdata {
+        float4 vertex : POSITION;
+        float2 uv     : TEXCOORD0;
+        float4 color  : COLOR;
+    };
+
+    struct v2f {
+        float4 vertex        : SV_POSITION;
+        float4 worldPosition : TEXCOORD0;
+        float2 uv            : TEXCOORD1;
+        float4 color         : COLOR;
+    };
+
+    v2f vert (appdata v){
+        v2f o;
+        o.vertex = UnityObjectToClipPos(v.vertex);
+        o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
+        o.uv  = v.uv;
+        o.color = v.color;
+        return o;
+    }
+
+    // —— 声波叠加主逻辑（保持你的代码） —— //
+    float4 AccumulateSound(float3 baseCol, float4 worldPos, float2 svPos)
+    {
+        float3 receivedVolumeColor = baseCol;
+
+        float2 screenUV = svPos / _ScreenParams.xy;
+        float depth = tex2D(_CameraDepthTexture, screenUV).r;
+
+        [loop]
+        for (int id = 0; id < _SoundSourceCount; ++id) {
+            float soundDistance = length(_SoundSourcePositions[id] - worldPos.xyz);
+            float soundVolume   = _SoundSourceVolumes[id];
+            float soundLifeTime = _SoundSourceLifeTimes[id];
+            float borderDistance = min(soundVolume, soundLifeTime * 4) - soundDistance;
+            if (borderDistance <= 0) continue;
+            float prob = (1 - pow(saturate(soundDistance / soundVolume), 6.0)) * 0.25;
+            float rand = frac(sin(dot(worldPos.xyz + id * 12.345, float2(12.9898,78.233))) * 43758.5453);
+            if (rand > prob) continue;
+
+            float falloff = 1 - pow(1 - saturate(borderDistance / soundVolume), 2.0);
+            float t = clamp(soundLifeTime / 4.0, 0.0, 1.0);
+            float alpha = 5 * falloff * (1.0 - t * t);
+            receivedVolumeColor = max(receivedVolumeColor, _SoundColors[id] * alpha);
+        }
+        return float4(receivedVolumeColor, _IgnoreOutlineClip == 1 ? 1 : 0);
+    }
+
+    // —— 基础色，供两个通道复用 —— //
+    float3 GetBaseColor(float2 uv, float4 vtxColor)
+    {
+        if (_SampleTextureColorAsConstantColor == 1)
+            return tex2D(_MainTex, uv).rgb * vtxColor.rgb; // 贴图 * 顶点色（LineRenderer/TMP）
+        else
+            return _ConstantColor;
+    }
+
+    // —— Transparent 用的 SDF alpha 计算 —— //
+    float GetTMPAlpha(float2 uv, float4 vtxColor)
+    {
+        // TMP 字形的 SDF 存在 _MainTex.a
+        float sdf = tex2D(_MainTex, uv).a;
+
+        // 用 0.5 为中心的 AA 阈值（近似，已足够干净；需要更精细可引入 _GradientScale 等）
+        float w = fwidth(sdf);                  // 屏幕空间导数
+        float alpha = smoothstep(0.5 - w, 0.5 + w, sdf);
+
+        // 乘上顶点色的 alpha（TMP 顶点色经常带渐变/透明）
+        alpha *= vtxColor.a;
+
+        return alpha;
+    }
+    ENDCG
+
+    // -------- Opaque --------
     SubShader
     {
-        Tags { "RenderType" = "Opaque" }
+        Tags { "RenderType"="Opaque" }
         LOD 100
-
         Pass
         {
+            // 按需：ZWrite On / Cull Back
+            Cull Back
+            ZWrite On
+            ZTest LEqual
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag
+            #pragma fragment frag_opaque
 
-            #include "UnityCG.cginc"
-
-            sampler2D _CameraDepthTexture;
-
-            int _SoundSourceCount;
-            #define MAX_SOUND_SOURCE_COUNT 64
-            float3 _SoundSourcePositions[MAX_SOUND_SOURCE_COUNT];
-            float _SoundSourceVolumes[MAX_SOUND_SOURCE_COUNT];
-            float _SoundSourceLifeTimes[MAX_SOUND_SOURCE_COUNT];
-            float3 _SoundColors[MAX_SOUND_SOURCE_COUNT];
-
-            float3 _ConstantColor; // base color displayed when no sound waves are lighting it
-            int _UseOriginalColor; // define if use tex2d original color as constant color
-
-            struct appdata
+            float4 frag_opaque(v2f i) : SV_Target
             {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
-                float4 color : COLOR;
-            };
-
-            struct v2f
-            {
-                float4 vertex : SV_POSITION;
-                float4 worldPosition : TEXCOORD0;
-                float2 uv  : TEXCOORD1;
-                float4 color : COLOR; 
-            };
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
-                o.uv  = v.uv;
-                o.color = v.color;
-                return o;
+                float3 baseCol = GetBaseColor(i.uv, i.color);
+                float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
+                return outCol;
             }
+            ENDCG
+        }
+    }
 
-            #define MAX_SOUND_LIFE_TIME 4 //warning: need to be same value with "SoundSouce.cs" script
-            #define SOUND_SPEED_FACTOR 4
-            #define SOUND_BORDER_SCALE 0.1
-            fixed4 frag(v2f i) : SV_Target
+    // -------- Transparent（TMP 常用） --------
+    SubShader
+    {
+        Tags { "RenderType"="Transparent" }
+        LOD 100
+        Pass
+        {
+            // 关键设置：
+            Cull Off          // 双面渲染，解决“只有一面可见”
+            ZWrite On        // 透明物体通常不写深度，但是本游戏的渲染不存在"半透明"，所以还是写深度
+            ZTest LEqual
+            // 不需要混合（我们写到独立的 RT）；若你想叠加，可自行设 Blend
+
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag_transparent
+
+            float4 frag_transparent(v2f i) : SV_Target
             {
-                // 判断是否使用原始贴图颜色
-                float3 receivedVolumeColor;
+                // 用 SDF 裁剪字外区域（解决“矩形边界”的根因）
+                float alpha = GetTMPAlpha(i.uv, i.color);
+                clip(alpha - 1e-4);   // 字外像素直接丢弃
 
-                if (_UseOriginalColor == 1)
-                {
-                    receivedVolumeColor = tex2D(_MainTex, i.uv).rgb * i.color.rgb; // 混合 LineRenderer 顶点色
-                }
-                else
-                {
-                    receivedVolumeColor = _ConstantColor;
-                }
-                float2 screenUV = i.vertex.xy / _ScreenParams.xy;
-                float depth = tex2D(_CameraDepthTexture, screenUV);
-                for (int id = 0; id < _SoundSourceCount; ++id) {
-                    float soundDistance = length(_SoundSourcePositions[id] - i.worldPosition);
-                    float soundVolume = _SoundSourceVolumes[id];
-                    float soundLifeTime = _SoundSourceLifeTimes[id];
-                    float borderDistance = min(soundVolume, soundLifeTime * SOUND_SPEED_FACTOR) - soundDistance;
-                    if (borderDistance <= 0)
-                        continue;
-                    // 使用 soundDistance / soundVolume 作为概率决定是否跳过 ====
-                    float prob = (1 - pow(saturate(soundDistance / soundVolume), 6.0)) * 0.25;
-                    // 利用伪随机函数（例如 hash2D）生成随机值
-                    float rand = frac(sin(dot(i.worldPosition + id * 12.345, float2(12.9898,78.233))) * 43758.5453);
-                    if (rand > prob)
-                        continue; // 概率不通过则跳过涂色
-                    float falloff = 1 - pow(1 - saturate(borderDistance / soundVolume), 2.0);
-                    float t = clamp(soundLifeTime / MAX_SOUND_LIFE_TIME, 0.0, 1.0);
-                    float alpha = 5 * falloff * (1.0 - pow(t, 2.0));
-                    receivedVolumeColor = max(receivedVolumeColor, _SoundColors[id] * alpha);
-                }
-                return float4(receivedVolumeColor, 1);
+                // 字内像素：颜色= 基础色(贴图*顶点色 或 常量色) 再叠加声波
+                float3 baseCol = GetBaseColor(i.uv, i.color);
+                float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
+                return outCol;
+            }
+            ENDCG
+        }
+    }
+
+    // -------- TransparentCutout（可选） --------
+    SubShader
+    {
+        Tags { "RenderType"="TransparentCutout" }
+        LOD 100
+        Pass
+        {
+            Cull Off
+            ZWrite On
+            ZTest LEqual
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag_cutout
+            float4 frag_cutout(v2f i) : SV_Target
+            {
+                // 简化：硬阈值（如需软边，直接调用 GetTMPAlpha 并 smoothstep）
+                float a = tex2D(_MainTex, i.uv).a * i.color.a;
+                clip(a - 0.5);
+
+                float3 baseCol = GetBaseColor(i.uv, i.color);
+                float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
+                return outCol;
             }
             ENDCG
         }

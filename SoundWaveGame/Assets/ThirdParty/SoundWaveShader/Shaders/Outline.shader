@@ -27,6 +27,7 @@
 			// to be in the 0...1 range.
 			sampler2D _CameraNormalsTexture;
 			sampler2D _CameraDepthTexture;
+			sampler2D _TransparentDepthTexture;
 			sampler2D _SoundBordersTexture;
 			sampler2D _SoundVolumesTexture;
 
@@ -59,8 +60,6 @@
 				return float4(color, alpha);
 			}
 
-			float LinEye(float d) { return LinearEyeDepth(d); }              // 或 LinearEyeDepth(d, _ZBufferParams)
-
 			// Both the Varyings struct and the Vert shader are copied
 			// from StdLib.hlsl included above, with some modifications.
 			struct Varyings
@@ -81,6 +80,15 @@
 				return o;
 			}
 
+			float sampleDepth(float2 uv)
+			{
+				float opaqueDepth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv));
+				float4 t = tex2D(_TransparentDepthTexture, uv);
+				float transparentDepth = (t.a > 0.5) ? t.r : 1.0;   // 未写视作最远
+				float depth = min(opaqueDepth, transparentDepth);
+				return depth;
+			}
+
 			float4 Frag(Varyings i) : SV_Target
 			{
 				//debug mode
@@ -88,13 +96,13 @@
 				case 1:
 					return tex2D(_CameraNormalsTexture, i.texcoord);
 				case 2:
-					return tex2D(_CameraDepthTexture, i.texcoord);
+					return float4(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.texcoord).xxx, 1);
 				case 3:
-					return tex2D(_SoundBordersTexture, i.texcoord);
+					return tex2D(_TransparentDepthTexture, i.texcoord);
 				case 4:
 					return tex2D(_SoundVolumesTexture, i.texcoord);
 				}
-				float lin01 = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.texcoord));
+				float lin01 = Linear01Depth(sampleDepth(i.texcoord));
 				// 根据深度调节采样半径：远处放大
 				float adaptiveScale = _Scale * lerp(1.0, 25.0, lin01);
 				//test if this fragment is on an outline
@@ -115,10 +123,10 @@
 				float3 normal2 = tex2D(_CameraNormalsTexture, bottomRightUV).rgb;
 				float3 normal3 = tex2D(_CameraNormalsTexture, topLeftUV).rgb;
 
-				float depth0 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, bottomLeftUV);
-				float depth1 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, topRightUV);
-				float depth2 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, bottomRightUV);
-				float depth3 = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, topLeftUV);
+				float depth0 = sampleDepth(bottomLeftUV);
+				float depth1 = sampleDepth(topRightUV);
+				float depth2 = sampleDepth(bottomRightUV);
+				float depth3 = sampleDepth(topLeftUV);
 
 				// Transform the view normal from the 0...1 range to the -1...1 range.
 				float3 viewNormal = normal0 * 2 - 1;
@@ -147,13 +155,14 @@
 				float3 normalFiniteDifference1 = normal3 - normal2;
 				// Dot the finite differences with themselves to transform the 
 				// three-dimensional values to scalars.
+				float4 volumeColor = tex2D(_SoundVolumesTexture, i.texcoord);
 				float edgeNormal = sqrt(dot(normalFiniteDifference0, normalFiniteDifference0) + dot(normalFiniteDifference1, normalFiniteDifference1));
 				float3 outlineClipColor;
-				//not outline returns backgroud color
-				if (edgeDepth <= depthThreshold && edgeNormal <= _NormalThreshold)
+				//not outline returns backgroud color (unless it marked always draw by a == 1)
+				if (volumeColor.a != 1 && edgeDepth <= depthThreshold && edgeNormal <= _NormalThreshold)
 					outlineClipColor = _BackgroundColor;
 				else
-					outlineClipColor = tex2D(_SoundVolumesTexture, i.texcoord);
+					outlineClipColor = volumeColor;
 				//draw border line
 				float3 borderColor = tex2D(_SoundBordersTexture, i.texcoord);
 				//outline returns sound volume color

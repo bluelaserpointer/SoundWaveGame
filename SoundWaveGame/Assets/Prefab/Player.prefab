@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7510534adbf98e469faa90c2c2e2098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPosition: {x: 0, y: 0, z: 0}
   _throwingAnchor: {fileID: 3446778108563496388}
   knifePrefab: {fileID: 5694267814874617822, guid: 71a0bad739512484da0d0024ad29df71, type: 3}
   knifeThrowingForce: 100
@@ -190,18 +191,32 @@ MonoBehaviour:
     renderTextureFormat: 0
     filterMode: 0
     renderTextureDepth: 24
+    clearColor: 1
+    clearColorValue: {r: 0.5, g: 0.5, b: 1, a: 0}
   - textureName: _SoundVolumesTexture
     shader: {fileID: 4800000, guid: 3d5cc7827ad3e9c4da520a3ab60d102e, type: 3}
     replacementTag: RenderType
     renderTextureFormat: 0
     filterMode: 0
     renderTextureDepth: 24
+    clearColor: 1
+    clearColorValue: {r: 0, g: 0, b: 0, a: 0}
   - textureName: _SoundBordersTexture
     shader: {fileID: 4800000, guid: 544c82e515d37454385ae192157fff21, type: 3}
     replacementTag: RenderType
     renderTextureFormat: 0
     filterMode: 0
     renderTextureDepth: 24
+    clearColor: 1
+    clearColorValue: {r: 0, g: 0, b: 0, a: 0}
+  - textureName: _TransparentDepthTexture
+    shader: {fileID: 4800000, guid: 1e24c4f9aeee86a4b93fd7c116fc0678, type: 3}
+    replacementTag: RenderType
+    renderTextureFormat: 0
+    filterMode: 0
+    renderTextureDepth: 24
+    clearColor: 1
+    clearColorValue: {r: 1, g: 1, b: 1, a: 0}
 --- !u!114 &3446778108712132037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,7 +415,6 @@ MonoBehaviour:
   _abilities:
   - {fileID: 3446778108563496387}
   - {fileID: 3446778108805446154}
-  _playerCamera: {fileID: 3446778108712132033}
   _cameraSystem: {fileID: 3446778108712132039}
   _movementInputSystem: {fileID: 3446778110045665639}
   _knifeThrow: {fileID: 3446778108563496387}
@@ -418,6 +432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _constantColor: {r: 0.6377357, g: 0.6377357, b: 0.6377357, a: 1}
+  _useOriginalColor: 0
 --- !u!114 &3446778110045665639
 MonoBehaviour:
   m_ObjectHideFlags: 0

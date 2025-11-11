@@ -189,7 +189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _constantColor: {r: 0, g: 0, b: 0, a: 0}
-  _useOriginalColor: 1
+  _sampleTextureColorAsConstantColor: 1
+  _ignoreOutlineClip: 1
 --- !u!1 &5888503955079651260
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,8 +21,16 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public float fadeInDuration = 0.5f;
     public float fadeOutDuration = 0.3f;
 
+    [Header("Image Alpha Settings")]
+    [Range(0f, 1f)]
+    public float normalAlpha = 0.4f; // 正常状态透明度 40%
+    [Range(0f, 1f)]
+    public float hoverAlpha = 1f;    // 悬停状态透明度 100%
+    public float alphaChangeDuration = 0.2f; // 透明度变化持续时间
+
     private Material buttonMaterial;
     private Coroutine animationCoroutine;
+    private Coroutine alphaAnimationCoroutine; // 透明度动画协程
     private bool isMouseOver = false;
 
     [Header("Ring Effect Settings")]
@@ -51,6 +59,11 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             Debug.LogWarning("未找到Image组件！");
         }
+        else
+        {
+            // 设置初始透明度
+            SetImageAlpha(normalAlpha);
+        }
 
         // 创建材质实例
         buttonMaterial = new Material(Shader.Find("UIButtonBorder"));
@@ -72,11 +85,20 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData)
     {
         isMouseOver = true;
+
+        // 停止之前的动画
         if (animationCoroutine != null)
             StopCoroutine(animationCoroutine);
+        if (alphaAnimationCoroutine != null)
+            StopCoroutine(alphaAnimationCoroutine);
+
+        // 开始边框动画
         buttonMaterial.SetColor("_BorderColor", borderColor);
         animationCoroutine = StartCoroutine(AnimateBorder(1f, 0f, fadeOutDuration));
         
+        // 开始透明度动画（从当前透明度到悬停透明度）
+        alphaAnimationCoroutine = StartCoroutine(AnimateAlpha(hoverAlpha, alphaChangeDuration));
+
         // 切换文本
         if (buttonText != null)
         {
@@ -89,9 +111,18 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerExit(PointerEventData eventData)
     {
         isMouseOver = false;
+
+        // 停止之前的动画
         if (animationCoroutine != null)
             StopCoroutine(animationCoroutine);
+        if (alphaAnimationCoroutine != null)
+            StopCoroutine(alphaAnimationCoroutine);
+
+        // 开始边框动画
         animationCoroutine = StartCoroutine(AnimateBorder(0f, 1f, fadeInDuration));
+
+        // 开始透明度动画（从当前透明度到正常透明度）
+        alphaAnimationCoroutine = StartCoroutine(AnimateAlpha(normalAlpha, alphaChangeDuration));
         
         // 恢复默认文本
         if (buttonText != null)
@@ -118,6 +149,38 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         animationCoroutine = null;
     }
 
+    // 新增：透明度动画协程
+    private IEnumerator AnimateAlpha(float targetAlpha, float duration)
+    {
+        if (buttonImage == null) yield break;
+
+        float elapsed = 0f;
+        Color startColor = buttonImage.color;
+        float startAlpha = startColor.a;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float currentAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / duration);
+            SetImageAlpha(currentAlpha);
+            yield return null;
+        }
+
+        SetImageAlpha(targetAlpha);
+        alphaAnimationCoroutine = null;
+    }
+
+    // 新增：设置图片透明度的方法
+    private void SetImageAlpha(float alpha)
+    {
+        if (buttonImage != null)
+        {
+            Color color = buttonImage.color;
+            color.a = alpha;
+            buttonImage.color = color;
+        }
+    }
+
     void OnDestroy()
     {
         // 清理材质实例
@@ -140,5 +203,24 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
         borderWidth = newWidth;
         if (buttonMaterial != null)
             buttonMaterial.SetFloat("_BorderWidth", borderWidth);
+    }
+    
+    // 新增：公共方法用于动态修改透明度设置
+    public void SetNormalAlpha(float alpha)
+    {
+        normalAlpha = Mathf.Clamp01(alpha);
+        if (!isMouseOver)
+        {
+            SetImageAlpha(normalAlpha);
+        }
+    }
+
+    public void SetHoverAlpha(float alpha)
+    {
+        hoverAlpha = Mathf.Clamp01(alpha);
+        if (isMouseOver)
+        {
+            SetImageAlpha(hoverAlpha);
+        }
     }
 }

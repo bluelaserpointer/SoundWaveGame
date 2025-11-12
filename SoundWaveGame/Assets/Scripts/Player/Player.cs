@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
             return;
         if (Input.GetMouseButtonDown(0))
         {
-            if (Ability.GetType() == typeof(KnifeThrow))
+            if (Ability.GetType() == typeof(KnifeThrow) || Ability.GetType() == typeof(BaitThrow))
             {
                 Ray cameraRay = Camera.ScreenPointToRay(Input.mousePosition);
                 float minDistance = 100;
@@ -117,7 +117,11 @@ public class Player : MonoBehaviour
                     minDistance = hit.distance;
                     hitPosition = hit.point;
                 }
-                ((KnifeThrow)Ability).targetPosition = hitPosition;
+                //TODO: need abstract class
+                if (Ability.GetType() == typeof(KnifeThrow))
+                    ((KnifeThrow)Ability).targetPosition = hitPosition;
+                else if (Ability.GetType() == typeof(BaitThrow))
+                    ((BaitThrow)Ability).targetPosition = hitPosition;
             }
             CurrentAbility.TryActivateAbility();
         }

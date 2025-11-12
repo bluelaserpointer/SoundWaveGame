@@ -94,6 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6653527874183988753}
   - component: {fileID: 6006064909330451736}
+  - component: {fileID: 6315094181260785341}
   - component: {fileID: 6653527875406054878}
   - component: {fileID: 6653527875406054689}
   - component: {fileID: 6653527875406054688}
@@ -135,6 +136,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: Coin
+--- !u!114 &6315094181260785341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6653527875406054690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ee28f1ba5f1dd4c9dab0272423d924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _constantColor: {r: 0, g: 0, b: 0, a: 1}
+  _sampleTextureColorAsConstantColor: 0
+  _ignoreOutlineClip: 0
+  _forceFrontMost: 0
+  _useParticleAlphaClip: 0
+  _useAdditiveBlackKey: 0
 --- !u!111 &6653527875406054878
 Animation:
   m_ObjectHideFlags: 0

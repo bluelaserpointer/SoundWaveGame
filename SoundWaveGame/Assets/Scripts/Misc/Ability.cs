@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public abstract class Ability : MonoBehaviour
 {
     public readonly UnityEvent<string> onStatusChange = new UnityEvent<string>();
-    public enum AbilityType { Knife, Beacon }
+    public enum AbilityType { Knife, Beacon, Detector }
     public abstract AbilityType Type { get; }
     public abstract string Name { get; }
     public abstract bool IsUssable { get; }

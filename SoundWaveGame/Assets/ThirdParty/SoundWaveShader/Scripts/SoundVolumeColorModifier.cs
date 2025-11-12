@@ -12,16 +12,14 @@ using UnityEngine.Rendering;
 [DisallowMultipleComponent]
 public class SoundVolumeColorModifier : MonoBehaviour
 {
-    [SerializeField]
     [Tooltip("Black has no effect.")]
-    Color _constantColor = Color.black;
+    public Color constantColor = Color.black;
     [SerializeField]
     [Tooltip("Replace constantColor.")]
     bool _sampleTextureColorAsConstantColor;
     [SerializeField]
     bool _ignoreOutlineClip;
-    [SerializeField]
-    bool _forceFrontMost;
+    public bool forceFrontMost;
 
     [Header("Particle")]
     [SerializeField]
@@ -40,11 +38,9 @@ public class SoundVolumeColorModifier : MonoBehaviour
 
     MaterialPropertyBlock _mpb;
 
-    void OnEnable() { Apply(enabled); }
-    void OnDisable() { Apply(false); }
-    void OnValidate() { Apply(enabled); }
+    void OnEnable() { Apply(); }
 
-    void Apply(bool visible)
+    public void Apply()
     {
 #if UNITY_EDITOR
         // 如果当前对象是 Prefab Asset（不是场景实例），跳过 Apply
@@ -63,7 +59,7 @@ public class SoundVolumeColorModifier : MonoBehaviour
             for (int i = 0; i < submeshCount; i++)
             {
                 r.GetPropertyBlock(_mpb, i);
-                _mpb.SetColor(ID_ConstantColor, visible ? _constantColor : Color.black);
+                _mpb.SetColor(ID_ConstantColor, constantColor);
                 _mpb.SetInt(ID_SampleTextureColorAsConstantColor, _sampleTextureColorAsConstantColor ? 1 : 0);
                 _mpb.SetInt(ID_IgnoreOutlineClip, _ignoreOutlineClip ? 1 : 0);
                 _mpb.SetInt(ID_UseParticleAlphaClip, _useParticleAlphaClip ? 1 : 0);
@@ -81,7 +77,7 @@ public class SoundVolumeColorModifier : MonoBehaviour
                     var m = mats[i];
                     if (m == null) continue;
 
-                    if (_forceFrontMost)
+                    if (forceFrontMost)
                     {
                         // Overlay = 4000
                         m.renderQueue = 4000 + overlayQueueOffset;

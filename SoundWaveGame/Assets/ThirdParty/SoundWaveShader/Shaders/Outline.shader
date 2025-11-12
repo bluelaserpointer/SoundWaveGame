@@ -83,8 +83,7 @@
 			float sampleDepth(float2 uv)
 			{
 				float opaqueDepth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv));
-				float4 t = tex2D(_TransparentDepthTexture, uv);
-				float transparentDepth = (t.a > 0.5) ? t.r : 1.0;   // 未写视作最远
+				float4 transparentDepth = tex2D(_TransparentDepthTexture, uv);
 				float depth = min(opaqueDepth, transparentDepth);
 				return depth;
 			}

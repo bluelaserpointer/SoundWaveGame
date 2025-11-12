@@ -100,6 +100,7 @@ class ShaderToTexture
             Camera.targetTexture = RenderTexture;
             Camera.clearFlags = CameraClearFlags.SolidColor;
             Camera.backgroundColor = clearColorValue; // 如果还要清深度，确保 subCamera.depthTextureMode 或 RenderTexture 有深度缓冲
+
             Camera.RenderWithShader(shader, replacementTag);
 
             Camera.clearFlags = prevFlags;

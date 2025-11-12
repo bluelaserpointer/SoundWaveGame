@@ -9,6 +9,7 @@
     CGINCLUDE
     #include "UnityCG.cginc"
     #include "./SoundWaveCommon.cginc"
+    #pragma multi_compile __ FRONT_MOST
 
     sampler2D _MainTex;
     sampler2D _BumpMap;
@@ -65,7 +66,7 @@
     }
 
     // ——— 主片元：法线贴图 → WS → VS —— //
-    float4 FragBody(v2f i) : SV_Target
+    float4 frag_opaque(v2f i) : SV_Target
     {
         // Tangent-space normal
         float3 nTS = UnpackNormal(tex2D(_BumpMap, i.uv)); // default "bump" 给 neutral 正常
@@ -73,63 +74,120 @@
         float3 nWS = normalize(mul(TBN, nTS));
         return OutputVSNormal(nWS);
     }
-    ENDCG
+    // 片元参数里加：UNITY_VFACE_TYPE faceSign : SV_IsFrontFace
+    // Unity 提供 UNITY_VFACE 宏来兼容性声明，下方写法在 HLSL 下可用：
+    float4 frag_transparent(v2f i) : SV_Target
+    {
+        // —— 1) SDF/Alpha 裁剪——
+        ClipCombinedAlpha(_MainTex, i.uv, i.col.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
 
+        // —— 2) TBN 法线——
+        float3 nTS = UnpackNormal(tex2D(_BumpMap, i.uv));
+        float3x3 TBN = float3x3(i.tWS, i.bWS, i.nWS);
+        float3 nWS = normalize(mul(TBN, nTS));
+
+        float3 viewDirWS = normalize(_WorldSpaceCameraPos - i.wpos);
+        if (dot(nWS, viewDirWS) < 0) nWS = -nWS;   // 朝向摄像机
+
+        return OutputVSNormal(nWS);
+    }
+    float4 frag_cutout(v2f i) : SV_Target
+    {
+        ClipCombinedAlpha(_MainTex, i.uv, 1, _UseParticleAlphaClip, _UseAdditiveBlackKey);
+        return frag_opaque(i);
+    }
+    float4 frag_clip(v2f i) : SV_Target
+    {
+        clip(-1);
+        return float4(0, 0, 0, 0);
+    }
+    ENDCG
+    
     // -------- Opaque --------
     SubShader
     {
         Tags { "RenderType"="Opaque" }
+        LOD 100
         Pass
         {
-            // Opaque：按原逻辑
+            Name "Normal"
             Cull Back
             ZWrite On
             ZTest LEqual
-
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag
-
-            float4 frag(v2f i) : SV_Target
+            #pragma fragment Frag_Normal
+            float4 Frag_Normal(v2f i) : SV_Target
             {
-                return FragBody(i);
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_opaque(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Back
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_opaque(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }
     }
 
-    // -------- Transparent（覆盖 TMP 常用路径） --------
+    // -------- Transparent（TMP 常用） --------
     SubShader
     {
         Tags { "RenderType"="Transparent" }
+        LOD 100
         Pass
         {
-            // 关键设置：双面 & 不写深度
+            Name "Normal"
             Cull Off
             ZWrite On
             ZTest LEqual
-            // 如需把输出叠加而不是覆盖，自己加 Blend 规则（多数替换渲染输出到专用RT可不设）
-
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag_t
-
-            // 片元参数里加：UNITY_VFACE_TYPE faceSign : SV_IsFrontFace
-            // Unity 提供 UNITY_VFACE 宏来兼容性声明，下方写法在 HLSL 下可用：
-            float4 frag_t(v2f i) : SV_Target
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
             {
-                // —— 1) SDF/Alpha 裁剪——
-                ClipCombinedAlpha(_MainTex, i.uv, i.col.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
-
-                // —— 2) TBN 法线——
-                float3 nTS = UnpackNormal(tex2D(_BumpMap, i.uv));
-                float3x3 TBN = float3x3(i.tWS, i.bWS, i.nWS);
-                float3 nWS = normalize(mul(TBN, nTS));
-
-                float3 viewDirWS = normalize(_WorldSpaceCameraPos - i.wpos);
-                if (dot(nWS, viewDirWS) < 0) nWS = -nWS;   // 朝向摄像机
-
-                return OutputVSNormal(nWS);
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_transparent(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Off
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_transparent(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }
@@ -139,21 +197,42 @@
     SubShader
     {
         Tags { "RenderType"="TransparentCutout" }
+        LOD 100
         Pass
         {
+            Name "Normal"
             Cull Off
             ZWrite On
             ZTest LEqual
-
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag_c
-
-            float4 frag_c(v2f i) : SV_Target
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
             {
-                // —— 1) SDF/Alpha 裁剪——
-                ClipCombinedAlpha(_MainTex, i.uv, 1, _UseParticleAlphaClip, _UseAdditiveBlackKey);
-                return FragBody(i);
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_cutout(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Off
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_cutout(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }

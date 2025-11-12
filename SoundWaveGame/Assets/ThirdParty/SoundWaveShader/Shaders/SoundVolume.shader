@@ -11,6 +11,7 @@
     CGINCLUDE
     #include "UnityCG.cginc"
     #include "./SoundWaveCommon.cginc"
+    #pragma multi_compile __ FRONT_MOST
 
     sampler2D _CameraDepthTexture;
 
@@ -23,10 +24,10 @@
 
     float3 _ConstantColor;
     int _SampleTextureColorAsConstantColor;
-	int _IgnoreOutlineClip;
-    
-    int   _UseParticleAlphaClip;
-    int   _UseAdditiveBlackKey;
+    int _IgnoreOutlineClip;
+
+    int _UseParticleAlphaClip;
+    int _UseAdditiveBlackKey;
 
     sampler2D _MainTex;
     float4 _MainTex_ST;
@@ -50,12 +51,12 @@
         o.vertex = UnityObjectToClipPos(v.vertex);
         o.color = v.color;
         o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
-        o.uv  = v.uv;
+        o.uv  = TRANSFORM_TEX(v.uv, _MainTex);
         o.screenPos = ComputeScreenPos(o.vertex);
         return o;
     }
 
-    // —— 声波叠加主逻辑（保持你的代码） —— //
+    // —— 声波叠加主逻辑（保持你的算法） —— //
     float4 AccumulateSound(float3 baseCol, float4 worldPos, float2 svPos)
     {
         float3 receivedVolumeColor = baseCol;
@@ -70,6 +71,7 @@
             float soundLifeTime = _SoundSourceLifeTimes[id];
             float borderDistance = min(soundVolume, soundLifeTime * 4) - soundDistance;
             if (borderDistance <= 0) continue;
+
             float prob = (1 - pow(saturate(soundDistance / soundVolume), 6.0)) * 0.25;
             float rand = frac(sin(dot(worldPos.xyz + id * 12.345, float2(12.9898,78.233))) * 43758.5453);
             if (rand > prob) continue;
@@ -79,6 +81,8 @@
             float alpha = 5 * falloff * (1.0 - t * t);
             receivedVolumeColor = max(receivedVolumeColor, _SoundColors[id] * alpha);
         }
+
+        // 不再依赖 _ZWrite/_ZTest 的调试分支
         return float4(receivedVolumeColor, _IgnoreOutlineClip == 1 ? 1 : 0);
     }
 
@@ -91,8 +95,40 @@
             return _ConstantColor;
     }
 
-    ENDCG
+    // 片元实现
 
+    float4 frag_transparent(v2f i) : SV_Target
+    {
+        // TMP(SDF) / 粒子透明裁剪
+        ClipCombinedAlpha(_MainTex, i.uv, i.color.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
+
+        float3 baseCol = GetBaseColor(i.uv, i.color);
+        return AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
+    }
+
+    float4 frag_cutout(v2f i) : SV_Target
+    {
+        // 硬阈值裁剪（如需软边，可改 smoothstep）
+        float a = tex2D(_MainTex, i.uv).a * i.color.a;
+        clip(a - 0.5);
+
+        float3 baseCol = GetBaseColor(i.uv, i.color);
+        return AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
+    }
+    
+    float4 frag_opaque(v2f i) : SV_Target
+    {
+        float3 baseCol = GetBaseColor(i.uv, i.color);
+        return AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
+    }
+
+    float4 frag_clip(v2f i) : SV_Target
+    {
+        clip(-1);
+        return float4(0, 0, 0, 0);
+    }
+    ENDCG
+    
     // -------- Opaque --------
     SubShader
     {
@@ -100,19 +136,39 @@
         LOD 100
         Pass
         {
-            // 按需：ZWrite On / Cull Back
+            Name "Normal"
             Cull Back
             ZWrite On
             ZTest LEqual
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag_opaque
-
-            float4 frag_opaque(v2f i) : SV_Target
+            #pragma fragment Frag_Normal
+            float4 Frag_Normal(v2f i) : SV_Target
             {
-                float3 baseCol = GetBaseColor(i.uv, i.color);
-                float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
-                return outCol;
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_opaque(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Back
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_opaque(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }
@@ -125,25 +181,39 @@
         LOD 100
         Pass
         {
-            // 关键设置：
-            Cull Off          // 双面渲染，解决“只有一面可见”
-            ZWrite On        // 透明物体通常不写深度，但是本游戏的渲染不存在"半透明"，所以还是写深度
+            Name "Normal"
+            Cull Off
+            ZWrite On
             ZTest LEqual
-            // 不需要混合（我们写到独立的 RT）；若你想叠加，可自行设 Blend
-
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag_transparent
-
-            float4 frag_transparent(v2f i) : SV_Target
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
             {
-                // 1) 选择 alpha 来源：TMP(SDF) 或 粒子(贴图A)， 丢弃透明区（把 PNG 的透明边缘/空白剔除）
-                 ClipCombinedAlpha(_MainTex, i.uv, i.color.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
-
-                // 2) 计算颜色并叠加声波
-                float3 baseCol = GetBaseColor(i.uv, i.color);
-                float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
-                return outCol;
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_transparent(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Off
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_transparent(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }
@@ -156,21 +226,39 @@
         LOD 100
         Pass
         {
+            Name "Normal"
             Cull Off
             ZWrite On
             ZTest LEqual
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag_cutout
-            float4 frag_cutout(v2f i) : SV_Target
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
             {
-                // 简化：硬阈值（如需软边，直接调用 GetTMPAlpha 并 smoothstep）
-                float a = tex2D(_MainTex, i.uv).a * i.color.a;
-                clip(a - 0.5);
-
-                float3 baseCol = GetBaseColor(i.uv, i.color);
-                float4 outCol  = AccumulateSound(baseCol, i.worldPosition, i.vertex.xy);
-                return outCol;
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_cutout(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Off
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_cutout(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }

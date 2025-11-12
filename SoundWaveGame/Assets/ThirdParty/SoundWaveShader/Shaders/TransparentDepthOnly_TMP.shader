@@ -8,6 +8,7 @@
     CGINCLUDE
     #include "UnityCG.cginc"
     #include "./SoundWaveCommon.cginc"
+    #pragma multi_compile __ FRONT_MOST
 
     sampler2D _MainTex;
     
@@ -47,32 +48,162 @@
 #endif
         return Linear01Depth(raw01);           // 统一得到 线性0..1（近=0，远=1）
     }
+    inline float4 frag_common(v2f i) : SV_Target
+    {
+        // TMP(SDF) / 粒子透明裁剪
+        ClipCombinedAlpha(_MainTex, i.uv, i.col.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
+        float d01 = Linear01FromSVPos(i.pos);
+        return float4(d01, d01, d01, 1);
+    }
+    float4 frag_opaque(v2f i) : SV_Target
+    {
+        return frag_common(i);
+    }
+    float4 frag_transparent(v2f i) : SV_Target
+    {
+        return frag_common(i);
+    }
+    float4 frag_cutout(v2f i) : SV_Target
+    {
+        return frag_common(i);
+    }
+    float4 frag_clip(v2f i) : SV_Target
+    {
+        clip(-1);
+        return float4(0, 0, 0, 0);
+    }
     ENDCG
+    
+    // -------- Opaque --------
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 100
+        Pass
+        {
+            Name "Normal"
+            Cull Back
+            ZWrite On
+            ZTest LEqual
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Normal
+            float4 Frag_Normal(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_clip(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Back
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_clip(i);
+            #endif
+            }
+            ENDCG
+        }
+    }
 
-    // -------- Transparent（覆盖 TMP 常用路径） --------
+    // -------- Transparent（TMP 常用） --------
     SubShader
     {
         Tags { "RenderType"="Transparent" }
+        LOD 100
         Pass
         {
+            Name "Normal"
             Cull Off
             ZWrite On
             ZTest LEqual
-            // 如需把输出叠加而不是覆盖，自己加 Blend 规则（多数替换渲染输出到专用RT可不设）
-
             CGPROGRAM
             #pragma vertex vert
-            #pragma fragment frag_t
-
-            // Transparent Pass 的片元：对 TMP 做 SDF 裁剪，再输出法线
-            float4 frag_t(v2f i) : SV_Target
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
             {
-                // —— 1) SDF/Alpha 裁剪：直接丢弃（不写 RT）——
-                 ClipCombinedAlpha(_MainTex, i.uv, i.col.a, _UseParticleAlphaClip, _UseAdditiveBlackKey);
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_transparent(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Off
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_transparent(i);
+            #else
+                return frag_clip(i);
+            #endif
+            }
+            ENDCG
+        }
+    }
 
-                // —— 2) 计算并写入depth（你的原逻辑）——
-                float d01 = Linear01FromSVPos(i.pos);
-                return float4(d01, d01, d01, 1);  // A=1 标记“已写”
+    // -------- TransparentCutout（可选） --------
+    SubShader
+    {
+        Tags { "RenderType"="TransparentCutout" }
+        LOD 100
+        Pass
+        {
+            Name "Normal"
+            Cull Off
+            ZWrite On
+            ZTest LEqual
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_clip(i);
+            #else
+                return frag_cutout(i);
+            #endif
+            }
+            ENDCG
+        }
+        Pass
+        {
+            Name "FrontMost"
+            Cull Off
+            ZWrite Off
+            ZTest Always
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment Frag_Front
+            float4 Frag_Front(v2f i) : SV_Target
+            {
+            #ifdef FRONT_MOST
+                return frag_cutout(i);
+            #else
+                return frag_clip(i);
+            #endif
             }
             ENDCG
         }

@@ -435,6 +435,9 @@ MonoBehaviour:
   _constantColor: {r: 0.6377357, g: 0.6377357, b: 0.6377357, a: 1}
   _sampleTextureColorAsConstantColor: 0
   _ignoreOutlineClip: 0
+  _forceFrontMost: 0
+  _useParticleAlphaClip: 0
+  _useAdditiveBlackKey: 0
 --- !u!114 &3446778110045665639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,6 +585,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: cbd1db45c75e5b948a5befe9ecb80421, type: 2}
+    - target: {fileID: 167210972398403431, guid: 612c93b5086874d418ec7b3e383620d2, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 167210972398403431, guid: 612c93b5086874d418ec7b3e383620d2, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0

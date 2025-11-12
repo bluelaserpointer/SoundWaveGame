@@ -1,4 +1,10 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using System;
+using UnityEditor;
+#endif
+
+using UnityEngine;
+using UnityEngine.Rendering;
 
 /// <summary>
 /// Modify child renderers appearance in soundwave shaders.
@@ -14,6 +20,8 @@ public class SoundVolumeColorModifier : MonoBehaviour
     bool _sampleTextureColorAsConstantColor;
     [SerializeField]
     bool _ignoreOutlineClip;
+    [SerializeField]
+    bool _forceFrontMost;
 
     [Header("Particle")]
     [SerializeField]
@@ -28,18 +36,24 @@ public class SoundVolumeColorModifier : MonoBehaviour
     static readonly int ID_UseParticleAlphaClip = Shader.PropertyToID("_UseParticleAlphaClip");
     static readonly int ID_UseAdditiveBlackKey = Shader.PropertyToID("_UseAdditiveBlackKey");
 
+    static readonly string KEYWORD_FRONT_MOST = "FRONT_MOST";
+
     MaterialPropertyBlock _mpb;
 
     void OnEnable() { Apply(enabled); }
     void OnDisable() { Apply(false); }
-#if UNITY_EDITOR
     void OnValidate() { Apply(enabled); }
-#endif
 
     void Apply(bool visible)
     {
+#if UNITY_EDITOR
+        // 如果当前对象是 Prefab Asset（不是场景实例），跳过 Apply
+        if (!Application.isPlaying || PrefabUtility.IsPartOfPrefabAsset(this))
+            return;
+#endif
         if (_mpb == null) _mpb = new MaterialPropertyBlock();
         var renderers = GetComponentsInChildren<Renderer>(true);
+        int overlayQueueOffset = 10;
         foreach (var r in renderers)
         {
             if (!r) continue;
@@ -55,6 +69,31 @@ public class SoundVolumeColorModifier : MonoBehaviour
                 _mpb.SetInt(ID_UseParticleAlphaClip, _useParticleAlphaClip ? 1 : 0);
                 _mpb.SetInt(ID_UseAdditiveBlackKey, _useAdditiveBlackKey ? 1 : 0);
                 r.SetPropertyBlock(_mpb, i);
+            }
+            // —— 材质实例：调整 Render Queue（MPB改不了队列） —— //
+            // 注意：materials 会实例化，避免污染原材质
+
+            var mats = r.materials;
+            if (mats != null)
+            {
+                for (int i = 0; i < mats.Length; i++)
+                {
+                    var m = mats[i];
+                    if (m == null) continue;
+
+                    if (_forceFrontMost)
+                    {
+                        // Overlay = 4000
+                        m.renderQueue = 4000 + overlayQueueOffset;
+                        m.EnableKeyword(KEYWORD_FRONT_MOST);
+                    }
+                    else
+                    {
+                        // -1 恢复为 shader 默认
+                        m.renderQueue = -1;
+                        m.DisableKeyword(KEYWORD_FRONT_MOST);
+                    }
+                }
             }
         }
     }

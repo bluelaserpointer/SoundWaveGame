@@ -17,4 +17,16 @@ public class PlayerEnterDetector : MonoBehaviour
             return;
         _onPlayerEnter.Invoke();
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (!collision.collider.CompareTag("Player"))
+            return;
+        _onPlayerEnter.Invoke();
+    }
+
+    // For inspector events
+    public void KillPlayer()
+    {
+        Player.Instance.Dead();
+    }
 }

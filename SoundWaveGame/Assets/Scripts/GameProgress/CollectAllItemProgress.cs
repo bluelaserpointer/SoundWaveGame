@@ -33,13 +33,18 @@ public class CollectAllItemProgress : GameProgress
             if (!_targetItemIdentifier.Equals(identifier))
                 return;
             ++_collectedCount;
-            if (CollectedCount >= RequiredCount)
-            {
-                Complete();
-            }
+            CheckComplete();
             onStateChange.Invoke();
         });
+        CheckComplete();
         onStateChange.Invoke();
+    }
+    public void CheckComplete()
+    {
+        if (CollectedCount >= RequiredCount)
+        {
+            Complete();
+        }
     }
     public override float GetProgressRatio()
     {

@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 366992568411011072}
   - component: {fileID: 366992568411011075}
   m_Layer: 11
-  m_Name: KnifeSupply
+  m_Name: DetectorSupply
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,8 +132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79dd3c5f166361408307c7968b11c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _identifier: KnifeSupply
-  _abilityType: 0
+  _identifier: DetectorSupply
+  _abilityType: 2
   _supplyKnifeCount: 10
 --- !u!111 &366992568411011326
 Animation:

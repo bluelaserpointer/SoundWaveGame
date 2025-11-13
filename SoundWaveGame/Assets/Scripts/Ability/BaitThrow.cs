@@ -33,7 +33,7 @@ public class BaitThrow : Ability
     public override string UsageText => RemainCount.ToString();
 
     public override string Name => "Bait";
-    public override AbilityType Type => AbilityType.Knife;
+    public override AbilityType Type => AbilityType.Bait;
 
     public override bool IsUssable => _remainCount > 0 && throwCD.IsReady;
 

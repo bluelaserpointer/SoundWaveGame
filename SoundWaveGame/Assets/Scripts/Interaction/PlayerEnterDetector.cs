@@ -29,4 +29,8 @@ public class PlayerEnterDetector : MonoBehaviour
     {
         Player.Instance.Dead();
     }
+    public void WarpPlayerTo(Transform anchor)
+    {
+        Player.Instance.SetPositionAndRotation(anchor);
+    }
 }

@@ -18,11 +18,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     vThirdPersonInput _movementInputSystem;
     [SerializeField]
+    vThirdPersonController _controller;
+    [SerializeField]
     KnifeThrow _knifeThrow;
     [SerializeField]
     SoundSourceGenerator _activelySoundSourceGenerator;
 
     public static Player Instance { get; private set; }
+    public Rigidbody Rigidbody => _controller.Rigidbody;
     public Camera Camera => _cameraSystem.Camera;
     public Ability Ability
     {
@@ -142,6 +145,10 @@ public class Player : MonoBehaviour
             }
         }
         */
+    }
+    public void SetPositionAndRotation(Transform anchor)
+    {
+        _controller.TeleportTo(anchor.position, anchor.rotation);
     }
     public void UpdateControllableState()
     {

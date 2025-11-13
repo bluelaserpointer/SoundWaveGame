@@ -61,7 +61,7 @@ namespace Invector.vCharacterController
 
         #region Components
 
-        internal Rigidbody _rigidbody;                                                      // access the Rigidbody component
+        public Rigidbody Rigidbody { get; private set; }                                    // access the Rigidbody component
         internal PhysicMaterial frictionPhysics, maxFrictionPhysics, slippyPhysics;         // create PhysicMaterial for the Rigidbody
         internal CapsuleCollider _capsuleCollider;                                          // access CapsuleCollider information
 
@@ -135,7 +135,7 @@ namespace Invector.vCharacterController
             slippyPhysics.frictionCombine = PhysicMaterialCombine.Minimum;
 
             // rigidbody info
-            _rigidbody = GetComponent<Rigidbody>();
+            Rigidbody = GetComponent<Rigidbody>();
 
             // capsule collider info
             _capsuleCollider = GetComponent<CapsuleCollider>();
@@ -180,12 +180,12 @@ namespace Invector.vCharacterController
             if (_direction.magnitude > 1f)
                 _direction.Normalize();
 
-            Vector3 targetPosition = (useRootMotion ? animator.rootPosition : _rigidbody.position) + _direction * (stopMove ? 0 : moveSpeed) * Time.deltaTime;
+            Vector3 targetPosition = (useRootMotion ? animator.rootPosition : Rigidbody.position) + _direction * (stopMove ? 0 : moveSpeed) * Time.deltaTime;
             Vector3 targetVelocity = (targetPosition - transform.position) / Time.deltaTime;
 
             bool useVerticalVelocity = true;
-            if (useVerticalVelocity) targetVelocity.y = _rigidbody.velocity.y;
-            _rigidbody.velocity = targetVelocity;
+            if (useVerticalVelocity) targetVelocity.y = Rigidbody.velocity.y;
+            Rigidbody.velocity = targetVelocity;
         }
 
         public virtual void CheckSlopeLimit()
@@ -249,9 +249,9 @@ namespace Invector.vCharacterController
                 isJumping = false;
             }
             // apply extra force to the jump height   
-            var vel = _rigidbody.velocity;
+            var vel = Rigidbody.velocity;
             vel.y = jumpHeight;
-            _rigidbody.velocity = vel;
+            Rigidbody.velocity = vel;
         }
 
         public virtual void AirControl()
@@ -262,7 +262,7 @@ namespace Invector.vCharacterController
 
             if (jumpWithRigidbodyForce && !isGrounded)
             {
-                _rigidbody.AddForce(moveDirection * airSpeed * Time.deltaTime, ForceMode.VelocityChange);
+                Rigidbody.AddForce(moveDirection * airSpeed * Time.deltaTime, ForceMode.VelocityChange);
                 return;
             }
 
@@ -270,11 +270,11 @@ namespace Invector.vCharacterController
             moveDirection.x = Mathf.Clamp(moveDirection.x, -1f, 1f);
             moveDirection.z = Mathf.Clamp(moveDirection.z, -1f, 1f);
 
-            Vector3 targetPosition = _rigidbody.position + (moveDirection * airSpeed) * Time.deltaTime;
+            Vector3 targetPosition = Rigidbody.position + (moveDirection * airSpeed) * Time.deltaTime;
             Vector3 targetVelocity = (targetPosition - transform.position) / Time.deltaTime;
 
-            targetVelocity.y = _rigidbody.velocity.y;
-            _rigidbody.velocity = Vector3.Lerp(_rigidbody.velocity, targetVelocity, airSmooth * Time.deltaTime);
+            targetVelocity.y = Rigidbody.velocity.y;
+            Rigidbody.velocity = Vector3.Lerp(Rigidbody.velocity, targetVelocity, airSmooth * Time.deltaTime);
         }
 
         protected virtual bool jumpFwdCondition
@@ -300,7 +300,7 @@ namespace Invector.vCharacterController
             {
                 isGrounded = true;
                 if (!isJumping && groundDistance > 0.05f)
-                    _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
+                    Rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
 
                 heightReached = transform.position.y;
             }
@@ -311,16 +311,16 @@ namespace Invector.vCharacterController
                     // set IsGrounded to false 
                     isGrounded = false;
                     // check vertical velocity
-                    verticalVelocity = _rigidbody.velocity.y;
+                    verticalVelocity = Rigidbody.velocity.y;
                     // apply extra gravity when falling
                     if (!isJumping)
                     {
-                        _rigidbody.AddForce(transform.up * extraGravity * Time.deltaTime, ForceMode.VelocityChange);
+                        Rigidbody.AddForce(transform.up * extraGravity * Time.deltaTime, ForceMode.VelocityChange);
                     }
                 }
                 else if (!isJumping)
                 {
-                    _rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
+                    Rigidbody.AddForce(transform.up * (extraGravity * 2 * Time.deltaTime), ForceMode.VelocityChange);
                 }
             }
         }

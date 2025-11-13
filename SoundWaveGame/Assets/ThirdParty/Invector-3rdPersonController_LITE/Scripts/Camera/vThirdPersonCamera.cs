@@ -168,7 +168,7 @@ public class vThirdPersonCamera : MonoBehaviour
         ClipPlanePoints oldPoints = Camera.NearClipPlanePoints(desired_cPos + (camDir * distance), clipPlaneMargin);
 
         //Check if Height is not blocked 
-        if (Physics.SphereCast(targetPos, checkHeightRadius, Vector3.up, out hitInfo, cullingHeight + 0.2f, cullingLayer))
+        if (Physics.SphereCast(targetPos, checkHeightRadius, Vector3.up, out hitInfo, cullingHeight + 0.2f, cullingLayer, QueryTriggerInteraction.Ignore))
         {
             var t = hitInfo.distance - 0.2f;
             t -= height;
@@ -221,25 +221,25 @@ public class vThirdPersonCamera : MonoBehaviour
     {
         bool value = false;
 
-        if (Physics.Raycast(from, _to.LowerLeft - from, out hitInfo, distance, cullingLayer))
+        if (Physics.Raycast(from, _to.LowerLeft - from, out hitInfo, distance, cullingLayer, QueryTriggerInteraction.Ignore))
         {
             value = true;
             cullingDistance = hitInfo.distance;
         }
 
-        if (Physics.Raycast(from, _to.LowerRight - from, out hitInfo, distance, cullingLayer))
+        if (Physics.Raycast(from, _to.LowerRight - from, out hitInfo, distance, cullingLayer, QueryTriggerInteraction.Ignore))
         {
             value = true;
             if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
         }
 
-        if (Physics.Raycast(from, _to.UpperLeft - from, out hitInfo, distance, cullingLayer))
+        if (Physics.Raycast(from, _to.UpperLeft - from, out hitInfo, distance, cullingLayer, QueryTriggerInteraction.Ignore))
         {
             value = true;
             if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;
         }
 
-        if (Physics.Raycast(from, _to.UpperRight - from, out hitInfo, distance, cullingLayer))
+        if (Physics.Raycast(from, _to.UpperRight - from, out hitInfo, distance, cullingLayer, QueryTriggerInteraction.Ignore))
         {
             value = true;
             if (cullingDistance > hitInfo.distance) cullingDistance = hitInfo.distance;

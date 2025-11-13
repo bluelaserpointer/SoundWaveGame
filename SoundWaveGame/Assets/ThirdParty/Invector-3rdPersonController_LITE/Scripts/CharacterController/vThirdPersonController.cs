@@ -4,6 +4,36 @@ namespace Invector.vCharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
+        private bool teleportingThisFrame = false;
+        public void TeleportTo(Vector3 newPosition, Quaternion newRotation)
+        {
+            teleportingThisFrame = true;
+
+            // 1. 暂时交给脚本控制，避免中途物理乱算
+            var rb = Rigidbody;
+
+            // 2. 直接把角色搬过去 (transform rigidbody 都需要，否则会被父类认为dx很大）
+            transform.SetPositionAndRotation(newPosition, newRotation);
+            rb.position = newPosition;
+            rb.rotation = newRotation;
+
+            // 3. 清刚体速度
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            // 4. 清 Invector 内部的运动状态
+            horizontalSpeed = 0f;
+            verticalSpeed = 0f;
+            inputMagnitude = 0f;
+
+            isJumping = false;
+            jumpCounter = 0f;
+            isSprinting = false;
+            stopMove = false;
+
+            CheckGround();
+        }
+
         public virtual void ControlAnimatorRootMotion()
         {
             if (!this.enabled) return;

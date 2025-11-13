@@ -497,6 +497,7 @@ MonoBehaviour:
   - {fileID: 7943863876250507726}
   _cameraSystem: {fileID: 3446778108712132039}
   _movementInputSystem: {fileID: 3446778110045665639}
+  _controller: {fileID: 3446778110045665642}
   _knifeThrow: {fileID: 3446778108563496387}
   _activelySoundSourceGenerator: {fileID: 5219771548714686655}
   _controllable: 0

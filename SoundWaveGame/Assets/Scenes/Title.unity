@@ -209,14 +209,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1490390766}
         m_TargetAssemblyTypeName: LevelMenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel3
-        m_Mode: 1
+        m_MethodName: LoadLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Level1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &19970244
@@ -276,6 +276,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -703,6 +706,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -1265,6 +1271,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -1490,14 +1499,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1490390766}
         m_TargetAssemblyTypeName: LevelMenuManager, Assembly-CSharp
-        m_MethodName: LoadLevel4
-        m_Mode: 1
+        m_MethodName: LoadLevel
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Level2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &801172486
@@ -1557,6 +1566,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -2119,6 +2131,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -2216,7 +2231,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Level1
+          m_StringArgument: Dock Thing
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1032574751
@@ -2276,6 +2291,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -2433,6 +2451,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -2657,6 +2678,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -2885,6 +2909,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -3042,6 +3069,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -3334,6 +3364,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -3431,7 +3464,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Dock Thing
+          m_StringArgument: LevelTutorial
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1376726298
@@ -3491,6 +3524,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -4080,6 +4116,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -4354,6 +4393,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1
@@ -5474,6 +5516,9 @@ MonoBehaviour:
   waveSpeed: 2
   fadeInDuration: 0.5
   fadeOutDuration: 0.3
+  normalAlpha: 0.4
+  hoverAlpha: 1
+  alphaChangeDuration: 0.2
   ringColor: {r: 1, g: 1, b: 1, a: 1}
   ringWidth: 0.02
   ringSpeed: 1

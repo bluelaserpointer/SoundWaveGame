@@ -34,7 +34,6 @@ public class Level : MonoBehaviour
     {
         Instance = this;
         _itemManager.Init();
-        Player player = Instantiate(_playerPrefab);
-        player.transform.SetPositionAndRotation(_playerStartAnchor.position, _playerStartAnchor.rotation);
+        Player player = Instantiate(_playerPrefab, _playerStartAnchor.position, _playerStartAnchor.rotation);
     }
 }

@@ -20,6 +20,7 @@ public class SoundVolumeColorModifier : MonoBehaviour
     [SerializeField]
     bool _ignoreOutlineClip;
     public bool forceFrontMost;
+    public bool isSea;
 
     [Header("Particle")]
     [SerializeField]
@@ -35,10 +36,12 @@ public class SoundVolumeColorModifier : MonoBehaviour
     static readonly int ID_UseAdditiveBlackKey = Shader.PropertyToID("_UseAdditiveBlackKey");
 
     static readonly string KEYWORD_FRONT_MOST = "FRONT_MOST";
+    static readonly string KEYWORD_IS_SEA = "IS_SEA";
 
     MaterialPropertyBlock _mpb;
 
     void OnEnable() { Apply(); }
+    private void OnValidate() { Apply(); }
 
     public void Apply()
     {
@@ -88,6 +91,14 @@ public class SoundVolumeColorModifier : MonoBehaviour
                         // -1 恢复为 shader 默认
                         m.renderQueue = -1;
                         m.DisableKeyword(KEYWORD_FRONT_MOST);
+                    }
+                    if (isSea)
+                    {
+                        m.EnableKeyword(KEYWORD_IS_SEA);
+                    }
+                    else
+                    {
+                        m.DisableKeyword(KEYWORD_IS_SEA);
                     }
                 }
             }

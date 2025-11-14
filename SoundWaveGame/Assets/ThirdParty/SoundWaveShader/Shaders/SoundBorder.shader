@@ -11,6 +11,8 @@
     CGINCLUDE
     #include "UnityCG.cginc"
     #include "./SoundWaveCommon.cginc"
+    #include "./SeaDeform.cginc"
+    #pragma multi_compile __ IS_SEA
 
     sampler2D _CameraDepthTexture;
 
@@ -46,7 +48,17 @@
     {
         v2f o;
         o.vertex        = UnityObjectToClipPos(v.vertex);
-        o.worldPosition = mul(unity_ObjectToWorld, v.vertex);
+        float3 worldPos;
+        #ifdef IS_SEA
+            // 对海面：走公用的 Gerstner 逻辑
+            worldPos = Sea_LocalToWorld(v.vertex.xyz, v.uv);
+            o.vertex = UnityWorldToClipPos(worldPos);
+        #else
+            // 其他物体：保持原逻辑
+            worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+            o.vertex = UnityObjectToClipPos(v.vertex);
+        #endif
+        o.worldPosition = float4(worldPos, 1.0);
         o.uv            = TRANSFORM_TEX(v.uv, _MainTex);
         o.color         = v.color;
         return o;

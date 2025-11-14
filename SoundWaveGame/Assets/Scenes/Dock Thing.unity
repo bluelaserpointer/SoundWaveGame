@@ -681,6 +681,7 @@ GameObject:
   - component: {fileID: 26782208}
   - component: {fileID: 26782212}
   - component: {fileID: 26782213}
+  - component: {fileID: 26782214}
   m_Layer: 0
   m_Name: Plane_Ocean (14)
   m_TagString: Untagged
@@ -782,6 +783,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.0000014305115, y: -0.2, z: -0.000000014901161}
+--- !u!114 &26782214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 26782207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &27262974
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2654,6 +2682,7 @@ GameObject:
   - component: {fileID: 120921663}
   - component: {fileID: 120921667}
   - component: {fileID: 120921668}
+  - component: {fileID: 120921669}
   m_Layer: 0
   m_Name: Plane_Ocean (3)
   m_TagString: Untagged
@@ -2755,6 +2784,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.00000023841858, y: -0.2, z: 0.00000035762787}
+--- !u!114 &120921669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120921662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &122206402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d76a78a721a5d9d499abc8aec19fdc8b, type: 3}
@@ -3032,6 +3088,7 @@ GameObject:
   - component: {fileID: 140256799}
   - component: {fileID: 140256803}
   - component: {fileID: 140256804}
+  - component: {fileID: 140256805}
   m_Layer: 0
   m_Name: Plane_Ocean (22)
   m_TagString: Untagged
@@ -3133,6 +3190,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000009536743, y: -0.2, z: -0.000000014901161}
+--- !u!114 &140256805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 140256798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &142843657
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4634,6 +4718,7 @@ GameObject:
   - component: {fileID: 245773448}
   - component: {fileID: 245773452}
   - component: {fileID: 245773453}
+  - component: {fileID: 245773454}
   m_Layer: 0
   m_Name: Plane_Ocean (8)
   m_TagString: Untagged
@@ -4735,6 +4820,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.00000023841858, y: -0.2, z: -0.000000014901161}
+--- !u!114 &245773454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245773447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &245957098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4863,6 +4975,7 @@ GameObject:
   - component: {fileID: 249685421}
   - component: {fileID: 249685425}
   - component: {fileID: 249685426}
+  - component: {fileID: 249685427}
   m_Layer: 0
   m_Name: Plane_Ocean (15)
   m_TagString: Untagged
@@ -4964,6 +5077,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.0000009536743, y: -0.2, z: 0.0000009536743}
+--- !u!114 &249685427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249685420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &255266664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6573,6 +6713,7 @@ GameObject:
   - component: {fileID: 324924162}
   - component: {fileID: 324924166}
   - component: {fileID: 324924167}
+  - component: {fileID: 324924168}
   m_Layer: 0
   m_Name: Plane_Ocean (9)
   m_TagString: Untagged
@@ -6674,6 +6815,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000006109476, y: -0.2, z: 0.00000071525574}
+--- !u!114 &324924168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324924161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &325094821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7465,6 +7633,7 @@ GameObject:
   - component: {fileID: 360886286}
   - component: {fileID: 360886290}
   - component: {fileID: 360886291}
+  - component: {fileID: 360886292}
   m_Layer: 0
   m_Name: Plane_Ocean (4)
   m_TagString: Untagged
@@ -7566,6 +7735,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.00000062584877, y: -0.2, z: -0.00000047683716}
+--- !u!114 &360886292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360886285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &363804428
 GameObject:
   m_ObjectHideFlags: 0
@@ -9025,6 +9221,7 @@ GameObject:
   - component: {fileID: 438733921}
   - component: {fileID: 438733925}
   - component: {fileID: 438733926}
+  - component: {fileID: 438733927}
   m_Layer: 0
   m_Name: Plane_Ocean (10)
   m_TagString: Untagged
@@ -9126,6 +9323,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.00000011920929, y: -0.2, z: 0.0000009536743}
+--- !u!114 &438733927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438733920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &438973097
 GameObject:
   m_ObjectHideFlags: 0
@@ -9139,6 +9363,7 @@ GameObject:
   - component: {fileID: 438973098}
   - component: {fileID: 438973102}
   - component: {fileID: 438973103}
+  - component: {fileID: 438973104}
   m_Layer: 0
   m_Name: Plane_Ocean (19)
   m_TagString: Untagged
@@ -9240,6 +9465,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.0000009536743, y: -0.2, z: -0.00000047683716}
+--- !u!114 &438973104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438973097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &442374764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 455408, guid: 1bf9bc82a9760b2488a711e79d36551e, type: 3}
@@ -12652,7 +12904,7 @@ MonoBehaviour:
   _sampleTextureColorAsConstantColor: 0
   _ignoreOutlineClip: 1
   forceFrontMost: 0
-  isSea: 0
+  isSea: 1
   _useParticleAlphaClip: 0
   _useAdditiveBlackKey: 0
 --- !u!114 &643095455
@@ -14181,6 +14433,7 @@ GameObject:
   - component: {fileID: 717204434}
   - component: {fileID: 717204438}
   - component: {fileID: 717204439}
+  - component: {fileID: 717204440}
   m_Layer: 0
   m_Name: Plane_Ocean (5)
   m_TagString: Untagged
@@ -14282,6 +14535,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.00000011920929, y: -0.2, z: -0.00000047683716}
+--- !u!114 &717204440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717204433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &717248817
 GameObject:
   m_ObjectHideFlags: 0
@@ -15275,7 +15555,7 @@ MonoBehaviour:
   _sampleTextureColorAsConstantColor: 0
   _ignoreOutlineClip: 1
   forceFrontMost: 0
-  isSea: 0
+  isSea: 1
   _useParticleAlphaClip: 0
   _useAdditiveBlackKey: 0
 --- !u!4 &791026694 stripped
@@ -16247,6 +16527,7 @@ GameObject:
   - component: {fileID: 848883252}
   - component: {fileID: 848883256}
   - component: {fileID: 848883257}
+  - component: {fileID: 848883258}
   m_Layer: 0
   m_Name: Plane_Ocean (1)
   m_TagString: Untagged
@@ -16348,6 +16629,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000005066395, y: -0.2, z: 0.00000035762787}
+--- !u!114 &848883258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848883251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &849273927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17185,6 +17493,7 @@ GameObject:
   - component: {fileID: 868697788}
   - component: {fileID: 868697792}
   - component: {fileID: 868697793}
+  - component: {fileID: 868697794}
   m_Layer: 0
   m_Name: Plane_Ocean (13)
   m_TagString: Untagged
@@ -17286,6 +17595,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.0000009536743, y: -0.2, z: -0.00000047683716}
+--- !u!114 &868697794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 868697787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &872052335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17609,6 +17945,7 @@ GameObject:
   - component: {fileID: 884397037}
   - component: {fileID: 884397041}
   - component: {fileID: 884397042}
+  - component: {fileID: 884397043}
   m_Layer: 0
   m_Name: Plane_Ocean (20)
   m_TagString: Untagged
@@ -17710,6 +18047,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000011920929, y: -0.2, z: 0.00000047683716}
+--- !u!114 &884397043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884397036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &884986463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18510,6 +18874,7 @@ GameObject:
   - component: {fileID: 938502847}
   - component: {fileID: 938502851}
   - component: {fileID: 938502852}
+  - component: {fileID: 938502853}
   m_Layer: 0
   m_Name: Plane_Ocean (21)
   m_TagString: Untagged
@@ -18611,6 +18976,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.00000071525574, y: -0.2, z: -0.00000047683716}
+--- !u!114 &938502853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938502846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &938814167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18893,6 +19285,7 @@ GameObject:
   - component: {fileID: 957827671}
   - component: {fileID: 957827675}
   - component: {fileID: 957827676}
+  - component: {fileID: 957827677}
   m_Layer: 0
   m_Name: Plane_Ocean (24)
   m_TagString: Untagged
@@ -18994,6 +19387,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000009536743, y: -0.2, z: -0.00000047683716}
+--- !u!114 &957827677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957827670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &958130720
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23185,6 +23605,7 @@ GameObject:
   - component: {fileID: 1159018718}
   - component: {fileID: 1159018722}
   - component: {fileID: 1159018723}
+  - component: {fileID: 1159018724}
   m_Layer: 0
   m_Name: Plane_Ocean (16)
   m_TagString: Untagged
@@ -23286,6 +23707,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.00000052154064, y: -0.2, z: -0.0000009536743}
+--- !u!114 &1159018724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159018717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1167692674
 GameObject:
   m_ObjectHideFlags: 0
@@ -24090,6 +24538,7 @@ GameObject:
   - component: {fileID: 1203677814}
   - component: {fileID: 1203677818}
   - component: {fileID: 1203677819}
+  - component: {fileID: 1203677820}
   m_Layer: 0
   m_Name: Plane_Ocean (17)
   m_TagString: Untagged
@@ -24191,6 +24640,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0, y: -0.2, z: -0.00000047683716}
+--- !u!114 &1203677820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203677813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1205210488
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28809,6 +29285,7 @@ GameObject:
   - component: {fileID: 1451663356}
   - component: {fileID: 1451663360}
   - component: {fileID: 1451663361}
+  - component: {fileID: 1451663362}
   m_Layer: 0
   m_Name: Plane_Ocean (6)
   m_TagString: Untagged
@@ -28910,6 +29387,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.00000023841858, y: -0.2, z: -0.00000023841858}
+--- !u!114 &1451663362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451663355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1451992175 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 64438420d273554448959a35c747f25a, type: 3}
@@ -30218,6 +30722,7 @@ GameObject:
   - component: {fileID: 1570661767}
   - component: {fileID: 1570661771}
   - component: {fileID: 1570661772}
+  - component: {fileID: 1570661773}
   m_Layer: 0
   m_Name: Plane_Ocean (23)
   m_TagString: Untagged
@@ -30319,6 +30824,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000009536743, y: -0.2, z: 0.0000009536743}
+--- !u!114 &1570661773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570661766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1574246288
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30381,6 +30913,7 @@ GameObject:
   - component: {fileID: 1580531977}
   - component: {fileID: 1580531981}
   - component: {fileID: 1580531982}
+  - component: {fileID: 1580531983}
   m_Layer: 0
   m_Name: Plane_Ocean (11)
   m_TagString: Untagged
@@ -30482,6 +31015,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.00000023841858, y: -0.2, z: 0.00000071525574}
+--- !u!114 &1580531983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580531976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1580655823 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 462418, guid: 9f35541b213a65340a8e088b7f3ab551, type: 3}
@@ -30988,6 +31548,7 @@ GameObject:
   - component: {fileID: 1601721295}
   - component: {fileID: 1601721299}
   - component: {fileID: 1601721300}
+  - component: {fileID: 1601721301}
   m_Layer: 0
   m_Name: Plane_Ocean (12)
   m_TagString: Untagged
@@ -31089,6 +31650,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: -0.00000047683716, y: -0.2, z: 0.00000047683716}
+--- !u!114 &1601721301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601721294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1603006826 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 420012, guid: 4154bf6e40fe42543a525d9b4fbc965f, type: 3}
@@ -32334,6 +32922,7 @@ GameObject:
   - component: {fileID: 1697521765}
   - component: {fileID: 1697521769}
   - component: {fileID: 1697521770}
+  - component: {fileID: 1697521771}
   m_Layer: 0
   m_Name: Plane_Ocean (2)
   m_TagString: Untagged
@@ -32435,6 +33024,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0, y: -0.2, z: 0.00000035762787}
+--- !u!114 &1697521771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697521764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1705026251
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36231,6 +36847,7 @@ GameObject:
   - component: {fileID: 1907408232}
   - component: {fileID: 1907408236}
   - component: {fileID: 1907408237}
+  - component: {fileID: 1907408238}
   m_Layer: 0
   m_Name: Plane_Ocean
   m_TagString: Untagged
@@ -36332,6 +36949,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0, y: -0.2, z: -0.000000014901161}
+--- !u!114 &1907408238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1907408231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1908299293
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36863,6 +37507,7 @@ GameObject:
   - component: {fileID: 1940884261}
   - component: {fileID: 1940884265}
   - component: {fileID: 1940884266}
+  - component: {fileID: 1940884267}
   m_Layer: 0
   m_Name: Plane_Ocean (18)
   m_TagString: Untagged
@@ -36964,6 +37609,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0, y: -0.2, z: -0.00000047683716}
+--- !u!114 &1940884267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940884260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1943279827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38776,6 +39448,7 @@ GameObject:
   - component: {fileID: 2020428059}
   - component: {fileID: 2020428063}
   - component: {fileID: 2020428064}
+  - component: {fileID: 2020428065}
   m_Layer: 0
   m_Name: Plane_Ocean (7)
   m_TagString: Untagged
@@ -38877,6 +39550,33 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.0000005, y: 0.1, z: 2.0000005}
   m_Center: {x: 0.0000005662441, y: -0.2, z: -0.000000014901161}
+--- !u!114 &2020428065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020428058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ea3a18f5c3f13242a489df00f856d44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onPlayerEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 26782214}
+        m_TargetAssemblyTypeName: PlayerEnterDetector, Assembly-CSharp
+        m_MethodName: KillPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &2021506175
 PrefabInstance:
   m_ObjectHideFlags: 0

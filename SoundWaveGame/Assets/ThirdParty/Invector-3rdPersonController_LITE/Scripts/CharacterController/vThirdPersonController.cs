@@ -4,11 +4,8 @@ namespace Invector.vCharacterController
 {
     public class vThirdPersonController : vThirdPersonAnimator
     {
-        private bool teleportingThisFrame = false;
         public void TeleportTo(Vector3 newPosition, Quaternion newRotation)
         {
-            teleportingThisFrame = true;
-
             // 1. 暂时交给脚本控制，避免中途物理乱算
             var rb = Rigidbody;
 

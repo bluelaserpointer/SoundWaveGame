@@ -16,6 +16,7 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
     
     [Header("Border Settings")]
     public Color borderColor = Color.white;
+    public Color clickedBorderColor = Color.red; // 新增：点击后的边框颜色
     public float borderWidth = 0.05f;
     public float waveSpeed = 2.0f;
     public float fadeInDuration = 0.5f;
@@ -130,6 +131,29 @@ public class ButtonHoverEffect : MonoBehaviour, IPointerEnterHandler, IPointerEx
             buttonText.text = normalText;
             Debug.Log("鼠标离开，文本恢复: " + normalText);
         }
+    }
+
+    // 新增：设置点击边框颜色
+    public void SetClickedBorderColor(Color newColor)
+    {
+        clickedBorderColor = newColor;
+    }
+
+    // 新增：显示点击效果
+    public void ShowClickEffect(float targetAlpha)
+    {
+        // 停止之前的动画
+        if (animationCoroutine != null)
+            StopCoroutine(animationCoroutine);
+        if (alphaAnimationCoroutine != null)
+            StopCoroutine(alphaAnimationCoroutine);
+
+        // 设置红色边框
+        buttonMaterial.SetColor("_BorderColor", clickedBorderColor);
+        animationCoroutine = StartCoroutine(AnimateBorder(1f, 0f, fadeOutDuration));
+        
+        // 设置透明度
+        alphaAnimationCoroutine = StartCoroutine(AnimateAlpha(targetAlpha, alphaChangeDuration));
     }
 
     private IEnumerator AnimateBorder(float startValue, float endValue, float duration)

@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: BaitSupply
+  _pickupDetector: {fileID: 0}
   _abilityType: 3
   _supplyKnifeCount: 10
 --- !u!111 &366992568411011326
@@ -274,19 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onPickup:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 366992568411011079}
-        m_TargetAssemblyTypeName: KnifeSupply, Assembly-CSharp
-        m_MethodName: Collected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   particle: {fileID: 0}
   _audioSource: {fileID: 366992568411011072}
 --- !u!1 &2492305456191396844

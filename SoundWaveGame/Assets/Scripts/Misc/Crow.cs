@@ -15,6 +15,8 @@ public class Crow : MonoBehaviour
     Cooldown _flySoundCd;
     [SerializeField]
     int _flySoundMaxCount;
+    [SerializeField]
+    List<AudioClip> _flySEs;
 
     int _flySoundCount;
     bool _isFlying;
@@ -40,6 +42,7 @@ public class Crow : MonoBehaviour
 
     public void Fly()
     {
+        AudioSource.PlayClipAtPoint(_flySEs.GetRandomElement(), transform.position);
         _isFlying = true;
         _flySoundCd.Ratio = 1;
         _animator.SetBool("fly", true);

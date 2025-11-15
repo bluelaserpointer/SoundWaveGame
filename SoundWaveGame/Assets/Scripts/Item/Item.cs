@@ -4,16 +4,24 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(vPickupItem))]
 public class Item : MonoBehaviour, IInteractable
 {
     public static UnityEvent<string> ItemCollected = new();
     [SerializeField]
     string _identifier;
 
+    vPickupItem _pickupDetector;
     public static Dictionary<string, List<Item>> StageItems => ItemManager.Instance.stageItems;
     public static Dictionary<string, int> CollectedItemCounts => ItemManager.Instance.collectedItemCounts;
 
+    public readonly UnityEvent onPickup = new(); 
     public string Identifier => _identifier;
+    private void Awake()
+    {
+        _pickupDetector = GetComponent<vPickupItem>();
+        _pickupDetector.OnPickup.AddListener(() => onPickup.Invoke());
+    }
     public void Init()
     {
         List<Item> sameIdentifierItems;

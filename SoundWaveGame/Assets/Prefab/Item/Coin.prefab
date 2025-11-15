@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _identifier: Coin
+  _pickupDetector: {fileID: 0}
 --- !u!114 &6315094181260785341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,10 +149,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84ee28f1ba5f1dd4c9dab0272423d924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _constantColor: {r: 0, g: 0, b: 0, a: 1}
+  constantColor: {r: 0, g: 0, b: 0, a: 1}
   _sampleTextureColorAsConstantColor: 0
   _ignoreOutlineClip: 0
-  _forceFrontMost: 0
+  forceFrontMost: 0
+  isSea: 0
   _useParticleAlphaClip: 0
   _useAdditiveBlackKey: 0
 --- !u!111 &6653527875406054878
@@ -293,19 +295,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onPickup:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6006064909330451736}
-        m_TargetAssemblyTypeName: Item, Assembly-CSharp
-        m_MethodName: Collected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   particle: {fileID: 0}
   _audioSource: {fileID: 6653527875406054688}
 --- !u!1 &6653527876063961208

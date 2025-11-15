@@ -12,6 +12,8 @@ public class vPickupItem : MonoBehaviour
     [SerializeField]
     AudioSource _audioSource;
 
+    public UnityEvent OnPickup => _onPickup;
+
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))

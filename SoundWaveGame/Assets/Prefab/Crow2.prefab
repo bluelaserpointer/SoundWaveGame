@@ -1167,7 +1167,7 @@ MonoBehaviour:
   soundColor: {r: 0.5999999, g: 0.5999999, b: 0.5999999, a: 0}
   soundType: 0
   volume: 20
-  audioClip: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: a1fe409122d88fb4fb399555cd003e8c, type: 3}
 --- !u!1 &4184083761796974252
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,6 +2142,11 @@ MonoBehaviour:
   _flySoundCd:
     requiredTime: 0.25
   _flySoundMaxCount: 5
+  _flySEs:
+  - {fileID: 8300000, guid: a1fe409122d88fb4fb399555cd003e8c, type: 3}
+  - {fileID: 8300000, guid: 1a1ed90a4e74aa546a6e66177812c74e, type: 3}
+  - {fileID: 8300000, guid: a1fe409122d88fb4fb399555cd003e8c, type: 3}
+  - {fileID: 8300000, guid: a1fe409122d88fb4fb399555cd003e8c, type: 3}
 --- !u!114 &3847146983469371720
 MonoBehaviour:
   m_ObjectHideFlags: 0
